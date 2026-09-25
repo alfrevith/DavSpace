@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>David Menjivar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: "#f5f5f1",
+                        muted: "#b4b7c3",
+                        dim: "#747986",
+                        night: "#07080b",
+                        cyanSoft: "#93e7ff",
+                        greenSoft: "#a7f3c5",
+                        roseSoft: "#ff9db5",
+                        goldSoft: "#f2c766"
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                        mono: ["SFMono-Regular", "Consolas", "Liberation Mono", "monospace"],
+                        serif: ["Georgia", "Times New Roman", "serif"]
+                    },
+                    boxShadow: {
+                        soft: "0 28px 100px rgba(0,0,0,.48)",
+                        lift: "0 28px 80px rgba(0,0,0,.34)"
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="min-h-screen overflow-x-hidden bg-night text-ink font-sans selection:bg-cyanSoft selection:text-night">
+    <div
+        class="pointer-events-none fixed inset-0 -z-20 bg-[linear-gradient(90deg,rgba(255,255,255,.022)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,.018)_1px,transparent_1px),radial-gradient(circle_at_48%_-12%,rgba(147,231,255,.12),transparent_34rem)] bg-[size:72px_72px,72px_72px,auto]">
+    </div>
+    <div
+        class="pointer-events-none fixed inset-0 -z-10 opacity-30 [background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.018)_0_1px,transparent_1px_4px)]">
+    </div>
+    <div class="cursor-light" aria-hidden="true"></div>
+
+    <main
+        class="relative z-10 mx-auto my-0 min-h-screen w-full overflow-hidden bg-night shadow-soft backdrop-blur xl:my-6 xl:min-h-[calc(100vh-3rem)] xl:w-[min(calc(100%-48px),1540px)]">
+        <div
+            class="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,transparent_0_8.5%,rgba(255,255,255,.035)_8.55%_8.7%,transparent_8.75%),linear-gradient(180deg,rgba(255,255,255,.04),transparent_120px)]">
+        </div>
+
+        <header
+            class="sticky top-0 z-20 grid grid-cols-1 items-center gap-4 bg-night/75 px-6 py-5 backdrop-blur-xl md:grid-cols-[minmax(180px,1fr)_auto_minmax(140px,1fr)] xl:px-28">
+            <a class="group flex w-max items-center gap-3 text-ink" href="#start" aria-label="David Menjivar home">
+                <span
+                    class="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[.055] font-mono text-xs font-black transition group-hover:border-cyanSoft/40">DM</span>
+                <strong class="text-sm font-extrabold">David Menjivar</strong>
+            </a>
+
+            <nav class="nav flex w-full gap-1 overflow-x-auto rounded-full border border-white/10 bg-white/[.055] p-2 md:w-auto"
+                aria-label="Main navigation">
+                <a class="is-active min-h-9 rounded-full px-4 py-2 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-ink"
+                    href="#start">/start</a>
+                <a class="min-h-9 rounded-full px-4 py-2 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-ink"
+                    href="#about-me">/about-me</a>
+                <a class="min-h-9 rounded-full px-4 py-2 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-ink"
+                    href="#projects">/projects</a>
+                <a class="min-h-9 rounded-full px-4 py-2 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-ink"
+                    href="#skills">/skills</a>
+                <a class="min-h-9 rounded-full px-4 py-2 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-ink"
+                    href="#contact">/contact</a>
+            </nav>
+
+            <a class="justify-self-start text-sm font-extrabold text-muted transition hover:text-ink md:justify-self-end"
+                href="https://www.linkedin.com/" target="_blank" rel="noreferrer">linkedin <span
+                    class="text-cyanSoft">-></span></a>
+        </header>
+
+        <div
+            class="relative z-10 grid grid-cols-1 gap-8 px-6 pb-28 pt-8 sm:px-8 md:grid-cols-[28px_minmax(0,1fr)] xl:grid-cols-[70px_minmax(0,1fr)] xl:px-28">
+            <aside class="rail relative hidden justify-center md:flex" aria-hidden="true">
+                <span
+                    class="absolute top-3 h-[calc(100%-12px)] w-px rounded-full bg-gradient-to-b from-white/45 via-white/10 to-transparent"></span>
+                <span
+                    class="rail-progress absolute top-3 w-px rounded-full bg-gradient-to-b from-cyanSoft to-greenSoft shadow-[0_0_26px_rgba(147,231,255,.25)]"></span>
+                <span
+                    class="sticky top-28 mt-2 h-2.5 w-2.5 rounded-full border border-ink bg-night shadow-[0_0_0_5px_#07080b,0_0_28px_rgba(255,255,255,.24)]"></span>
+            </aside>
+
+            <div class="grid gap-24 md:gap-36">
+                <section
+                    class="section reveal grid min-h-[calc(100vh-190px)] items-start gap-10 pt-10 md:grid-cols-[minmax(0,1fr)_minmax(220px,.36fr)] xl:gap-16 xl:pt-14"
+                    id="start">
+                    <div class="max-w-5xl">
+                        <span
+                            class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;start/&gt;</span>
+                        <h1 class="hero-title max-w-4xl tracking-normal">
+                            <span
+                                class="inline-flex flex-wrap items-baseline gap-x-3 gap-y-1 text-2xl font-extrabold leading-tight text-muted sm:text-3xl lg:text-4xl">
+                                <span>Hi, I am</span>
+                                <span class="name font-serif text-ink">David Menjivar</span>
+                            </span>
+                            <span
+                                class="mt-5 block max-w-3xl text-balance text-4xl font-black leading-[1.04] text-ink sm:text-5xl xl:text-[64px]">
+                                I'm a student who turns ideas into
+                                <span class="hero-glitch-line mt-4 block">
+                                    <span class="glitch-word" data-glitch>websites</span>
+                                </span>
+                            </span>
+                        </h1>
+                        <p class="mt-7 max-w-3xl text-[17px] leading-8 text-muted lg:text-lg">
+                            This portfolio brings together my academic journey, selected projects, technical growth, and
+                            creative work in one clear personal space.
+                        </p>
+
+                        <div class="mt-8 flex flex-wrap gap-3">
+                            <a class="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 bg-ink px-5 font-extrabold text-night shadow-[0_16px_40px_rgba(245,245,241,.12)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_56px_rgba(245,245,241,.18)]"
+                                href="#projects">Explore work</a>
+                            <a class="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 px-5 font-extrabold text-ink transition hover:-translate-y-0.5 hover:bg-white/5"
+                                href="#contact">Contact</a>
+                        </div>
+                    </div>
+
+                    <aside
+                        class="reveal mx-auto grid w-full max-w-sm content-between rounded-lg border border-white/10 bg-white/[.04] bg-[linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.028))] p-4 shadow-[0_30px_80px_rgba(0,0,0,.28)] sm:p-5 md:min-h-[430px] md:max-w-none xl:min-h-[520px]"
+                        aria-label="Profile summary">
+                        <div class="flex w-max mb-2 items-center gap-2 font-mono text-xs text-muted"><i
+                                class="h-2 w-2 rounded-full bg-greenSoft shadow-[0_0_18px_#a7f3c5]"></i>available for
+                            internships</div>
+                        <div
+                            class="mt-4 grid aspect-[4/5] place-items-center overflow-hidden rounded-lg border border-white/10 bg-[linear-gradient(145deg,rgba(147,231,255,.13),transparent_42%),linear-gradient(315deg,rgba(242,199,102,.12),transparent_38%),rgba(255,255,255,.035)] lg:mt-0">
+                            <img class="h-full w-full object-cover" src="images/pfp.png"
+                                alt="David Menjivar profile photo" />
+                        </div>
+                        <div class="grid gap-2.5">
+                            <p class="flex justify-between gap-4 border-t border-white/10 pt-2.5 text-sm text-muted">
+                                <span class="font-mono text-dim">Name</span> David Menjivar
+                            </p>
+                            <p class="flex justify-between gap-4 border-t border-white/10 pt-2.5 text-sm text-muted">
+                                <span class="font-mono text-dim">Location</span> El Salvador
+                            </p>
+                            <p class="flex justify-between gap-4 border-t border-white/10 pt-2.5 text-sm text-muted">
+                                <span class="font-mono text-dim">Education</span> High School Student
+                            </p>
+                            <p class="flex justify-between gap-4 border-t border-white/10 pt-2.5 text-sm text-muted">
+                                <span class="font-mono text-dim">Languages</span> English - Spanish
+                            </p>
+                        </div>
+                    </aside>
+                </section>
+
+                <section class="section reveal scroll-mt-28" id="about-me">
+                    <span
+                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;about-me/&gt;</span>
+                    <div class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_380px] xl:gap-12">
+                        <div
+                            class="rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.025)_42%,rgba(147,231,255,.055))] p-6 sm:p-8">
+                            <p class="mb-4 font-mono text-xs uppercase text-greenSoft">Profile</p>
+                            <h2
+                                class="max-w-3xl text-balance text-4xl font-black leading-tight sm:text-5xl xl:text-6xl">
+                                Curious student, practical builder, constant learner.</h2>
+                            <p class="mt-6 max-w-4xl text-[17px] leading-8 text-muted lg:text-lg">
+                                I'm David Menjivar, a passionate and curious student interested in technology, software,
+                                and creative problem-solving. I enjoy learning new things, taking on challenges, and
+                                turning ideas into practical solutions. I consider myself a determined, analytical, and
+                                responsible person who is always looking for opportunities to grow both personally and
+                                professionally.
+                            </p>
+
+                            <div
+                                class="mt-8 rounded-lg border border-white/10 bg-night/35 p-5 sm:p-6">
+                                <div class="flex flex-wrap items-center justify-between gap-3">
+                                    <div>
+                                        <p class="font-mono text-xs uppercase text-greenSoft">Personal strengths</p>
+                                        <h3 class="mt-2 text-2xl font-extrabold">Skills I keep sharpening</h3>
+                                    </div>
+                                    <span class="font-mono text-xs text-dim">editable list</span>
+                                </div>
+
+                                <ul class="mt-5 grid gap-2 sm:grid-cols-2" aria-label="Personal strengths list">
+                                    <li
+                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-cyanSoft"></span>Strong logic
+                                    </li>
+                                    <li
+                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-greenSoft"></span>Adaptability
+                                    </li>
+                                    <li
+                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-roseSoft"></span>Clear reasoning
+                                    </li>
+                                    <li
+                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-goldSoft"></span>Fast learning
+                                    </li>
+                                    <li
+                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-cyanSoft"></span>Creative problem
+                                        solving
+                                    </li>
+                                    <li
+                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-greenSoft"></span>Attention to detail
+                                    </li>
+                                    <li
+                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-roseSoft"></span>Written communication
+                                    </li>
+                                    <li
+                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-goldSoft"></span>Self-management
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <aside class="grid gap-4">
+                            <article
+                                class="magnetic rounded-lg border border-white/10 bg-white/[.04] p-5 transition hover:border-white/30 hover:bg-white/[.065]">
+                                <small class="font-mono text-xs uppercase text-cyanSoft">current focus</small>
+                                <h3 class="mt-5 text-2xl font-extrabold">What I am building toward</h3>
+                                <ul class="mt-5 grid gap-3 text-sm leading-6 text-muted">
+                                    <li class="border-t border-white/10 pt-3">Improving my software development
+                                        foundation.</li>
+                                    <li class="border-t border-white/10 pt-3">Creating projects with clearer structure
+                                        and purpose.</li>
+                                    <li class="border-t border-white/10 pt-3">Growing as a student, teammate, and
+                                        creative problem solver.</li>
+                                </ul>
+                            </article>
+                            <article
+                                class="magnetic rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(242,199,102,.1),rgba(255,255,255,.04))] p-5 transition hover:border-goldSoft/35 hover:bg-white/[.065]">
+                                <div class="flex flex-wrap items-start justify-between gap-4">
+                                    <div>
+                                        <small class="font-mono text-xs uppercase text-goldSoft">achievements</small>
+                                        <h3 class="mt-5 text-2xl font-extrabold">Achievements & certifications</h3>
+                                        <p class="mt-3 text-sm leading-7 text-muted">A clean space for certificates,
+                                            course completions, awards, events, or academic milestones.</p>
+                                    </div>
+                                    <span
+                                        class="rounded-md border border-goldSoft/25 px-3 py-2 font-mono text-xs uppercase text-goldSoft">ready
+                                        to grow</span>
+                                </div>
+
+                                <div class="mt-5 grid gap-3">
+                                    <div class="rounded-md border border-white/10 bg-night/40 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <strong class="text-sm font-extrabold">Certification title</strong>
+                                            <span class="font-mono text-xs text-dim">2026</span>
+                                        </div>
+                                        <p class="mt-2 text-sm leading-6 text-muted">Provider, institution, or course
+                                            details.</p>
+                                    </div>
+                                    <div class="rounded-md border border-white/10 bg-night/40 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <strong class="text-sm font-extrabold">Academic achievement</strong>
+                                            <span class="font-mono text-xs text-dim">soon</span>
+                                        </div>
+                                        <p class="mt-2 text-sm leading-6 text-muted">Add awards, recognitions, events,
+                                            or important learning milestones.</p>
+                                    </div>
+                                </div>
+                            </article>
+                        </aside>
+                    </div>
+                </section>
+
+                <section class="section reveal scroll-mt-28" id="projects">
+                    <span
+                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;projects/&gt;</span>
+                    <div class="grid items-end gap-7 xl:grid-cols-[minmax(0,.9fr)_minmax(340px,.7fr)]">
+                        <div>
+                            <p class="mb-4 font-mono text-xs uppercase text-greenSoft">Selected work</p>
+                            <h2
+                                class="max-w-4xl text-balance text-4xl font-black leading-tight sm:text-5xl xl:text-[58px]">
+                                A small project lab for ideas that can become case studies.</h2>
+                        </div>
+                        <p class="max-w-3xl text-[17px] leading-8 text-muted">
+                            Add screenshots later by replacing each empty image source. Every card opens a focused
+                            detail view for context, role, stack, result, and links.
+                        </p>
+                    </div>
+
+                    <div class="mt-8 flex flex-wrap gap-2" aria-label="Project filters">
+                        <button
+                            class="filter is-active min-h-9 rounded-full border border-white/10 px-4 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-ink hover:text-night"
+                            type="button" data-filter="all">All</button>
+                        <button
+                            class="filter min-h-9 rounded-full border border-white/10 px-4 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-ink hover:text-night"
+                            type="button" data-filter="web">Web</button>
+                        <button
+                            class="filter min-h-9 rounded-full border border-white/10 px-4 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-ink hover:text-night"
+                            type="button" data-filter="design">Design</button>
+                        <button
+                            class="filter min-h-9 rounded-full border border-white/10 px-4 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-ink hover:text-night"
+                            type="button" data-filter="identity">Identity</button>
+                    </div>
+
+                    <div class="project-board mt-8 grid auto-rows-[180px] grid-cols-1 gap-5 md:grid-cols-6 xl:auto-rows-[190px]"
+                        aria-label="Project list">
+                        <button
+                            class="project-card project-poster group relative min-h-[440px] overflow-hidden rounded-lg border border-white/10 text-left text-ink transition hover:border-white/30 hover:shadow-lift md:col-span-4 md:row-span-2 xl:col-span-3"
+                            type="button" data-project="taskflow" data-category="web">
+                            <span
+                                class="project-image absolute inset-0 grid place-items-center overflow-hidden bg-[#111319]">
+                                <img class="hidden h-full w-full object-cover" src="" alt="" data-empty data-fit="cover" />
+                                <span class="project-image-label font-mono text-xs uppercase text-ink/70">Drop project image</span>
+                            </span>
+                            <span class="project-content absolute inset-x-0 bottom-0 z-10 grid gap-2 p-5 sm:p-6">
+                                <small class="font-mono text-xs font-black uppercase text-ink/75">web / web app</small>
+                                <strong class="max-w-[12ch] text-4xl font-black leading-[.9] sm:text-5xl">Plant
+                                    Bud</strong>
+                                <span
+                                    class="project-footer mt-1 flex max-w-md items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Web app</span>
+                                    <span>2026</span>
+                                </span>
+                            </span>
+                        </button>
+
+                        <button
+                            class="project-card project-poster group relative min-h-[360px] overflow-hidden rounded-lg border border-white/10 text-left text-ink transition hover:border-white/30 hover:shadow-lift md:col-span-2 md:row-span-2 xl:col-span-3"
+                            type="button" data-project="nova" data-category="design">
+                            <span
+                                class="project-image absolute inset-0 grid place-items-center overflow-hidden bg-[#111319]">
+                                <img class="hidden h-full w-full object-cover" src="" alt="" data-empty data-fit="cover" />
+                                <span class="project-image-label font-mono text-xs uppercase text-ink/70">Drop project image</span>
+                            </span>
+                            <span class="project-content absolute inset-x-0 bottom-0 z-10 grid gap-2 p-5 sm:p-6">
+                                <small class="font-mono text-xs font-black uppercase text-ink/75">landing / brand</small>
+                                <strong class="max-w-[13ch] text-3xl font-black leading-[.95] sm:text-4xl">Nova Product
+                                    Page</strong>
+                                <span
+                                    class="project-footer mt-1 flex max-w-md items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>UI design</span>
+                                    <span>2026</span>
+                                </span>
+                            </span>
+                        </button>
+
+                        <button
+                            class="project-card project-poster group relative min-h-[340px] overflow-hidden rounded-lg border border-white/10 text-left text-ink transition hover:border-white/30 hover:shadow-lift md:col-span-3 md:row-span-2"
+                            type="button" data-project="resume" data-category="identity">
+                            <span
+                                class="project-image absolute inset-0 grid place-items-center overflow-hidden bg-[#111319]">
+                                <img class="hidden h-full w-full object-cover" src="" alt="" data-empty data-fit="cover" />
+                                <span class="project-image-label font-mono text-xs uppercase text-ink/70">Drop project image</span>
+                            </span>
+                            <span class="project-content absolute inset-x-0 bottom-0 z-10 grid gap-2 p-5 sm:p-6">
+                                <small class="font-mono text-xs font-black uppercase text-ink/75">portfolio / identity</small>
+                                <strong class="max-w-[13ch] text-3xl font-black leading-[.95] sm:text-4xl">Creative
+                                    Resume</strong>
+                                <span
+                                    class="project-footer mt-1 flex max-w-md items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Design</span>
+                                    <span>2026</span>
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="section reveal scroll-mt-28" id="skills">
+                    <span
+                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;skills/&gt;</span>
+
+                    <div class="grid items-end gap-8 py-4 xl:grid-cols-[minmax(0,.9fr)_minmax(360px,.7fr)]">
+                        <div>
+                            <p class="mb-4 font-mono text-xs uppercase text-greenSoft">Skills index</p>
+                            <h2
+                                class="max-w-5xl text-balance text-4xl font-black leading-tight sm:text-5xl xl:text-6xl">
+                                Three creative portals connected to the same portfolio.</h2>
+                        </div>
+                        <p class="max-w-3xl text-[17px] leading-8 text-muted">
+                            The technical side stays in the structure, projects, and interactions. These spaces give
+                            photography, drawing, stories, and poems their own atmosphere without leaving the index.
+                        </p>
+                    </div>
+
+                    <div class="skill-portals mt-14 grid gap-10 xl:gap-12">
+                        <article
+                            class="skill-portal portal-photo magnetic relative min-h-[540px] overflow-hidden rounded-lg border border-white/10 p-5 sm:p-8 xl:min-h-[590px] xl:p-10">
+                            <div class="relative z-10 grid h-full gap-8 xl:grid-cols-[.68fr_1.32fr] xl:items-end">
+                                <div class="flex h-full flex-col justify-between gap-12">
+                                    <div>
+                                        <p class="font-mono text-xs uppercase text-goldSoft">&lt;photography/&gt;</p>
+                                        <h3
+                                            class="mt-8 max-w-xl text-balance text-4xl font-black leading-none sm:text-5xl xl:text-6xl">
+                                            Light, grain, and captured memory.
+                                        </h3>
+                                        <p class="mt-6 max-w-lg text-[17px] leading-8 text-[#e3d6bd]">
+                                            A visual archive for photographs, places, portraits, moods, and experiments
+                                            with light. This preview is built as a portal into the full photo gallery.
+                                        </p>
+                                    </div>
+                                    <a class="w-max rounded-lg border border-goldSoft/35 px-5 py-3 font-mono text-xs uppercase text-goldSoft transition hover:bg-goldSoft hover:text-night"
+                                        href="photography.html">More</a>
+                                </div>
+
+                                <div class="portal-gallery grid auto-rows-[150px] gap-4 md:grid-cols-4">
+                                    <figure class="photo-frame md:col-span-2 md:row-span-2">
+                                        <img src="" alt="Photography work preview" data-empty />
+                                        <figcaption>Series cover</figcaption>
+                                    </figure>
+                                    <figure class="photo-frame md:col-span-2">
+                                        <img src="" alt="Photography work preview" data-empty />
+                                        <figcaption>Portrait study</figcaption>
+                                    </figure>
+                                    <figure class="photo-frame">
+                                        <img src="" alt="Photography work preview" data-empty />
+                                        <figcaption>Street detail</figcaption>
+                                    </figure>
+                                    <figure class="photo-frame">
+                                        <img src="" alt="Photography work preview" data-empty />
+                                        <figcaption>Light test</figcaption>
+                                    </figure>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article
+                            class="skill-portal portal-draw magnetic relative min-h-[540px] overflow-hidden rounded-lg border border-white/10 bg-[#eee9df] p-5 text-[#171717] sm:p-8 xl:min-h-[560px] xl:p-10">
+                            <div class="relative z-10 grid h-full gap-8 xl:grid-cols-[.72fr_1.28fr] xl:items-end">
+                                <div class="flex h-full flex-col justify-between gap-12">
+                                    <div>
+                                        <p class="font-mono text-xs uppercase text-black/45">&lt;drawings/&gt;</p>
+                                        <h3
+                                            class="mt-8 max-w-xl text-balance text-4xl font-black leading-none sm:text-5xl xl:text-6xl">
+                                            Paper marks, pencil pressure, quiet studies.
+                                        </h3>
+                                        <p class="mt-6 max-w-lg text-[17px] leading-8 text-black/65">
+                                            A sketchbook-like space for photos of drawings, scanned pages, characters,
+                                            gestures, unfinished thoughts, and ink or pencil studies.
+                                        </p>
+                                    </div>
+                                    <a class="w-max rounded-lg border border-black/20 px-5 py-3 font-mono text-xs uppercase text-black/65 transition hover:bg-black hover:text-white"
+                                        href="drawings.html">More</a>
+                                </div>
+
+                                <div class="grid gap-4 md:grid-cols-4">
+                                    <article class="sketch-page drawing-frame min-h-[260px] md:col-span-2">
+                                        <img src="" alt="Drawing work preview" data-empty />
+                                    </article>
+                                    <article class="sketch-page drawing-frame min-h-[260px]">
+                                        <img src="" alt="Drawing work preview" data-empty />
+                                    </article>
+                                    <article class="sketch-page drawing-frame min-h-[260px]">
+                                        <img src="" alt="Drawing work preview" data-empty />
+                                    </article>
+                                    <article class="sketch-page drawing-frame min-h-[240px] md:col-span-2">
+                                        <img src="" alt="Drawing work preview" data-empty />
+                                    </article>
+                                    <article class="sketch-page drawing-frame min-h-[240px] md:col-span-2">
+                                        <img src="" alt="Drawing work preview" data-empty />
+                                    </article>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article
+                            class="skill-portal portal-writing magnetic relative min-h-[540px] overflow-hidden rounded-lg border border-white/10 p-5 sm:p-8 xl:min-h-[570px] xl:p-10">
+                            <div class="relative z-10 grid h-full gap-8 xl:grid-cols-[.68fr_1.32fr] xl:items-end">
+                                <div class="flex h-full flex-col justify-between gap-12">
+                                    <div>
+                                        <p class="font-mono text-xs uppercase text-roseSoft">&lt;stories-poems/&gt;</p>
+                                        <h3
+                                            class="mt-8 max-w-xl text-balance text-4xl font-black leading-none sm:text-5xl xl:text-6xl">
+                                            Writing pieces as a downloadable library.
+                                        </h3>
+                                        <p class="mt-6 max-w-lg text-[17px] leading-8 text-muted">
+                                            Stories and poems live here as PDF pieces. Each preview card can show title,
+                                            mood, date, and a download link for the complete file.
+                                        </p>
+                                    </div>
+                                    <a class="w-max rounded-lg border border-roseSoft/35 px-5 py-3 font-mono text-xs uppercase text-roseSoft transition hover:bg-roseSoft hover:text-night"
+                                        href="stories-poems.html">More</a>
+                                </div>
+
+                                <div class="grid gap-4 md:grid-cols-2">
+                                    <article class="pdf-card">
+                                        <span>poem / pdf</span>
+                                        <h2>Untitled Poem</h2>
+                                        <p>Preview the piece here, then attach the final PDF.</p>
+                                        <a href="pdfs/untitled-poem.pdf" download>Download PDF</a>
+                                    </article>
+                                    <article class="pdf-card">
+                                        <span>story / pdf</span>
+                                        <h2>Scene Fragment</h2>
+                                        <p>A slot for a story draft, chapter, or narrative experiment.</p>
+                                        <a href="pdfs/scene-fragment.pdf" download>Download PDF</a>
+                                    </article>
+                                    <article class="pdf-card">
+                                        <span>poem / pdf</span>
+                                        <h2>Night Notes</h2>
+                                        <p>Add a cover-like preview and link a downloadable PDF.</p>
+                                        <a href="pdfs/night-notes.pdf" download>Download PDF</a>
+                                    </article>
+                                    <article class="pdf-card">
+                                        <span>archive / pdf</span>
+                                        <h2>Writing Index</h2>
+                                        <p>Use this for a collection, table of contents, or longer work.</p>
+                                        <a href="pdfs/writing-index.pdf" download>Download PDF</a>
+                                    </article>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="section reveal scroll-mt-28" id="contact">
+                    <span
+                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;contact/&gt;</span>
+                    <div
+                        class="grid items-end gap-6 rounded-lg border border-white/10 bg-white/[.04] bg-[linear-gradient(135deg,rgba(147,231,255,.08),transparent_42%)] p-6 sm:p-10 lg:grid-cols-[1fr_auto]">
+                        <div>
+                            <p class="mb-4 font-mono text-xs uppercase text-greenSoft">Next step</p>
+                            <h2
+                                class="max-w-4xl text-balance text-4xl font-black leading-tight sm:text-5xl xl:text-6xl">
+                                Let us build something clear, useful, and memorable.</h2>
+                            <p class="mt-5 max-w-2xl leading-8 text-muted">Open to internships, collaborations,
+                                freelance work, and honest feedback on web ideas.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <a class="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 bg-ink px-5 font-extrabold text-night shadow-[0_16px_40px_rgba(245,245,241,.12)] transition hover:-translate-y-0.5"
+                                href="mailto:david.menjivar@example.com">Send email</a>
+                            <a class="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 px-5 font-extrabold text-ink transition hover:-translate-y-0.5 hover:bg-white/5"
+                                href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <dialog
+        class="project-modal w-[min(calc(100%-28px),1060px)] rounded-lg border border-white/15 bg-[#0c0e13]/95 p-0 text-ink shadow-[0_34px_130px_rgba(0,0,0,.74)] backdrop:bg-black/70">
+        <div class="relative grid gap-6 p-6 lg:grid-cols-[minmax(280px,.95fr)_minmax(0,1.05fr)]">
+            <button
+                class="modal-close absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/10 text-ink"
+                type="button" aria-label="Close project details">x</button>
+            <div
+                class="modal-media grid min-h-[280px] place-items-center rounded-md border border-white/10 bg-[#111319] text-center font-mono text-muted lg:min-h-[390px]">
+                <span id="modal-media-label">Project preview slot</span>
+            </div>
+            <div class="self-center lg:pr-8">
+                <small id="modal-type" class="font-mono text-xs uppercase text-dim">case study</small>
+                <h2 id="modal-title" class="mt-3 text-4xl font-black leading-tight lg:text-5xl">Project title</h2>
+                <p id="modal-description" class="mt-4 leading-8 text-muted">Project description goes here.</p>
+                <div class="mt-6 grid gap-3 sm:grid-cols-3">
+                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4"><span
+                            class="font-mono text-xs text-dim">Role</span><strong id="modal-role"
+                            class="mt-2 block text-sm">Frontend</strong></div>
+                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4"><span
+                            class="font-mono text-xs text-dim">Stack</span><strong id="modal-stack"
+                            class="mt-2 block text-sm">HTML / CSS / JS</strong></div>
+                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4"><span
+                            class="font-mono text-xs text-dim">Status</span><strong id="modal-status"
+                            class="mt-2 block text-sm">Template</strong></div>
+                </div>
+                <div class="mt-6 rounded-md border border-white/10 bg-white/[.04] p-4">
+                    <h3 class="font-extrabold">Detail template</h3>
+                    <p id="modal-next" class="mt-2 leading-7 text-muted">Add the problem, process, screenshots, links,
+                        and final outcome here.</p>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

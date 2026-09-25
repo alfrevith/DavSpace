@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photography | David Menjivar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#f5f5f1",
+            muted: "#b4b7c3",
+            night: "#07080b",
+            goldSoft: "#f2c766"
+          },
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+            mono: ["SFMono-Regular", "Consolas", "Liberation Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="min-h-screen bg-night text-ink font-sans">
+  <main class="world-photo relative min-h-screen overflow-hidden px-6 py-8 text-[#fff4dc] sm:px-10 lg:px-16">
+    <div class="relative z-10 mx-auto max-w-7xl">
+      <header class="flex flex-wrap items-center justify-between gap-4 border-b border-[#fff4dc]/15 pb-6">
+        <a class="font-mono text-sm text-goldSoft" href="index.html#skills">&lt;- back to skills</a>
+        <span class="rounded-full border border-goldSoft/25 px-4 py-2 font-mono text-xs uppercase text-[#e3d6bd]">photography gallery</span>
+      </header>
+
+      <section class="grid gap-8 py-14 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+        <div>
+          <p class="mb-4 font-mono text-xs uppercase text-goldSoft">Frames / light / memory</p>
+          <h1 class="text-balance text-5xl font-black leading-none sm:text-6xl lg:text-7xl">A contact sheet for the way I see.</h1>
+        </div>
+        <p class="max-w-3xl text-lg leading-8 text-[#e3d6bd]">
+          Add as many photographs as you want by duplicating a frame. Organize them by series, place, date, or mood.
+          The page is built to feel like a warm archive instead of a generic gallery.
+        </p>
+      </section>
+
+      <section class="grid auto-rows-[190px] gap-5 md:grid-cols-4">
+        <figure class="photo-frame md:col-span-2 md:row-span-2"><img src="" alt="Photography gallery item" data-empty /><figcaption>Series cover</figcaption></figure>
+        <figure class="photo-frame md:col-span-2"><img src="" alt="Photography gallery item" data-empty /><figcaption>Portrait study</figcaption></figure>
+        <figure class="photo-frame"><img src="" alt="Photography gallery item" data-empty /><figcaption>Street detail</figcaption></figure>
+        <figure class="photo-frame"><img src="" alt="Photography gallery item" data-empty /><figcaption>Light test</figcaption></figure>
+        <figure class="photo-frame md:col-span-2"><img src="" alt="Photography gallery item" data-empty /><figcaption>Landscape mood</figcaption></figure>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
