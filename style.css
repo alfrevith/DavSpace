@@ -235,6 +235,111 @@ button {
   isolation: isolate;
 }
 
+.hero-scene {
+  --hero-pin-top: 152px;
+}
+
+@media (min-width: 768px) {
+  .hero-scene {
+    --hero-pin-top: 108px;
+  }
+}
+
+.hero-stage[data-hero-scroll] .hero-scroll-track {
+  height: var(--hero-track-height);
+}
+
+.hero-stage[data-hero-scroll] .hero-scene {
+  position: sticky;
+  top: var(--hero-pin-top);
+  min-height: var(--hero-scene-height);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-stage[data-hero-scroll] .hero-copy {
+    translate: 0 var(--hero-copy-y, 0px);
+  }
+
+  .hero-stage[data-hero-scroll] .hero-identity {
+    opacity: var(--hero-identity-opacity, 1);
+    translate: 0 var(--hero-identity-y, 0px);
+  }
+
+  .hero-stage[data-hero-scroll] .profile-facts {
+    opacity: var(--hero-facts-opacity, 1);
+    translate: calc(-1 * var(--hero-facts-x, 0px)) 0;
+  }
+
+  .hero-stage[data-hero-scroll] .profile-facts:nth-of-type(2) {
+    translate: var(--hero-facts-x, 0px) 0;
+  }
+
+  .hero-stage[data-hero-scroll] .profile-languages {
+    opacity: var(--hero-facts-opacity, 1);
+    translate: 0 var(--hero-facts-x, 0px);
+  }
+
+  .hero-stage[data-hero-scroll] .hero-footer {
+    opacity: var(--hero-footer-opacity, 1);
+    translate: 0 var(--hero-footer-y, 0px);
+  }
+
+  .hero-stage[data-hero-scroll] .profile-status {
+    opacity: var(--hero-status-opacity, 1);
+  }
+
+  .hero-stage[data-hero-scroll]:not([data-hero-identity-ready]) .hero-identity,
+  .hero-stage[data-hero-scroll]:not([data-hero-actions-ready]) .hero-footer {
+    pointer-events: none;
+  }
+
+  /* The opening owns the lettering; scroll owns the later portrait and actions. */
+  .hero-stage[data-hero-scroll] :is(.hero-profile, .profile-facts > div, .profile-languages, .hero-actions > a, .profile-status, .profile-photo img, .portrait-shutter > span, .profile-blueprint, .blueprint-edge) {
+    animation: none;
+  }
+
+  .hero-stage[data-hero-scroll] .profile-blueprint {
+    display: block;
+    opacity: var(--hero-frame-opacity, 0);
+  }
+
+  .hero-stage[data-hero-scroll] :is(.blueprint-top, .blueprint-bottom) {
+    transform: scaleX(var(--hero-frame-x, 1));
+  }
+
+  .hero-stage[data-hero-scroll] :is(.blueprint-left, .blueprint-right) {
+    transform: scaleY(var(--hero-frame-y, 1));
+  }
+
+  .hero-stage[data-hero-scroll] .profile-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 36%, rgb(147 231 255 / .06) 44%, rgb(255 255 255 / .28) 50%, transparent 64%);
+    opacity: var(--hero-portrait-glint, 0);
+    transform: translate3d(var(--hero-glint-x, 140%), 0, 0);
+    animation: none;
+  }
+
+  .hero-stage[data-hero-scroll] .profile-photo img {
+    scale: var(--hero-image-scale, 1);
+  }
+
+  .hero-stage[data-hero-scroll] .portrait-shutter {
+    display: block;
+  }
+
+  .hero-stage[data-hero-scroll] .portrait-shutter > span {
+    transform: translate3d(calc((1 - var(--hero-aperture, 0)) * -52%), calc((1 - var(--hero-aperture, 0)) * -52%), 0);
+  }
+
+  .hero-stage[data-hero-scroll] .portrait-shutter > span:last-child {
+    transform: translate3d(calc((1 - var(--hero-aperture, 0)) * 52%), calc((1 - var(--hero-aperture, 0)) * 52%), 0);
+  }
+}
+
 .hero-backdrop {
   height: var(--hero-backdrop-height, 58rem);
   mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
@@ -275,12 +380,16 @@ button {
   display: block;
 }
 
-.intro-word,
-.intro-char {
+.intro-mask {
   display: inline-block;
+  overflow: clip;
+  vertical-align: bottom;
+  padding: .12em .05em .22em;
+  margin: -.12em -.05em -.22em;
 }
 
 .intro-word {
+  display: inline-block;
   white-space: nowrap;
 }
 
@@ -308,17 +417,17 @@ button {
 
 @media (prefers-reduced-motion: no-preference) {
   /* Only the opening owns these layers; the finished hero has no animation state. */
-  .intro-pending :is(.hero-kicker, .hero-intro-line, .hero-statement, .hero-actions, .hero-profile-shell) {
+  .intro-pending :is(.hero-kicker, .hero-intro-line, .hero-statement, .hero-actions, .hero-profile-shell, .profile-facts, .profile-languages, .profile-status) {
     opacity: 0;
   }
 
   .intro-running {
-    --intro-ease: cubic-bezier(.22, 1, .36, 1);
+    --intro-ease: cubic-bezier(.16, 1, .3, 1);
   }
 
   .intro-running .hero-kicker,
   .intro-running .intro-greeting {
-    animation: intro-lift .7s var(--intro-ease) .06s both;
+    animation: intro-lift .65s var(--intro-ease) .04s both;
   }
 
   .intro-running .hero-kicker::before {
@@ -326,50 +435,83 @@ button {
     animation: intro-draw-x .65s var(--intro-ease) both;
   }
 
-  .intro-running .name .intro-char {
+  .intro-running .intro-greeting::before,
+  .intro-running .intro-greeting::after {
+    animation: intro-draw-x .85s var(--intro-ease) .18s both;
+  }
+
+  .intro-running .intro-greeting::before { transform-origin: right; }
+  .intro-running .intro-greeting::after { transform-origin: left; }
+
+  .intro-running .name .intro-word {
     transform-origin: 50% 100%;
-    animation: intro-letter .86s var(--intro-ease) calc(.12s + var(--intro-order) * .028s) both;
+    animation: intro-name-word 1s var(--intro-ease) calc(.24s + var(--intro-order) * .14s) both;
   }
 
   .intro-running .name::before {
     content: attr(data-intro-label) / "";
     position: absolute;
     inset: 0;
-    z-index: -1;
-    padding: inherit;
     pointer-events: none;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(147, 231, 255, .5);
-    text-shadow: 4px 5px 0 rgba(242, 199, 102, .12);
-    animation: intro-name-echo 1.05s var(--intro-ease) .12s both;
+    -webkit-text-stroke: 1px rgb(220 239 245 / .6);
+    text-shadow: none;
+    animation: intro-name-contour 1.4s cubic-bezier(.22, 1, .36, 1) .02s both;
+  }
+
+  .intro-running .name::after {
+    content: attr(data-intro-label) / "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    color: transparent;
+    background: linear-gradient(110deg, transparent 10%, rgb(255 255 255 / .85) 55%, transparent 90%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    text-shadow: none;
+    animation: intro-name-light .64s ease-out 1.14s both;
   }
 
   .intro-running .statement-text .intro-word {
     transform-origin: 0 100%;
-    animation: intro-word .86s var(--intro-ease) calc(.36s + var(--intro-order) * .065s) both;
+    animation: intro-word .75s var(--intro-ease) calc(.5s + var(--intro-order) * .04s) both;
   }
 
   .intro-running .hero-glitch-line {
-    animation: intro-resolve .8s var(--intro-ease) .8s both;
+    animation: intro-resolve .9s var(--intro-ease) .7s both;
+  }
+
+  .intro-running .hero-code-open {
+    --bracket-direction: -1;
+    animation: intro-bracket .8s var(--intro-ease) .64s both;
+  }
+
+  .intro-running .hero-code-close {
+    --bracket-direction: 1;
+    animation: intro-bracket .8s var(--intro-ease) .72s both;
   }
 
   .intro-running .glitch-output::after {
-    animation: intro-draw-x .85s var(--intro-ease) .95s both;
+    animation: intro-draw-x .8s var(--intro-ease) .94s both;
   }
 
-  .intro-running .hero-actions {
-    animation: intro-lift .7s var(--intro-ease) 1.14s both;
+  .intro-running .hero-actions > a {
+    animation: intro-lift .65s var(--intro-ease) 1.2s both;
+  }
+
+  .intro-running .hero-actions > a:last-child {
+    animation-delay: 1.3s;
   }
 
   .intro-running .profile-blueprint {
     display: block;
-    animation: intro-frame-fade 1.9s linear both;
+    animation: intro-frame-fade 2s linear both;
   }
 
   .blueprint-edge {
     position: absolute;
-    background: linear-gradient(90deg, #93e7ff, #f5f5f1 60%, #f2c766);
-    box-shadow: 0 0 12px rgba(147, 231, 255, .25);
+    background: linear-gradient(90deg, #93e7ff, #f5f5f1 60%, transparent);
+    box-shadow: 0 0 8px rgb(147 231 255 / .12);
   }
 
   .blueprint-top,
@@ -393,7 +535,7 @@ button {
   .blueprint-right {
     inset-block: 0;
     width: 1px;
-    background: linear-gradient(#93e7ff, rgba(245, 245, 241, .2), #f2c766);
+    background: linear-gradient(#93e7ff, rgba(245, 245, 241, .2), transparent);
     animation: intro-draw-y .85s var(--intro-ease) .26s both;
   }
 
@@ -408,50 +550,50 @@ button {
   }
 
   .intro-running .hero-profile {
-    transform-origin: 100% 35%;
-    animation: intro-card-unfold 1.05s var(--intro-ease) .35s both;
+    transform-origin: center;
+    animation: intro-portrait-open 1.1s var(--intro-ease) .42s both;
+  }
+
+  .intro-running .profile-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 36%, rgb(147 231 255 / .06) 44%, rgb(255 255 255 / .28) 50%, transparent 64%);
+    animation: intro-portrait-glint .85s ease .96s both;
   }
 
   .intro-running .portrait-shutter {
-    display: grid;
+    display: block;
   }
 
   .portrait-shutter > span {
-    margin-inline: -1px;
-    border-left: 1px solid rgba(147, 231, 255, .24);
-    background: linear-gradient(160deg, #1e2732, #0b0d13 75%);
-    transform-origin: top;
-    animation: intro-shutter .78s var(--intro-ease) .68s both;
+    position: absolute;
+    inset: 0;
+    background: #0b0d13;
+    clip-path: polygon(0 0, 102% 0, 0 102%);
+    animation: intro-aperture-near 1.05s var(--intro-ease) .58s both;
   }
 
-  .portrait-shutter > span:nth-child(2) { animation-delay: .75s; }
-  .portrait-shutter > span:nth-child(3) { animation-delay: .82s; }
-  .portrait-shutter > span:nth-child(4) { animation-delay: .89s; }
-  .portrait-shutter > span:nth-child(5) { animation-delay: .96s; }
+  .portrait-shutter > span:last-child {
+    clip-path: polygon(100% -2%, 100% 100%, -2% 100%);
+    animation-name: intro-aperture-far;
+  }
 
   .intro-running .profile-photo img {
-    animation: intro-portrait 1.3s var(--intro-ease) .48s both;
+    animation: intro-portrait 1.2s var(--intro-ease) .5s both;
   }
 
   .intro-running .profile-status {
-    animation: intro-lift .65s var(--intro-ease) .77s both;
+    animation: intro-lift .5s var(--intro-ease) 1.5s both;
   }
 
-  .intro-running .profile-caption {
-    animation: intro-lift .7s var(--intro-ease) 1.04s both;
+  .intro-running .profile-facts > div,
+  .intro-running .profile-languages {
+    animation: intro-lift .65s var(--intro-ease) 1.08s both;
   }
 
-  .intro-running .profile-facts > div {
-    animation: intro-lift .6s var(--intro-ease) 1.08s both;
-  }
-
-  .intro-running .profile-facts > div:nth-child(2) { animation-delay: 1.14s; }
-  .intro-running .profile-facts > div:nth-child(3) { animation-delay: 1.2s; }
-  .intro-running .profile-facts > div:nth-child(4) { animation-delay: 1.26s; }
-
-  .intro-running .profile-traits {
-    animation: intro-lift .6s var(--intro-ease) 1.35s both;
-  }
 }
 
 .magnetic {
@@ -2083,24 +2225,30 @@ button {
   to { transform: scaleY(1); }
 }
 
-@keyframes intro-letter {
-  from { opacity: 0; transform: translate3d(-.12em, .65em, 0) rotate(-8deg); }
+@keyframes intro-name-word {
+  from { opacity: 0; transform: translate3d(0, 115%, 0) skewY(3deg); }
   to { opacity: 1; transform: none; }
 }
 
-@keyframes intro-name-echo {
-  0% { opacity: 0; transform: translate3d(-.22em, .2em, 0) skewX(-6deg); }
-  28% { opacity: .65; }
-  100% { opacity: 0; transform: none; }
+@keyframes intro-name-contour {
+  0% { opacity: 0; clip-path: inset(0 100% 0 0); transform: translate3d(0, .045em, 0); }
+  18% { opacity: .8; }
+  58% { opacity: .45; clip-path: inset(0); }
+  100% { opacity: 0; clip-path: inset(0); transform: none; }
 }
 
 @keyframes intro-word {
-  from { opacity: 0; transform: translate3d(.15em, 110%, 0) rotate(3deg); }
+  from { opacity: 0; transform: translate3d(0, 110%, 0); }
   to { opacity: 1; transform: none; }
 }
 
 @keyframes intro-resolve {
-  from { opacity: 0; transform: translate3d(-.3em, 0, 0) skewX(-10deg); }
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes intro-bracket {
+  from { opacity: 0; transform: translate3d(calc(var(--bracket-direction) * .7em), 0, 0); }
   to { opacity: 1; transform: none; }
 }
 
@@ -2109,18 +2257,36 @@ button {
   100% { opacity: 0; }
 }
 
-@keyframes intro-card-unfold {
-  from { opacity: 0; transform: translate3d(12px, 18px, 0) rotateY(-12deg) rotateX(3deg) scale(.97); }
+@keyframes intro-portrait-open {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
   to { opacity: 1; transform: none; }
 }
 
-@keyframes intro-shutter {
-  from { transform: scaleY(1); }
-  to { transform: scaleY(0); }
+@keyframes intro-name-light {
+  0% { opacity: 0; clip-path: inset(0 100% 0 0); }
+  20% { opacity: .65; clip-path: inset(0 76% 0 8%); }
+  80% { opacity: .45; clip-path: inset(0 5% 0 78%); }
+  100% { opacity: 0; clip-path: inset(0 0 0 100%); }
+}
+
+@keyframes intro-portrait-glint {
+  from { opacity: 0; transform: translate3d(-110%, 0, 0); }
+  30%, 65% { opacity: .6; }
+  to { opacity: 0; transform: translate3d(110%, 0, 0); }
+}
+
+@keyframes intro-aperture-near {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-52%, -52%, 0); }
+}
+
+@keyframes intro-aperture-far {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(52%, 52%, 0); }
 }
 
 @keyframes intro-portrait {
-  from { transform: scale(1.12) translate3d(0, 1%, 0); }
+  from { transform: scale(1.04); }
   to { transform: none; }
 }
 

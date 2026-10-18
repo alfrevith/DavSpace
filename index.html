@@ -58,10 +58,10 @@
     <div class="cursor-light" aria-hidden="true"></div>
 
     <div class="hero-backdrop pointer-events-none absolute inset-x-0 top-0 z-0 overflow-hidden" aria-hidden="true">
-        <img class="absolute inset-0 h-full w-full object-cover object-center"
+        <img class="absolute inset-0 h-full w-full object-cover object-[50%_64%] md:object-[50%_68%]"
             src="images/hero-contours.webp" alt="" decoding="async" fetchpriority="high" />
-        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,13,19,.4),rgba(11,13,19,.08)_55%,transparent)]"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,13,19,.12),transparent_28%,rgba(11,13,19,.2)_64%,#0b0d13_100%)]"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,13,19,.18),transparent_26%,rgba(11,13,19,.1)_50%,transparent_74%,rgba(11,13,19,.18))]"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,13,19,.04),transparent_28%,rgba(11,13,19,.12)_64%,#0b0d13_100%)]"></div>
         <div class="hero-particles absolute inset-0" data-hero-particles></div>
     </div>
 
@@ -107,106 +107,105 @@
                 <span
                     class="rail-progress absolute top-3 w-px rounded-full bg-gradient-to-b from-cyanSoft to-greenSoft shadow-[0_0_26px_rgba(147,231,255,.25)]"></span>
                 <span
-                    class="sticky top-28 mt-2 h-2.5 w-2.5 rounded-full border border-ink bg-night shadow-[0_0_0_5px_#0b0d13,0_0_28px_rgba(255,255,255,.24)]"></span>
+                    class="absolute left-1/2 top-3 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-ink bg-night shadow-[0_0_0_5px_#0b0d13,0_0_28px_rgba(255,255,255,.24)]"></span>
             </aside>
 
             <div class="grid gap-24 md:gap-36">
                 <section
-                    class="hero-stage section grid items-start gap-10 pt-4 md:grid-cols-[minmax(0,1fr)_minmax(220px,.38fr)] md:pt-6 xl:gap-14"
-                    id="start">
-                    <div class="hero-copy relative z-10 max-w-5xl md:pt-6 xl:pt-9">
-                        <span
-                            class="hero-kicker mb-6 inline-flex items-center gap-3 font-mono text-xs text-ink/[.55] before:h-px before:w-8 before:bg-cyanSoft/50">&lt;start/&gt;</span>
-                        <h1 class="hero-title max-w-4xl tracking-normal">
-                            <span class="hero-intro-line flex flex-wrap items-baseline gap-x-2.5 gap-y-1 leading-tight">
-                                <span class="intro-greeting text-xl font-medium text-muted sm:text-2xl md:text-xl lg:text-2xl">Hi, I'm </span>
-                                <span class="name max-w-full font-serif text-[34px] font-bold leading-[1.15] text-ink sm:text-[44px] md:text-[38px] lg:text-[48px] xl:text-[56px]" data-intro-text="letters">David Menjivar</span>
-                            </span>
-                        </h1>
-                        <div class="hero-statement mt-6 grid gap-2 text-base font-medium leading-relaxed text-ink/75 sm:text-lg xl:text-xl">
-                            <p class="statement-line min-w-0">
-                                <span class="statement-text" data-intro-text="words">I'm a student and I turn ideas into</span>
-                            </p>
-                            <p class="hero-glitch-line mt-1 font-mono text-[28px] font-semibold leading-[1.25] text-ink min-[360px]:text-[32px] sm:text-[36px] md:text-[32px] lg:text-[38px] xl:text-[42px]">
-                                <span class="pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">&lt;</span>
-                                <span class="glitch-output">
-                                    <span class="glitch-word text-cyanSoft" data-glitch>websites</span>
-                                </span>
-                                <span class="pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">/&gt;</span>
-                            </p>
-                        </div>
+                    class="hero-stage section relative min-w-0 scroll-mt-28"
+                    id="start" aria-labelledby="hero-title">
+                    <span
+                        class="hero-kicker mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;start/&gt;</span>
 
-                        <div class="hero-actions mt-9 flex flex-wrap gap-3">
-                            <a class="group inline-flex min-h-12 items-center justify-between gap-7 rounded-md border border-ink bg-ink px-5 text-sm font-semibold text-night transition-colors duration-200 hover:border-white hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft"
-                                href="#projects">Explore work <span class="text-lg transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">&nearr;</span></a>
-                            <a class="group inline-flex min-h-12 items-center justify-between gap-7 rounded-md border border-white/15 bg-white/[.02] px-5 text-sm font-semibold text-ink transition-colors duration-200 hover:border-white/30 hover:bg-white/[.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft"
-                                href="#contact">Contact <span class="text-base text-muted transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">&rarr;</span></a>
-                        </div>
-                    </div>
-
-                    <div class="hero-profile-shell relative mx-auto w-full max-w-sm md:mx-0 md:max-w-[280px] md:justify-self-end">
-                        <div class="profile-blueprint pointer-events-none absolute -inset-2" aria-hidden="true">
-                            <span class="blueprint-edge blueprint-top"></span>
-                            <span class="blueprint-edge blueprint-right"></span>
-                            <span class="blueprint-edge blueprint-bottom"></span>
-                            <span class="blueprint-edge blueprint-left"></span>
-                        </div>
-                        <aside
-                            class="hero-profile profile-card relative isolate w-full overflow-hidden rounded-lg border border-white/15 bg-[#10141b] shadow-[0_16px_48px_rgba(0,0,0,.24)] transition-colors duration-300 hover:border-white/30 focus-within:border-cyanSoft/40"
-                            aria-label="Profile summary">
-                            <div class="profile-photo relative aspect-[5/6] overflow-hidden">
-                                <div class="profile-portrait absolute inset-0">
-                                    <img class="h-full w-full object-cover object-[center_25%]" src="images/pfp.jpg" fetchpriority="high"
-                                        alt="David Menjivar profile photo" />
+                    <div class="hero-scroll-track relative md:-ml-[60px] xl:-ml-[102px]" data-hero-story>
+                        <div class="hero-scene relative grid min-h-[min(640px,calc(100svh-176px))] items-center" data-hero-scene>
+                            <div
+                                class="hero-scene-content relative z-10 grid w-full justify-items-center gap-7 py-5 sm:gap-8 sm:py-6 md:[@media(max-height:820px)]:gap-6 md:[@media(max-height:820px)]:py-4"
+                                data-hero-scene-content>
+                                <div class="hero-copy relative z-10 flex w-full min-w-0 flex-col items-center">
+                                    <h1 class="hero-title w-full min-w-0 text-center tracking-normal" id="hero-title">
+                                        <span class="hero-intro-line flex flex-col items-center gap-3 leading-tight">
+                                            <span class="intro-greeting inline-flex items-center gap-3 text-lg font-medium text-ink/85 before:h-px before:w-6 before:bg-white/25 after:h-px after:w-6 after:bg-white/25 sm:text-xl">Hi, I'm</span>
+                                            <span
+                                                class="name max-w-full font-serif text-[34px] font-normal leading-[1.08] text-ink min-[390px]:text-[40px] sm:text-[56px] md:text-[60px] lg:text-[72px] xl:text-[80px] 2xl:text-[88px] md:[@media(max-height:820px)]:text-[60px]"
+                                                data-intro-text="words">David Menjivar</span>
+                                        </span>
+                                    </h1>
+                                    <div class="hero-statement mt-4 flex min-w-0 flex-col items-center gap-1 text-sm font-medium leading-relaxed text-ink/75 sm:mt-5 sm:text-base md:[@media(max-height:820px)]:mt-4">
+                                        <p class="statement-line min-w-0 text-center">
+                                            <span class="statement-text" data-intro-text="words">I'm a student and I turn ideas into</span>
+                                        </p>
+                                        <p class="hero-glitch-line font-mono text-[28px] font-semibold leading-[1.25] text-ink min-[360px]:text-[32px] sm:text-[36px] xl:text-[38px]">
+                                            <span class="hero-code-open pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">&lt;</span>
+                                            <span class="glitch-output">
+                                                <span class="glitch-word text-white" data-glitch>websites</span>
+                                            </span>
+                                            <span class="hero-code-close pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">/&gt;</span>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,12,17,.15),transparent_26%,transparent_48%,rgba(16,20,27,.65)_76%,#10141b)]" aria-hidden="true"></div>
 
-                                <div class="profile-status absolute inset-x-4 top-4 z-10 flex items-start">
-                                    <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-night/[.85] px-2.5 py-1.5 text-[10px] font-medium leading-4 text-greenSoft">
-                                        <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-greenSoft" aria-hidden="true"></span>
+                                <div
+                                    class="hero-identity relative z-10 grid w-full max-w-2xl grid-cols-[minmax(0,1fr)_112px_minmax(0,1fr)] items-center gap-x-3 sm:grid-cols-[minmax(0,1fr)_136px_minmax(0,1fr)] sm:gap-x-6 lg:grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)] md:[@media(max-height:820px)]:grid-cols-[minmax(0,1fr)_136px_minmax(0,1fr)]"
+                                    role="group" aria-label="Profile summary">
+                                    <dl class="profile-facts min-w-0 text-right">
+                                        <div class="min-w-0">
+                                            <dt class="text-[11px] text-muted">Based in</dt>
+                                            <dd class="mt-2 text-[13px] font-medium text-ink/90 sm:text-sm">El Salvador</dd>
+                                        </div>
+                                    </dl>
+
+                                    <div class="hero-profile-shell relative w-full min-w-0">
+                                        <div class="profile-blueprint pointer-events-none absolute -inset-1.5" aria-hidden="true">
+                                            <span class="blueprint-edge blueprint-top"></span>
+                                            <span class="blueprint-edge blueprint-right"></span>
+                                            <span class="blueprint-edge blueprint-bottom"></span>
+                                            <span class="blueprint-edge blueprint-left"></span>
+                                        </div>
+                                        <a class="hero-profile profile-card relative block rounded-md border border-white/20 bg-night shadow-[0_12px_30px_rgba(0,0,0,.2)] transition-colors duration-300 hover:border-white/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft"
+                                            href="#about-me" aria-label="Read about David Menjivar">
+                                            <div class="profile-photo relative aspect-[4/5] overflow-hidden rounded-[5px] bg-night">
+                                                <div class="profile-portrait absolute inset-0">
+                                                    <img class="h-full w-full object-cover object-[center_25%]" src="images/pfp.jpg" fetchpriority="high" decoding="async"
+                                                        alt="David Menjivar profile photo" />
+                                                </div>
+                                                <div class="portrait-shutter pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+                                                    <span></span>
+                                                    <span></span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <dl class="profile-facts min-w-0 text-left">
+                                        <div class="min-w-0">
+                                            <dt class="text-[11px] text-muted">Education</dt>
+                                            <dd class="mt-2 text-[13px] font-medium text-ink/90 sm:text-sm">High School</dd>
+                                        </div>
+                                    </dl>
+
+                                    <dl class="profile-languages col-span-full mt-5 flex items-baseline justify-center gap-3 text-[11px] leading-5">
+                                        <dt class="text-muted">Languages</dt>
+                                        <dd class="text-xs font-medium text-ink/90">
+                                            English <span class="mx-1.5 text-white/25" aria-hidden="true">/</span> Spanish
+                                        </dd>
+                                    </dl>
+                                </div>
+
+                                <div class="hero-footer relative z-10 flex w-full min-w-0 flex-col items-center">
+                                    <div class="hero-actions grid w-full max-w-[336px] grid-cols-2 gap-3">
+                                        <a class="group inline-flex min-h-11 min-w-0 items-center justify-between gap-2 rounded-md border border-ink bg-ink px-3 text-xs font-semibold text-night transition-colors duration-200 hover:border-white hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft sm:px-4 sm:text-sm"
+                                            href="#projects">Explore work <span class="text-lg transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">&nearr;</span></a>
+                                        <a class="group inline-flex min-h-11 min-w-0 items-center justify-between gap-2 rounded-md border border-white/15 px-3 text-xs font-semibold text-ink transition-colors duration-200 hover:border-white/35 hover:bg-white/[.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft sm:px-4 sm:text-sm"
+                                            href="#contact">Contact <span class="text-base text-muted transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">&rarr;</span></a>
+                                    </div>
+                                    <p class="profile-status mt-3 flex items-center justify-center gap-2 text-[11px] font-medium leading-4 text-muted">
+                                        <span class="h-1 w-1 shrink-0 rounded-full bg-greenSoft" aria-hidden="true"></span>
                                         Open to internships
-                                    </span>
-                                </div>
-
-                                <div class="portrait-shutter pointer-events-none absolute inset-0 z-20 grid-cols-5" aria-hidden="true">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                                <div class="profile-caption absolute inset-x-0 bottom-0 z-10 px-5 pb-1 pt-8">
-                                    <p class="mb-2 flex items-center gap-2 font-mono text-[10px] text-cyanSoft before:h-px before:w-5 before:bg-cyanSoft/60">Student &amp; maker</p>
-                                    <h2 class="text-[24px] font-semibold leading-tight text-ink">David Menjivar<span class="text-cyanSoft" aria-hidden="true">.</span></h2>
+                                    </p>
                                 </div>
                             </div>
-
-                            <dl class="profile-facts relative z-10 grid grid-cols-2 gap-x-4 gap-y-4 px-5 pb-5 pt-5">
-                                <div class="min-w-0">
-                                    <dt class="text-[11px] text-muted">Based in</dt>
-                                    <dd class="mt-1 text-[13px] font-medium text-ink">El Salvador</dd>
-                                </div>
-                                <div class="min-w-0">
-                                    <dt class="text-[11px] text-muted">Languages</dt>
-                                    <dd class="mt-1 text-[13px] font-medium text-ink">EN <span class="mx-1 text-white/25" aria-hidden="true">/</span><span class="sr-only">and </span>ES</dd>
-                                </div>
-                                <div class="min-w-0">
-                                    <dt class="text-[11px] text-muted">Education</dt>
-                                    <dd class="mt-1 text-[13px] font-medium text-ink">High School</dd>
-                                </div>
-                                <div class="min-w-0">
-                                    <dt class="text-[11px] text-muted">Main focus</dt>
-                                    <dd class="mt-1 text-[13px] font-medium text-ink">Software</dd>
-                                </div>
-                            </dl>
-
-                            <div class="profile-traits relative z-10 border-t border-white/10">
-                                <a class="group/link flex min-h-14 items-center justify-between gap-3 px-5 py-3 text-xs font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:bg-white/[.035] focus-visible:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft" href="#about-me">
-                                    A little more about me
-                                    <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/15 text-base text-ink transition-colors duration-200 group-hover/link:border-cyanSoft/40 group-hover/link:bg-cyanSoft group-hover/link:text-night group-focus-visible/link:border-cyanSoft/40 group-focus-visible/link:bg-cyanSoft group-focus-visible/link:text-night" aria-hidden="true">&nearr;</span>
-                                </a>
-                            </div>
-                        </aside>
+                        </div>
                     </div>
                 </section>
 

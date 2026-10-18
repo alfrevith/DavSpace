@@ -5,7 +5,7 @@ function initializeHeroIntro() {
   if (!root.classList.contains("intro-pending")) return;
 
   const hero = document.querySelector(".hero-stage");
-  const introTargets = hero ? [...hero.querySelectorAll(".hero-copy, .hero-profile-shell")] : [];
+  const introTargets = hero ? [...hero.querySelectorAll(".hero-copy, .hero-identity, .hero-footer")] : [];
   let finished = false;
   let started = false;
   let startQueued = false;
@@ -37,8 +37,8 @@ function initializeHeroIntro() {
     });
   }
 
-  function handleIntroPointer() {
-    if (started) finishIntro();
+  function handleIntroPointer(event) {
+    if (started && event.target.closest?.('a, button, input, select, textarea, [role="button"]')) finishIntro();
   }
 
   function handleIntroKey(event) {
@@ -54,13 +54,10 @@ function initializeHeroIntro() {
     if (motionPreference.matches) finishIntro();
   }
 
-  if (!hero || !introTargets.length || motionPreference.matches) {
+  if (!hero || !introTargets.length || motionPreference.matches || typeof IntersectionObserver !== "function") {
     finishIntro();
     return;
   }
-
-  let characterOrder = 0;
-  let wordOrder = 0;
 
   hero.querySelectorAll("[data-intro-text]").forEach((element) => {
     const text = element.textContent.trim();
@@ -74,23 +71,14 @@ function initializeHeroIntro() {
 
     text.split(/\s+/).forEach((word, index) => {
       if (index) visualText.append(" ");
+      const mask = document.createElement("span");
+      mask.className = "intro-mask";
       const wordElement = document.createElement("span");
       wordElement.className = "intro-word";
-
-      if (element.dataset.introText === "letters") {
-        Array.from(word).forEach((character) => {
-          const letter = document.createElement("span");
-          letter.className = "intro-char";
-          letter.textContent = character;
-          letter.style.setProperty("--intro-order", characterOrder++);
-          wordElement.append(letter);
-        });
-      } else {
-        wordElement.textContent = word;
-        wordElement.style.setProperty("--intro-order", wordOrder++);
-      }
-
-      visualText.append(wordElement);
+      wordElement.textContent = word;
+      wordElement.style.setProperty("--intro-order", index);
+      mask.append(wordElement);
+      visualText.append(mask);
     });
 
     element.replaceChildren(accessibleText, visualText);
@@ -127,6 +115,240 @@ function initializeHeroIntro() {
 }
 
 initializeHeroIntro();
+
+function initializeHeroScroll() {
+  const root = document.querySelector("#start");
+  const track = root?.querySelector("[data-hero-story]");
+  const scene = root?.querySelector("[data-hero-scene]");
+  const content = root?.querySelector("[data-hero-scene-content]");
+  if (!track || !scene || !content || typeof IntersectionObserver !== "function" ||
+    !window.CSS?.supports("position", "sticky")) return;
+
+  const properties = ["--hero-track-height", "--hero-scene-height", "--hero-copy-y",
+    "--hero-identity-opacity", "--hero-identity-y", "--hero-image-scale",
+    "--hero-footer-opacity", "--hero-footer-y", "--hero-aperture",
+    "--hero-facts-opacity", "--hero-facts-x", "--hero-status-opacity",
+    "--hero-portrait-glint", "--hero-glint-x", "--hero-frame-opacity",
+    "--hero-frame-x", "--hero-frame-y"];
+  const painted = new Map();
+  const timelineEnd = .84;
+  let enabled = false;
+  let visible = false;
+  let configured = false;
+  let focusRevealed = false;
+  let frame = 0;
+  let measureFrame = 0;
+  let trackTop = 0;
+  let pinTop = 0;
+  let distance = 1;
+  let sceneHeight = 0;
+  let lastProgress = -1;
+  let lastWidth = 0;
+  let lastHeight = 0;
+  let contentHeight = 0;
+  let renderedProgress = null;
+  let lastFrameTime = null;
+
+  function smooth(from, to, value) {
+    const t = Math.min(1, Math.max(0, (value - from) / (to - from)));
+    return t * t * t * (t * (t * 6 - 15) + 10);
+  }
+
+  function paint(now = window.performance.now()) {
+    window.cancelAnimationFrame(frame);
+    frame = 0;
+    if (!enabled || document.hidden) return;
+    const raw = focusRevealed ? 1 : (window.scrollY - trackTop + pinTop) / distance;
+    const target = Math.min(timelineEnd, Math.max(0, raw));
+    const elapsed = lastFrameTime === null ? 1000 / 60 : Math.min(64, Math.max(0, now - lastFrameTime));
+    lastFrameTime = now;
+
+    // A short, time-based settle softens wheel steps without changing native scroll.
+    if (renderedProgress === null || focusRevealed || Math.abs(target - renderedProgress) > .35) {
+      renderedProgress = target;
+    } else {
+      renderedProgress += (target - renderedProgress) * (1 - Math.exp(-elapsed / 48));
+      if (Math.abs(target - renderedProgress) < .001) renderedProgress = target;
+    }
+    const settling = renderedProgress !== target;
+    if (settling) schedule();
+    else lastFrameTime = null;
+    const progress = Math.round(renderedProgress * 10000) / 10000;
+    if (progress === lastProgress) return;
+    lastProgress = progress;
+
+    const copy = smooth(0, .4, progress);
+    const identity = smooth(.08, .42, progress);
+    const facts = smooth(.3, .64, progress);
+    const actions = smooth(.48, .78, progress);
+    const status = smooth(.6, timelineEnd, progress);
+    const glint = smooth(.3, .7, progress);
+    const set = (name, value, unit = "") => {
+      const next = `${value.toFixed(4)}${unit}`;
+      if (painted.get(name) === next) return;
+      painted.set(name, next);
+      root.style.setProperty(name, next);
+    };
+    set("--hero-copy-y", Math.min(88, sceneHeight * .14) * (1 - copy), "px");
+    set("--hero-identity-opacity", identity);
+    set("--hero-identity-y", 22 * (1 - identity), "px");
+    set("--hero-image-scale", 1 + .04 * (1 - smooth(.12, .6, progress)));
+    set("--hero-facts-opacity", facts);
+    set("--hero-facts-x", 8 * (1 - facts), "px");
+    set("--hero-footer-opacity", actions);
+    set("--hero-footer-y", 12 * (1 - actions), "px");
+    set("--hero-status-opacity", status);
+    set("--hero-portrait-glint", Math.sin(glint * Math.PI) * .65);
+    set("--hero-glint-x", -140 + 280 * glint, "%");
+    set("--hero-aperture", 1 - smooth(.16, .6, progress));
+    set("--hero-frame-opacity", .8 * smooth(.06, .14, progress) * (1 - smooth(.44, .7, progress)));
+    set("--hero-frame-x", smooth(.04, .2, progress));
+    set("--hero-frame-y", smooth(.12, .36, progress));
+    root.toggleAttribute("data-hero-identity-ready", identity >= .98);
+    root.toggleAttribute("data-hero-actions-ready", actions >= .98);
+  }
+
+  function schedule() {
+    if (!enabled || !visible || document.hidden || frame) return;
+    lastFrameTime ??= window.performance.now();
+    frame = window.requestAnimationFrame(paint);
+  }
+
+  function disable() {
+    enabled = false;
+    window.cancelAnimationFrame(frame);
+    frame = 0;
+    root.removeAttribute("data-hero-scroll");
+    root.removeAttribute("data-hero-identity-ready");
+    root.removeAttribute("data-hero-actions-ready");
+    properties.forEach((property) => root.style.removeProperty(property));
+    painted.clear();
+    renderedProgress = null;
+    lastFrameTime = null;
+    lastProgress = -1;
+  }
+
+  function measure() {
+    measureFrame = 0;
+    if (document.hidden) return;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const inset = parseFloat(window.getComputedStyle(scene).getPropertyValue("--hero-pin-top")) || 108;
+    const naturalHeight = content.offsetHeight;
+    const available = Math.floor(height - inset - 24);
+
+    // Preserve the visible reading position when the enhanced track changes height.
+    const bounds = track.getBoundingClientRect();
+    const anchor = configured && bounds.top < inset ?
+      (bounds.bottom < inset ? root.nextElementSibling : scene) : null;
+    const previousTop = anchor?.getBoundingClientRect().top;
+
+    lastWidth = width;
+    lastHeight = height;
+    contentHeight = naturalHeight;
+    if (motionPreference.matches || available < naturalHeight + 16) {
+      disable();
+    } else {
+      pinTop = inset;
+      sceneHeight = available;
+      distance = Math.min(900, Math.max(420, height * .85));
+      root.style.setProperty("--hero-scene-height", `${sceneHeight}px`);
+      root.style.setProperty("--hero-track-height", `${sceneHeight + distance}px`);
+      root.setAttribute("data-hero-scroll", "");
+      enabled = true;
+      trackTop = track.getBoundingClientRect().top + window.scrollY;
+      lastProgress = -1;
+      renderedProgress = null;
+    }
+
+    if (anchor && previousTop !== undefined) {
+      const delta = anchor.getBoundingClientRect().top - previousTop;
+      if (Math.abs(delta) > 1) window.scrollBy({ top: delta, left: 0, behavior: "instant" });
+    }
+    configured = true;
+    paint();
+  }
+
+  function scheduleMeasure() {
+    if (!document.hidden && !measureFrame) measureFrame = window.requestAnimationFrame(measure);
+  }
+
+  function resize() {
+    // Ignore mobile chrome changes unless they would cut off the content.
+    const fits = !enabled || (sceneHeight + contentHeight) / 2 <= window.innerHeight - pinTop - 24;
+    if (window.innerWidth === lastWidth && lastWidth < 768 &&
+      Math.abs(window.innerHeight - lastHeight) < 120 && fits) return;
+    scheduleMeasure();
+  }
+
+  function revealForFocus() {
+    if (!enabled) return;
+    focusRevealed = true;
+    paint();
+  }
+
+  function resumeScroll() {
+    // Focus is a temporary accessibility override, never a consumed presentation.
+    focusRevealed = false;
+    schedule();
+  }
+
+  function suspend() {
+    window.cancelAnimationFrame(frame);
+    window.cancelAnimationFrame(measureFrame);
+    frame = measureFrame = 0;
+    renderedProgress = null;
+    lastFrameTime = null;
+  }
+
+  const observer = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) {
+      renderedProgress = null;
+      schedule();
+    }
+    else {
+      focusRevealed = false;
+      renderedProgress = null;
+      lastFrameTime = null;
+      window.cancelAnimationFrame(frame);
+      frame = 0;
+    }
+  }, { rootMargin: "80px 0px" });
+  observer.observe(track);
+
+  if (typeof ResizeObserver === "function") {
+    const layoutObserver = new ResizeObserver(() => {
+      if (content.offsetHeight !== contentHeight || window.innerWidth !== lastWidth) scheduleMeasure();
+    });
+    layoutObserver.observe(content);
+  }
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", resize, { passive: true });
+  window.addEventListener("load", scheduleMeasure, { once: true });
+  window.addEventListener("pageshow", scheduleMeasure);
+  window.addEventListener("hashchange", resumeScroll);
+  window.addEventListener("pagehide", suspend);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) suspend();
+    else scheduleMeasure();
+  });
+  root.addEventListener("focusin", revealForFocus);
+  root.addEventListener("focusout", (event) => {
+    if (!root.contains(event.relatedTarget)) resumeScroll();
+  });
+  document.addEventListener("click", (event) => {
+    if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
+      (event.button !== undefined && event.button !== 0)) return;
+    const link = event.target.closest?.('a[href^="#"]');
+    if (link && (!link.target || link.target === "_self")) resumeScroll();
+  });
+  motionPreference.addEventListener("change", scheduleMeasure);
+  document.fonts?.ready.then(scheduleMeasure);
+  scheduleMeasure();
+}
+
+initializeHeroScroll();
 
 function initializeProfileHover() {
   const shell = document.querySelector(".hero-profile-shell");
