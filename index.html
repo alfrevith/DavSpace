@@ -4,7 +4,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no" />
     <title>David Menjivar</title>
+    <link rel="preload" as="image" href="images/pfp.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href="images/hero-contours.webp" fetchpriority="high" />
+    <link rel="icon" type="image/png" href="images/ico.png">
+    <script>
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            document.documentElement.classList.add("intro-pending");
+            window.heroIntroFallback = window.setTimeout(() => {
+                document.documentElement.classList.remove("intro-pending", "intro-running");
+            }, 4000);
+        }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -14,7 +26,7 @@
                         ink: "#f5f5f1",
                         muted: "#b4b7c3",
                         dim: "#747986",
-                        night: "#07080b",
+                        night: "#0b0d13",
                         cyanSoft: "#93e7ff",
                         greenSoft: "#a7f3c5",
                         roseSoft: "#ff9db5",
@@ -36,7 +48,7 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="min-h-screen overflow-x-hidden bg-night text-ink font-sans selection:bg-cyanSoft selection:text-night">
+<body class="relative isolate flow-root min-h-screen overflow-x-hidden bg-night text-ink font-sans selection:bg-cyanSoft selection:text-night">
     <div
         class="pointer-events-none fixed inset-0 -z-20 bg-[linear-gradient(90deg,rgba(255,255,255,.022)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,.018)_1px,transparent_1px),radial-gradient(circle_at_48%_-12%,rgba(147,231,255,.12),transparent_34rem)] bg-[size:72px_72px,72px_72px,auto]">
     </div>
@@ -45,321 +57,568 @@
     </div>
     <div class="cursor-light" aria-hidden="true"></div>
 
+    <div class="hero-backdrop pointer-events-none absolute inset-x-0 top-0 z-0 overflow-hidden" aria-hidden="true">
+        <img class="absolute inset-0 h-full w-full object-cover object-center"
+            src="images/hero-contours.webp" alt="" decoding="async" fetchpriority="high" />
+        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,13,19,.4),rgba(11,13,19,.08)_55%,transparent)]"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,13,19,.12),transparent_28%,rgba(11,13,19,.2)_64%,#0b0d13_100%)]"></div>
+        <div class="hero-particles absolute inset-0" data-hero-particles></div>
+    </div>
+
+    <header
+        class="site-header z-50 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-3 px-6 py-6 md:grid-cols-[minmax(44px,1fr)_auto_minmax(96px,1fr)] md:gap-3 lg:grid-cols-[minmax(184px,1fr)_auto_minmax(96px,1fr)] xl:gap-4 xl:px-28">
+        <a class="group flex w-max items-center gap-2.5 text-ink transition-colors hover:border-white/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft" href="#start" aria-label="David Menjivar home">
+            <span
+                class="grid h-8 w-8 shrink-0 place-items-center overflow-hidden rounded-full border border-white/15 transition-colors group-hover:border-cyanSoft/40"><img src="images/mini-pfp.jpg" class="h-full w-full object-cover" alt=""></span>
+            <strong class="pr-1 text-[13px] font-semibold md:hidden lg:inline">David Menjivar</strong>
+        </a>
+
+        <nav class="nav relative col-span-2 row-start-2 w-max max-w-full overflow-x-auto rounded-full border border-white/10 p-1.5 md:col-span-1 md:col-start-2 md:row-start-1 md:max-w-[calc(100vw-220px)] lg:max-w-full"
+            aria-label="Main navigation">
+            <div class="nav-track relative isolate flex w-max gap-1">
+                <span class="nav-indicator pointer-events-none absolute inset-y-0 left-0 rounded-full border border-white/[.14] bg-white/[.075] shadow-[inset_0_1px_0_rgba(255,255,255,.055)]" aria-hidden="true"></span>
+                <a class="is-active group relative z-10 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full border border-transparent px-3 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft"
+                    href="#start" aria-current="location"><span class="nav-slash font-mono" aria-hidden="true">/</span>start</a>
+                <a class="group relative z-10 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full border border-transparent px-3 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft"
+                    href="#about-me"><span class="nav-slash font-mono" aria-hidden="true">/</span>about-me</a>
+                <a class="group relative z-10 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full border border-transparent px-3 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft"
+                    href="#projects"><span class="nav-slash font-mono" aria-hidden="true">/</span>projects</a>
+                <a class="group relative z-10 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full border border-transparent px-3 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft"
+                    href="#certificates"><span class="nav-slash font-mono" aria-hidden="true">/</span>certificates</a>
+                <a class="group relative z-10 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full border border-transparent px-3 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft"
+                    href="#skills"><span class="nav-slash font-mono" aria-hidden="true">/</span>skills</a>
+                <a class="group relative z-10 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full border border-transparent px-3 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft"
+                    href="#contact"><span class="nav-slash font-mono" aria-hidden="true">/</span>contact</a>
+            </div>
+        </nav>
+
+        <a class="group col-start-2 row-start-1 inline-flex items-center gap-2 justify-self-end text-[13px] font-semibold text-muted transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft md:col-start-3"
+            href="https://www.linkedin.com/" target="_blank" rel="noreferrer">linkedin <span
+                class="text-cyanSoft transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">&nearr;</span></a>
+    </header>
+
     <main
-        class="relative z-10 mx-auto my-0 min-h-screen w-full overflow-hidden bg-night shadow-soft backdrop-blur xl:my-6 xl:min-h-[calc(100vh-3rem)] xl:w-[min(calc(100%-48px),1540px)]">
+        class="relative z-10 mx-auto my-0 min-h-screen w-full overflow-visible xl:my-6 xl:min-h-[calc(100vh-3rem)] xl:w-[min(calc(100%-48px),1540px)]">
         <div
-            class="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,transparent_0_8.5%,rgba(255,255,255,.035)_8.55%_8.7%,transparent_8.75%),linear-gradient(180deg,rgba(255,255,255,.04),transparent_120px)]">
-        </div>
-
-        <header
-            class="sticky top-0 z-20 grid grid-cols-1 items-center gap-4 bg-night/75 px-6 py-5 backdrop-blur-xl md:grid-cols-[minmax(180px,1fr)_auto_minmax(140px,1fr)] xl:px-28">
-            <a class="group flex w-max items-center gap-3 text-ink" href="#start" aria-label="David Menjivar home">
-                <span
-                    class="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[.055] font-mono text-xs font-black transition group-hover:border-cyanSoft/40"><img src="images/mini-pfp.jpg" class="rounded-full" alt="DM"></span>
-                <strong class="text-sm font-extrabold">David Menjivar</strong>
-            </a>
-
-            <nav class="nav flex w-full gap-1 overflow-x-auto rounded-full border border-white/10 bg-white/[.055] p-2 md:w-auto"
-                aria-label="Main navigation">
-                <a class="is-active min-h-9 rounded-full px-4 py-2 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-ink"
-                    href="#start">/start</a>
-                <a class="min-h-9 rounded-full px-4 py-2 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-ink"
-                    href="#about-me">/about-me</a>
-                <a class="min-h-9 rounded-full px-4 py-2 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-ink"
-                    href="#projects">/projects</a>
-                <a class="min-h-9 rounded-full px-4 py-2 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-ink"
-                    href="#skills">/skills</a>
-                <a class="min-h-9 rounded-full px-4 py-2 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-ink"
-                    href="#contact">/contact</a>
-            </nav>
-
-            <a class="justify-self-start text-sm font-extrabold text-muted transition hover:text-ink md:justify-self-end"
-                href="https://www.linkedin.com/" target="_blank" rel="noreferrer">linkedin <span
-                    class="text-cyanSoft">-></span></a>
-        </header>
-
-        <div
-            class="relative z-10 grid grid-cols-1 gap-8 px-6 pb-28 pt-8 sm:px-8 md:grid-cols-[28px_minmax(0,1fr)] xl:grid-cols-[70px_minmax(0,1fr)] xl:px-28">
-            <aside class="rail relative hidden justify-center md:flex" aria-hidden="true">
+            class="site-content relative z-10 grid grid-cols-1 gap-8 px-6 pb-28 sm:px-8 md:grid-cols-[28px_minmax(0,1fr)] xl:grid-cols-[70px_minmax(0,1fr)] xl:px-28">
+            <aside class="rail relative z-20 hidden justify-center md:flex" aria-hidden="true">
                 <span
                     class="absolute top-3 h-[calc(100%-12px)] w-px rounded-full bg-gradient-to-b from-white/45 via-white/10 to-transparent"></span>
                 <span
                     class="rail-progress absolute top-3 w-px rounded-full bg-gradient-to-b from-cyanSoft to-greenSoft shadow-[0_0_26px_rgba(147,231,255,.25)]"></span>
                 <span
-                    class="sticky top-28 mt-2 h-2.5 w-2.5 rounded-full border border-ink bg-night shadow-[0_0_0_5px_#07080b,0_0_28px_rgba(255,255,255,.24)]"></span>
+                    class="sticky top-28 mt-2 h-2.5 w-2.5 rounded-full border border-ink bg-night shadow-[0_0_0_5px_#0b0d13,0_0_28px_rgba(255,255,255,.24)]"></span>
             </aside>
 
             <div class="grid gap-24 md:gap-36">
                 <section
-                    class="section reveal grid min-h-[calc(100vh-190px)] items-start gap-10 pt-10 md:grid-cols-[minmax(0,1fr)_minmax(220px,.36fr)] xl:gap-16 xl:pt-14"
+                    class="hero-stage section grid items-start gap-10 pt-4 md:grid-cols-[minmax(0,1fr)_minmax(220px,.38fr)] md:pt-6 xl:gap-14"
                     id="start">
-                    <div class="max-w-5xl">
+                    <div class="hero-copy relative z-10 max-w-5xl md:pt-6 xl:pt-9">
                         <span
-                            class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;start/&gt;</span>
+                            class="hero-kicker mb-6 inline-flex items-center gap-3 font-mono text-xs text-ink/[.55] before:h-px before:w-8 before:bg-cyanSoft/50">&lt;start/&gt;</span>
                         <h1 class="hero-title max-w-4xl tracking-normal">
-                            <span
-                                class="inline-flex flex-wrap items-baseline gap-x-3 gap-y-1 text-2xl font-extrabold leading-tight text-muted sm:text-3xl lg:text-4xl">
-                                <span>Hi, I am</span>
-                                <span class="name font-serif text-ink">David Menjivar</span>
-                            </span>
-                            <span
-                                class="mt-5 block max-w-3xl text-balance text-4xl font-black leading-[1.04] text-ink sm:text-5xl xl:text-[64px]">
-                                I'm a student who turns ideas into
-                                <span class="hero-glitch-line mt-4 block">
-                                    <span class="glitch-word" data-glitch>websites</span>
-                                </span>
+                            <span class="hero-intro-line flex flex-wrap items-baseline gap-x-2.5 gap-y-1 leading-tight">
+                                <span class="intro-greeting text-xl font-medium text-muted sm:text-2xl md:text-xl lg:text-2xl">Hi, I'm </span>
+                                <span class="name max-w-full font-serif text-[34px] font-bold leading-[1.15] text-ink sm:text-[44px] md:text-[38px] lg:text-[48px] xl:text-[56px]" data-intro-text="letters">David Menjivar</span>
                             </span>
                         </h1>
-                        <p class="mt-7 max-w-3xl text-[17px] leading-8 text-muted lg:text-lg">
-                            This portfolio brings together my academic journey, selected projects, technical growth, and
-                            creative work in one clear personal space.
-                        </p>
+                        <div class="hero-statement mt-6 grid gap-2 text-base font-medium leading-relaxed text-ink/75 sm:text-lg xl:text-xl">
+                            <p class="statement-line min-w-0">
+                                <span class="statement-text" data-intro-text="words">I'm a student and I turn ideas into</span>
+                            </p>
+                            <p class="hero-glitch-line mt-1 font-mono text-[28px] font-semibold leading-[1.25] text-ink min-[360px]:text-[32px] sm:text-[36px] md:text-[32px] lg:text-[38px] xl:text-[42px]">
+                                <span class="pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">&lt;</span>
+                                <span class="glitch-output">
+                                    <span class="glitch-word text-cyanSoft" data-glitch>websites</span>
+                                </span>
+                                <span class="pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">/&gt;</span>
+                            </p>
+                        </div>
 
-                        <div class="mt-8 flex flex-wrap gap-3">
-                            <a class="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 bg-ink px-5 font-extrabold text-night shadow-[0_16px_40px_rgba(245,245,241,.12)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_56px_rgba(245,245,241,.18)]"
-                                href="#projects">Explore work</a>
-                            <a class="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 px-5 font-extrabold text-ink transition hover:-translate-y-0.5 hover:bg-white/5"
-                                href="#contact">Contact</a>
+                        <div class="hero-actions mt-9 flex flex-wrap gap-3">
+                            <a class="group inline-flex min-h-12 items-center justify-between gap-7 rounded-md border border-ink bg-ink px-5 text-sm font-semibold text-night transition-colors duration-200 hover:border-white hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft"
+                                href="#projects">Explore work <span class="text-lg transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">&nearr;</span></a>
+                            <a class="group inline-flex min-h-12 items-center justify-between gap-7 rounded-md border border-white/15 bg-white/[.02] px-5 text-sm font-semibold text-ink transition-colors duration-200 hover:border-white/30 hover:bg-white/[.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft"
+                                href="#contact">Contact <span class="text-base text-muted transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">&rarr;</span></a>
                         </div>
                     </div>
 
-                    <aside
-                        class="reveal mx-auto grid w-full max-w-sm content-between rounded-lg border border-white/10 bg-white/[.04] bg-[linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.028))] p-4 shadow-[0_30px_80px_rgba(0,0,0,.28)] sm:p-5 md:min-h-[430px] md:max-w-none xl:min-h-[520px]"
-                        aria-label="Profile summary">
-                        <div class="flex w-max mb-2 items-center gap-2 font-mono text-xs text-muted"><i
-                                class="h-2 w-2 rounded-full bg-greenSoft shadow-[0_0_18px_#a7f3c5]"></i>available for
-                            internships</div>
-                        <div
-                            class="mt-4 grid aspect-[4/5] place-items-center overflow-hidden rounded-lg border border-white/10 bg-[linear-gradient(145deg,rgba(147,231,255,.13),transparent_42%),linear-gradient(315deg,rgba(242,199,102,.12),transparent_38%),rgba(255,255,255,.035)] lg:mt-0">
-                            <img class="h-full w-full object-cover" src="images/pfp.jpg"
-                                alt="David Menjivar profile photo" />
+                    <div class="hero-profile-shell relative mx-auto w-full max-w-sm md:mx-0 md:max-w-[280px] md:justify-self-end">
+                        <div class="profile-blueprint pointer-events-none absolute -inset-2" aria-hidden="true">
+                            <span class="blueprint-edge blueprint-top"></span>
+                            <span class="blueprint-edge blueprint-right"></span>
+                            <span class="blueprint-edge blueprint-bottom"></span>
+                            <span class="blueprint-edge blueprint-left"></span>
                         </div>
-                        <div class="grid gap-2.5">
-                            <p class="flex justify-between gap-4 border-t border-white/10 pt-2.5 text-sm text-muted">
-                                <span class="font-mono text-dim">Name</span> David Menjivar
-                            </p>
-                            <p class="flex justify-between gap-4 border-t border-white/10 pt-2.5 text-sm text-muted">
-                                <span class="font-mono text-dim">Location</span> El Salvador
-                            </p>
-                            <p class="flex justify-between gap-4 border-t border-white/10 pt-2.5 text-sm text-muted">
-                                <span class="font-mono text-dim">Education</span> High School Student
-                            </p>
-                            <p class="flex justify-between gap-4 border-t border-white/10 pt-2.5 text-sm text-muted">
-                                <span class="font-mono text-dim">Languages</span> English - Spanish
-                            </p>
-                        </div>
-                    </aside>
-                </section>
+                        <aside
+                            class="hero-profile profile-card relative isolate w-full overflow-hidden rounded-lg border border-white/15 bg-[#10141b] shadow-[0_16px_48px_rgba(0,0,0,.24)] transition-colors duration-300 hover:border-white/30 focus-within:border-cyanSoft/40"
+                            aria-label="Profile summary">
+                            <div class="profile-photo relative aspect-[5/6] overflow-hidden">
+                                <div class="profile-portrait absolute inset-0">
+                                    <img class="h-full w-full object-cover object-[center_25%]" src="images/pfp.jpg" fetchpriority="high"
+                                        alt="David Menjivar profile photo" />
+                                </div>
+                                <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,12,17,.15),transparent_26%,transparent_48%,rgba(16,20,27,.65)_76%,#10141b)]" aria-hidden="true"></div>
 
-                <section class="section reveal scroll-mt-28" id="about-me">
-                    <span
-                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;about-me/&gt;</span>
-                    <div class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_380px] xl:gap-12">
-                        <div
-                            class="rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.025)_42%,rgba(147,231,255,.055))] p-6 sm:p-8">
-                            <p class="mb-4 font-mono text-xs uppercase text-greenSoft">Profile</p>
-                            <h2
-                                class="max-w-3xl text-balance text-4xl font-black leading-tight sm:text-5xl xl:text-6xl">
-                                Curious student, practical builder, constant learner.</h2>
-                            <p class="mt-6 max-w-4xl text-[17px] leading-8 text-muted lg:text-lg">
-                                I'm David Menjivar, a passionate and curious student interested in technology, software,
-                                and creative problem-solving. I enjoy learning new things, taking on challenges, and
-                                turning ideas into practical solutions. I consider myself a determined, analytical, and
-                                responsible person who is always looking for opportunities to grow both personally and
-                                professionally.
-                            </p>
-
-                            <div
-                                class="mt-8 rounded-lg border border-white/10 bg-night/35 p-5 sm:p-6">
-                                <div class="flex flex-wrap items-center justify-between gap-3">
-                                    <div>
-                                        <p class="font-mono text-xs uppercase text-greenSoft">Personal strengths</p>
-                                        <h3 class="mt-2 text-2xl font-extrabold">Skills I keep sharpening</h3>
-                                    </div>
-                                    <span class="font-mono text-xs text-dim">editable list</span>
+                                <div class="profile-status absolute inset-x-4 top-4 z-10 flex items-start">
+                                    <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-night/[.85] px-2.5 py-1.5 text-[10px] font-medium leading-4 text-greenSoft">
+                                        <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-greenSoft" aria-hidden="true"></span>
+                                        Open to internships
+                                    </span>
                                 </div>
 
-                                <ul class="mt-5 grid gap-2 sm:grid-cols-2" aria-label="Personal strengths list">
-                                    <li
-                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-cyanSoft"></span>Strong logic
-                                    </li>
-                                    <li
-                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-greenSoft"></span>Adaptability
-                                    </li>
-                                    <li
-                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-roseSoft"></span>Clear reasoning
-                                    </li>
-                                    <li
-                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-goldSoft"></span>Fast learning
-                                    </li>
-                                    <li
-                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-cyanSoft"></span>Creative problem
-                                        solving
-                                    </li>
-                                    <li
-                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-greenSoft"></span>Attention to detail
-                                    </li>
-                                    <li
-                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-roseSoft"></span>Written communication
-                                    </li>
-                                    <li
-                                        class="flex items-center gap-3 rounded-md border border-white/10 bg-night/35 px-3 py-3 text-sm text-muted">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-goldSoft"></span>Self-management
-                                    </li>
-                                </ul>
+                                <div class="portrait-shutter pointer-events-none absolute inset-0 z-20 grid-cols-5" aria-hidden="true">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <div class="profile-caption absolute inset-x-0 bottom-0 z-10 px-5 pb-1 pt-8">
+                                    <p class="mb-2 flex items-center gap-2 font-mono text-[10px] text-cyanSoft before:h-px before:w-5 before:bg-cyanSoft/60">Student &amp; maker</p>
+                                    <h2 class="text-[24px] font-semibold leading-tight text-ink">David Menjivar<span class="text-cyanSoft" aria-hidden="true">.</span></h2>
+                                </div>
                             </div>
-                        </div>
 
-                        <aside class="grid gap-4">
-                            <article
-                                class="magnetic rounded-lg border border-white/10 bg-white/[.04] p-5 transition hover:border-white/30 hover:bg-white/[.065]">
-                                <small class="font-mono text-xs uppercase text-cyanSoft">current focus</small>
-                                <h3 class="mt-5 text-2xl font-extrabold">What I am building toward</h3>
-                                <ul class="mt-5 grid gap-3 text-sm leading-6 text-muted">
-                                    <li class="border-t border-white/10 pt-3">Improving my software development
-                                        foundation.</li>
-                                    <li class="border-t border-white/10 pt-3">Creating projects with clearer structure
-                                        and purpose.</li>
-                                    <li class="border-t border-white/10 pt-3">Growing as a student, teammate, and
-                                        creative problem solver.</li>
-                                </ul>
-                            </article>
-                            <article
-                                class="magnetic rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(242,199,102,.1),rgba(255,255,255,.04))] p-5 transition hover:border-goldSoft/35 hover:bg-white/[.065]">
-                                <div class="flex flex-wrap items-start justify-between gap-4">
-                                    <div>
-                                        <small class="font-mono text-xs uppercase text-goldSoft">achievements</small>
-                                        <h3 class="mt-5 text-2xl font-extrabold">Achievements & certifications</h3>
-                                        <p class="mt-3 text-sm leading-7 text-muted">A clean space for certificates,
-                                            course completions, awards, events, or academic milestones.</p>
-                                    </div>
-                                    <span
-                                        class="rounded-md border border-goldSoft/25 px-3 py-2 font-mono text-xs uppercase text-goldSoft">ready
-                                        to grow</span>
+                            <dl class="profile-facts relative z-10 grid grid-cols-2 gap-x-4 gap-y-4 px-5 pb-5 pt-5">
+                                <div class="min-w-0">
+                                    <dt class="text-[11px] text-muted">Based in</dt>
+                                    <dd class="mt-1 text-[13px] font-medium text-ink">El Salvador</dd>
                                 </div>
+                                <div class="min-w-0">
+                                    <dt class="text-[11px] text-muted">Languages</dt>
+                                    <dd class="mt-1 text-[13px] font-medium text-ink">EN <span class="mx-1 text-white/25" aria-hidden="true">/</span><span class="sr-only">and </span>ES</dd>
+                                </div>
+                                <div class="min-w-0">
+                                    <dt class="text-[11px] text-muted">Education</dt>
+                                    <dd class="mt-1 text-[13px] font-medium text-ink">High School</dd>
+                                </div>
+                                <div class="min-w-0">
+                                    <dt class="text-[11px] text-muted">Main focus</dt>
+                                    <dd class="mt-1 text-[13px] font-medium text-ink">Software</dd>
+                                </div>
+                            </dl>
 
-                                <div class="mt-5 grid gap-3">
-                                    <div class="rounded-md border border-white/10 bg-night/40 p-4">
-                                        <div class="flex items-center justify-between gap-3">
-                                            <strong class="text-sm font-extrabold">Certification title</strong>
-                                            <span class="font-mono text-xs text-dim">2026</span>
-                                        </div>
-                                        <p class="mt-2 text-sm leading-6 text-muted">Provider, institution, or course
-                                            details.</p>
-                                    </div>
-                                    <div class="rounded-md border border-white/10 bg-night/40 p-4">
-                                        <div class="flex items-center justify-between gap-3">
-                                            <strong class="text-sm font-extrabold">Academic achievement</strong>
-                                            <span class="font-mono text-xs text-dim">soon</span>
-                                        </div>
-                                        <p class="mt-2 text-sm leading-6 text-muted">Add awards, recognitions, events,
-                                            or important learning milestones.</p>
-                                    </div>
-                                </div>
-                            </article>
+                            <div class="profile-traits relative z-10 border-t border-white/10">
+                                <a class="group/link flex min-h-14 items-center justify-between gap-3 px-5 py-3 text-xs font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:bg-white/[.035] focus-visible:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft" href="#about-me">
+                                    A little more about me
+                                    <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/15 text-base text-ink transition-colors duration-200 group-hover/link:border-cyanSoft/40 group-hover/link:bg-cyanSoft group-hover/link:text-night group-focus-visible/link:border-cyanSoft/40 group-focus-visible/link:bg-cyanSoft group-focus-visible/link:text-night" aria-hidden="true">&nearr;</span>
+                                </a>
+                            </div>
                         </aside>
                     </div>
                 </section>
 
-                <section class="section reveal scroll-mt-28" id="projects">
+                <section class="section scroll-mt-28" id="about-me" aria-labelledby="about-title">
                     <span
-                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;projects/&gt;</span>
-                    <div class="grid items-end gap-7 xl:grid-cols-[minmax(0,.9fr)_minmax(340px,.7fr)]">
-                        <div>
-                            <p class="mb-4 font-mono text-xs uppercase text-greenSoft">Selected work</p>
-                            <h2
-                                class="max-w-4xl text-balance text-4xl font-black leading-tight sm:text-5xl xl:text-[58px]">
-                                A small project lab for ideas that can become case studies.</h2>
+                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;about-me/&gt;</span>
+                    <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,.85fr)] lg:gap-12">
+                        <h2 class="text-[32px] font-medium leading-[1.2] text-ink sm:text-[40px]" id="about-title">
+                            <span class="about-heading-mask" data-about-reveal="heading"><span class="about-heading-line inline-block">A curious mind.</span></span>
+                            <span class="about-heading-mask" data-about-reveal="heading"><span class="about-heading-line inline-block font-serif italic text-ink/70">A practical approach.</span></span>
+                        </h2>
+                        <div class="about-introduction max-w-xl space-y-3 text-[15px] leading-7 text-muted">
+                            <p data-about-reveal="body">
+                                I'm David, a Salvadoran student with an analytical mind and a strong creative side.
+                                Mathematics, technology, and writing give me different ways to understand a problem or express an idea.
+                            </p>
+                            <p data-about-reveal="body">
+                                I'm drawn to things I can explore deeply, from the way a system fits together
+                                to the way a story takes shape. I enjoy connecting what I know with something I haven't tried yet.
+                            </p>
                         </div>
-                        <p class="max-w-3xl text-[17px] leading-8 text-muted">
-                            Add screenshots later by replacing each empty image source. Every card opens a focused
-                            detail view for context, role, stack, result, and links.
-                        </p>
                     </div>
 
-                    <div class="mt-8 flex flex-wrap gap-2" aria-label="Project filters">
-                        <button
-                            class="filter is-active min-h-9 rounded-full border border-white/10 px-4 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-ink hover:text-night"
-                            type="button" data-filter="all">All</button>
-                        <button
-                            class="filter min-h-9 rounded-full border border-white/10 px-4 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-ink hover:text-night"
-                            type="button" data-filter="web">Web</button>
-                        <button
-                            class="filter min-h-9 rounded-full border border-white/10 px-4 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-ink hover:text-night"
-                            type="button" data-filter="design">Design</button>
-                        <button
-                            class="filter min-h-9 rounded-full border border-white/10 px-4 text-sm font-extrabold text-muted transition hover:-translate-y-0.5 hover:bg-ink hover:text-night"
-                            type="button" data-filter="identity">Identity</button>
+                    <div class="about-mindset mt-10 sm:mt-12" data-mindset="logic">
+                        <p class="mb-5 font-mono text-[11px] uppercase text-muted" id="mindset-label" data-about-reveal="caption">How I think</p>
+
+                        <div class="mind-tabs relative hidden grid-cols-3 border-b border-white/15" data-mind-tabs data-about-reveal="tabs">
+                            <button class="mind-tab group min-w-0 pb-5 pr-2 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft"
+                                type="button" id="mind-tab-logic" data-mind-tab="logic" aria-controls="mind-logic">
+                                <span class="mb-2 block font-mono text-[10px] text-dim" aria-hidden="true">01 /</span>
+                                <span class="font-serif text-[18px] min-[360px]:text-xl sm:text-[30px]">Logic</span>
+                            </button>
+                            <button class="mind-tab group min-w-0 pb-5 pr-2 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-roseSoft"
+                                type="button" id="mind-tab-creativity" data-mind-tab="creativity" aria-controls="mind-creativity">
+                                <span class="mb-2 block font-mono text-[10px] text-dim" aria-hidden="true">02 /</span>
+                                <span class="font-serif text-[18px] min-[360px]:text-xl sm:text-[30px]">Creativity</span>
+                            </button>
+                            <button class="mind-tab group min-w-0 pb-5 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-goldSoft"
+                                type="button" id="mind-tab-curiosity" data-mind-tab="curiosity" aria-controls="mind-curiosity">
+                                <span class="mb-2 block font-mono text-[10px] text-dim" aria-hidden="true">03 /</span>
+                                <span class="font-serif text-[18px] min-[360px]:text-xl sm:text-[30px]">Curiosity</span>
+                            </button>
+                            <span class="mind-tab-line pointer-events-none absolute -bottom-px left-0 h-px w-1/3" aria-hidden="true"></span>
+                        </div>
+
+                        <div class="mind-stage relative isolate grid gap-8" data-about-reveal="stage">
+                            <article class="mind-panel relative isolate min-w-0 py-8 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyanSoft/50 sm:py-10" id="mind-logic" data-mind-panel="logic" aria-labelledby="mind-logic-title">
+                                <div class="mind-contours pointer-events-none" aria-hidden="true">
+                                    <span class="mind-contour-source mind-contour-primary"></span>
+                                    <span class="mind-contour-source mind-contour-secondary"></span>
+                                </div>
+                                <div class="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,.75fr)] lg:gap-12">
+                                    <div class="mind-copy min-w-0">
+                                        <p class="mind-ink mb-3 font-mono text-[11px]">01 / Logic</p>
+                                        <h3 class="max-w-md text-2xl font-medium leading-snug sm:text-[30px]" id="mind-logic-title">Understand the problem.<br />Then find the pattern.</h3>
+                                        <p class="mt-4 max-w-lg text-sm leading-7 text-muted">
+                                            Analyzing and solving problems comes naturally to me. I'm strong in mathematics,
+                                            logical reasoning, and spatial thinking: visualizing how parts fit together,
+                                            recognizing patterns, and breaking complex questions into manageable steps.
+                                        </p>
+                                        <p class="mb-3 mt-6 text-[11px] font-medium text-muted">Personal strengths</p>
+                                        <ul class="mind-strengths grid gap-x-5 gap-y-3 text-[13px] leading-5 text-ink/90 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
+                                            <li>Analysis &amp; problem-solving</li>
+                                            <li>Mathematical reasoning</li>
+                                            <li>Spatial reasoning &amp; visualization</li>
+                                            <li>Logic &amp; pattern recognition</li>
+                                        </ul>
+                                    </div>
+                                    <aside class="mind-note min-w-0 border-l border-white/10 pl-5 sm:pl-6" aria-labelledby="logic-note-title">
+                                        <p class="mind-ink mb-3 font-mono text-[10px] uppercase">Across physical &amp; digital systems</p>
+                                        <h4 class="font-serif text-[25px] leading-tight" id="logic-note-title">More than what's on a screen.</h4>
+                                        <dl class="mt-5 grid grid-cols-2 gap-x-5 gap-y-5">
+                                            <div>
+                                                <dt class="mb-1 text-[13px] font-medium text-ink">Electronics</dt>
+                                                <dd class="text-xs leading-5 text-muted">Circuits, components, and electrical relationships.</dd>
+                                            </div>
+                                            <div>
+                                                <dt class="mb-1 text-[13px] font-medium text-ink">Hardware</dt>
+                                                <dd class="text-xs leading-5 text-muted">Computer components and how they fit together.</dd>
+                                            </div>
+                                            <div>
+                                                <dt class="mb-1 text-[13px] font-medium text-ink">Software</dt>
+                                                <dd class="text-xs leading-5 text-muted">Applications, web technologies, and the logic behind them.</dd>
+                                            </div>
+                                            <div>
+                                                <dt class="mb-1 text-[13px] font-medium text-ink">Robotics</dt>
+                                                <dd class="text-xs leading-5 text-muted">How mechanisms, electronics, and code connect.</dd>
+                                            </div>
+                                        </dl>
+                                        <p class="mt-5 border-t border-white/10 pt-4 text-[11px] leading-5 text-muted">
+                                            <span class="mind-ink mb-1 block font-mono">Web toolkit</span>
+                                            HTML, CSS, JavaScript, Tailwind CSS, Node.js, AdonisJS, Python.
+                                        </p>
+                                    </aside>
+                                </div>
+                            </article>
+
+                            <article class="mind-panel relative isolate min-w-0 py-8 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-roseSoft/50 sm:py-10" id="mind-creativity" data-mind-panel="creativity" aria-labelledby="mind-creativity-title">
+                                <div class="mind-contours pointer-events-none" aria-hidden="true">
+                                    <span class="mind-contour-source mind-contour-primary"></span>
+                                    <span class="mind-contour-source mind-contour-secondary"></span>
+                                </div>
+                                <div class="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,.75fr)] lg:gap-12">
+                                    <div class="mind-copy min-w-0">
+                                        <p class="mind-ink mb-3 font-mono text-[11px]">02 / Creativity</p>
+                                        <h3 class="max-w-md text-2xl font-medium leading-snug sm:text-[30px]" id="mind-creativity-title">Find the words.<br />Give the idea a shape.</h3>
+                                        <p class="mt-4 max-w-lg text-sm leading-7 text-muted">
+                                            Writing and expressing ideas clearly are strengths of mine. I enjoy giving thoughts
+                                            structure and a voice, whether through stories, poems, images, or something I haven't
+                                            tried before. Creativity is also a reason to experiment.
+                                        </p>
+                                        <p class="mb-3 mt-6 text-[11px] font-medium text-muted">Personal strengths</p>
+                                        <ul class="mind-strengths grid gap-x-5 gap-y-3 text-[13px] leading-5 text-ink/90 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
+                                            <li>Writing &amp; composition</li>
+                                            <li>Clear expression of ideas</li>
+                                            <li>Visual thinking &amp; storytelling</li>
+                                            <li>Creative experimentation</li>
+                                        </ul>
+                                    </div>
+                                    <aside class="mind-note min-w-0 border-l border-white/10 pl-5 sm:pl-6" aria-labelledby="creativity-note-title">
+                                        <p class="mind-ink mb-3 font-mono text-[10px] uppercase">Other ways to say it</p>
+                                        <h4 class="font-serif text-[25px] leading-tight" id="creativity-note-title">Not every idea starts with code.</h4>
+                                        <nav class="mt-5 grid grid-cols-2 gap-x-5 gap-y-4" aria-label="David's creative interests">
+                                            <a class="mind-interest group min-w-0 border-b border-white/10 pb-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-roseSoft" href="photography.html">
+                                                <span class="flex items-center justify-between gap-1 text-[13px] font-medium">Photography <span class="mind-ink transition-transform duration-300 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" aria-hidden="true">&nearr;</span></span>
+                                                <span class="mt-2 block text-xs leading-5 text-muted">Light, framing, and everyday details.</span>
+                                            </a>
+                                            <a class="mind-interest group min-w-0 border-b border-white/10 pb-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-roseSoft" href="drawings.html">
+                                                <span class="flex items-center justify-between gap-1 text-[13px] font-medium">Drawing <span class="mind-ink transition-transform duration-300 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" aria-hidden="true">&nearr;</span></span>
+                                                <span class="mt-2 block text-xs leading-5 text-muted">Form, lines, and visual ideas.</span>
+                                            </a>
+                                            <a class="mind-interest group min-w-0 border-b border-white/10 pb-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-roseSoft" href="stories-poems.html">
+                                                <span class="flex items-center justify-between gap-1 text-[13px] font-medium">Stories <span class="mind-ink transition-transform duration-300 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" aria-hidden="true">&nearr;</span></span>
+                                                <span class="mt-2 block text-xs leading-5 text-muted">Characters and other perspectives.</span>
+                                            </a>
+                                            <a class="mind-interest group min-w-0 border-b border-white/10 pb-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-roseSoft" href="stories-poems.html">
+                                                <span class="flex items-center justify-between gap-1 text-[13px] font-medium">Poems <span class="mind-ink transition-transform duration-300 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" aria-hidden="true">&nearr;</span></span>
+                                                <span class="mt-2 block text-xs leading-5 text-muted">A feeling, a rhythm, a few words.</span>
+                                            </a>
+                                        </nav>
+                                    </aside>
+                                </div>
+                            </article>
+
+                            <article class="mind-panel relative isolate min-w-0 py-8 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-goldSoft/50 sm:py-10" id="mind-curiosity" data-mind-panel="curiosity" aria-labelledby="mind-curiosity-title">
+                                <div class="mind-contours pointer-events-none" aria-hidden="true">
+                                    <span class="mind-contour-source mind-contour-primary"></span>
+                                    <span class="mind-contour-source mind-contour-secondary"></span>
+                                </div>
+                                <div class="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,.75fr)] lg:gap-12">
+                                    <div class="mind-copy min-w-0">
+                                        <p class="mind-ink mb-3 font-mono text-[11px]">03 / Curiosity</p>
+                                        <h3 class="max-w-md text-2xl font-medium leading-snug sm:text-[30px]" id="mind-curiosity-title">Follow the interest.<br />Go past the surface.</h3>
+                                        <p class="mt-4 max-w-lg text-sm leading-7 text-muted">
+                                            When a subject genuinely interests me, I want more than a quick explanation.
+                                            I learn on my own, put effort into understanding it, and keep exploring until
+                                            the ideas start to connect. I'm willing to try unfamiliar things along the way.
+                                        </p>
+                                        <p class="mb-3 mt-6 text-[11px] font-medium text-muted">Personal strengths</p>
+                                        <ul class="mind-strengths grid gap-x-5 gap-y-3 text-[13px] leading-5 text-ink/90 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
+                                            <li>Self-directed learning</li>
+                                            <li>Persistence &amp; follow-through</li>
+                                            <li>Openness to new experiences</li>
+                                            <li>Adaptability &amp; initiative</li>
+                                        </ul>
+                                    </div>
+                                    <aside class="mind-note min-w-0 border-l border-white/10 pl-5 sm:pl-6" aria-labelledby="curiosity-note-title">
+                                        <p class="mind-ink mb-3 font-mono text-[10px] uppercase">Still becoming</p>
+                                        <h4 class="font-serif text-[25px] leading-tight" id="curiosity-note-title">My own pace. A clear direction.</h4>
+                                        <dl class="mt-6 space-y-5">
+                                            <div>
+                                                <dt class="mb-1 text-[11px] text-muted">My academic path</dt>
+                                                <dd class="text-[13px] leading-6 text-ink/90">High school student, working toward software engineering.</dd>
+                                            </div>
+                                            <div>
+                                                <dt class="mb-1 text-[11px] text-muted">Beyond the syllabus</dt>
+                                                <dd class="text-[13px] leading-6 text-ink/90">My interests give me reasons to keep learning outside the classroom.</dd>
+                                            </div>
+                                            <div>
+                                                <dt class="mb-1 text-[11px] text-muted">What I'm looking for</dt>
+                                                <dd class="text-[13px] leading-6 text-ink/90">An internship where I can learn, contribute, and keep growing.</dd>
+                                            </div>
+                                        </dl>
+                                    </aside>
+                                </div>
+                            </article>
+                        </div>
                     </div>
 
-                    <div class="project-board mt-8 grid auto-rows-[180px] grid-cols-1 gap-5 md:grid-cols-6 xl:auto-rows-[190px]"
-                        aria-label="Project list">
+                    <div class="about-personal grid gap-8 border-t border-white/15 pt-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,.75fr)] lg:gap-12">
+                        <div data-about-reveal="personal">
+                            <p class="mb-3 font-mono text-[11px] uppercase text-greenSoft">A little more personal</p>
+                            <h3 class="text-xl font-medium">The person, not just the skill set.</h3>
+                            <p class="mt-3 max-w-lg text-sm leading-7 text-muted">
+                                I consider myself analytical, responsible, and determined. I care about explaining
+                                my ideas clearly, paying attention to details, and following through on what I start.
+                                I don't see analytical thinking and creative expression as opposites; both are part of who I am.
+                            </p>
+                        </div>
+                        <div data-about-reveal="personal">
+                            <p class="mb-3 font-mono text-[11px] uppercase text-muted">Let's connect</p>
+                            <p class="max-w-sm text-sm leading-7 text-muted">
+                                Have a question, an opportunity, or an idea worth exploring?
+                                I'd be happy to start a conversation.
+                            </p>
+                            <a class="group mt-3 inline-flex min-h-11 items-center gap-4 text-sm font-medium text-ink underline decoration-white/25 underline-offset-8 transition-colors duration-300 hover:text-greenSoft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-greenSoft"
+                                href="#contact">Say hello <span class="transition-transform duration-300 motion-safe:group-hover:translate-x-1" aria-hidden="true">&rarr;</span></a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section relative isolate min-w-0 scroll-mt-28" id="projects" aria-labelledby="projects-title">
+                    <div class="project-atmosphere pointer-events-none absolute -inset-x-6 -inset-y-12 -z-10" data-project-ambience aria-hidden="true">
+                        <div class="project-light-field absolute inset-0"></div>
+                        <div class="project-particles absolute inset-0 overflow-hidden" data-project-particles></div>
+                    </div>
+                    <span
+                        class="reveal mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;projects/&gt;</span>
+                    <div class="reveal flex flex-wrap items-end justify-between gap-x-8 gap-y-5">
+                        <div class="min-w-0">
+                            <h2 class="text-balance text-3xl font-semibold leading-tight sm:text-[40px]" id="projects-title">
+                                Ideas <span class="font-serif italic text-greenSoft">in action.</span>
+                            </h2>
+                            <p class="mt-3 max-w-lg text-sm leading-relaxed text-muted sm:text-base">
+                                From web experiences to hands-on electronics.
+                            </p>
+                        </div>
+                        <p class="shrink-0 font-mono text-xs tabular-nums text-muted" data-project-count role="status" aria-live="polite" aria-atomic="true">4 projects</p>
+                    </div>
+
+                    <div class="reveal mt-7 grid gap-5 border-y border-white/10 py-5 sm:grid-cols-[auto_minmax(0,1fr)] xl:grid-cols-[auto_minmax(0,1fr)_auto] xl:gap-7" role="group" aria-label="Project filters">
+                        <div>
+                            <p class="mb-2 font-mono text-[10px] uppercase text-dim" id="project-overview-label">Overview</p>
+                            <div role="group" aria-labelledby="project-overview-label">
+                                <button class="filter is-active min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-filter="all" aria-pressed="true" aria-controls="project-list">All</button>
+                            </div>
+                        </div>
+
+                        <div class="min-w-0">
+                            <p class="mb-2 font-mono text-[10px] uppercase text-dim" id="project-software-label">Software</p>
+                            <div class="flex flex-wrap gap-1" role="group" aria-labelledby="project-software-label">
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-filter="web" aria-pressed="false" aria-controls="project-list">Web</button>
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-filter="web-app" aria-pressed="false" aria-controls="project-list">Web App</button>
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-filter="app" aria-pressed="false" aria-controls="project-list">App</button>
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-filter="prototype" aria-pressed="false" aria-controls="project-list">Prototype</button>
+                            </div>
+                        </div>
+
+                        <div class="min-w-0 sm:col-start-2 xl:col-start-auto">
+                            <p class="mb-2 font-mono text-[10px] uppercase text-dim" id="project-hardware-label">Hardware</p>
+                            <div class="flex flex-wrap gap-1" role="group" aria-labelledby="project-hardware-label">
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-filter="electronics" aria-pressed="false" aria-controls="project-list">Electronics</button>
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-filter="robotics" aria-pressed="false" aria-controls="project-list">Robotics</button>
+                            </div>
+                        </div>
+
+                        <div class="col-span-full flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[.06] pt-4" role="group" aria-labelledby="project-year-label">
+                            <p class="font-mono text-[10px] uppercase text-dim" id="project-year-label">Year</p>
+                            <div class="flex flex-wrap gap-1">
+                                <button class="filter is-active min-h-9 rounded-md border border-transparent px-3 text-xs font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-project-year="all" aria-pressed="true" aria-controls="project-list">All years</button>
+                                <button class="filter min-h-9 rounded-md border border-transparent px-3 text-xs font-medium tabular-nums text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-project-year="2024" aria-pressed="false" aria-controls="project-list">2024</button>
+                                <button class="filter min-h-9 rounded-md border border-transparent px-3 text-xs font-medium tabular-nums text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-project-year="2025" aria-pressed="false" aria-controls="project-list">2025</button>
+                                <button class="filter min-h-9 rounded-md border border-transparent px-3 text-xs font-medium tabular-nums text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft"
+                                    type="button" data-project-year="2026" aria-pressed="false" aria-controls="project-list">2026</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Categories may overlap; the footer's time element supplies the filter year. -->
+                    <div class="project-board mt-12 grid grid-cols-1 gap-x-10 gap-y-20 md:grid-cols-12 md:gap-y-24 xl:gap-x-14"
+                        id="project-list" aria-label="Project list">
                         <button
-                            class="project-card project-poster group relative min-h-[440px] overflow-hidden rounded-lg border border-white/10 text-left text-ink transition hover:border-white/30 hover:shadow-lift md:col-span-4 md:row-span-2 xl:col-span-3"
-                            type="button" data-project="taskflow" data-category="web">
+                            class="project-card project-poster project-wide group relative text-left text-ink transition"
+                            type="button" data-project="taskflow" data-category="web web-app">
                             <span
-                                class="project-image absolute inset-0 grid place-items-center overflow-hidden bg-[#111319]">
-                                <img class="hidden h-full w-full object-cover" src="" alt="" data-empty data-fit="cover" />
-                                <span class="project-image-label font-mono text-xs uppercase text-ink/70">Drop project image</span>
+                                class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/PlantBud.png" alt="Plant Bud" data-fit="cover" />
                             </span>
-                            <span class="project-content absolute inset-x-0 bottom-0 z-10 grid gap-2 p-5 sm:p-6">
-                                <small class="font-mono text-xs font-black uppercase text-ink/75">web / web app</small>
-                                <strong class="max-w-[12ch] text-4xl font-black leading-[.9] sm:text-5xl">Plant
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.9] sm:text-4xl">Plant
                                     Bud</strong>
                                 <span
-                                    class="project-footer mt-1 flex max-w-md items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
-                                    <span>Web app</span>
-                                    <span>2026</span>
+                                    class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Web / PWA</span>
+                                    <time datetime="2026">2026</time>
                                 </span>
                             </span>
                         </button>
 
                         <button
-                            class="project-card project-poster group relative min-h-[360px] overflow-hidden rounded-lg border border-white/10 text-left text-ink transition hover:border-white/30 hover:shadow-lift md:col-span-2 md:row-span-2 xl:col-span-3"
-                            type="button" data-project="nova" data-category="design">
+                            class="project-card project-poster project-compact group relative text-left text-ink transition"
+                            type="button" data-project="nova" data-category="web electronics">
                             <span
-                                class="project-image absolute inset-0 grid place-items-center overflow-hidden bg-[#111319]">
-                                <img class="hidden h-full w-full object-cover" src="" alt="" data-empty data-fit="cover" />
-                                <span class="project-image-label font-mono text-xs uppercase text-ink/70">Drop project image</span>
+                                class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/POT-C.png" alt="POT-C" data-fit="cover" />
                             </span>
-                            <span class="project-content absolute inset-x-0 bottom-0 z-10 grid gap-2 p-5 sm:p-6">
-                                <small class="font-mono text-xs font-black uppercase text-ink/75">landing / brand</small>
-                                <strong class="max-w-[13ch] text-3xl font-black leading-[.95] sm:text-4xl">Nova Product
-                                    Page</strong>
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.92] sm:text-4xl">POT-C</strong>
                                 <span
-                                    class="project-footer mt-1 flex max-w-md items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
-                                    <span>UI design</span>
-                                    <span>2026</span>
+                                    class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Informative Web / Smart Bin</span>
+                                    <time datetime="2025">2025</time>
                                 </span>
                             </span>
                         </button>
 
                         <button
-                            class="project-card project-poster group relative min-h-[340px] overflow-hidden rounded-lg border border-white/10 text-left text-ink transition hover:border-white/30 hover:shadow-lift md:col-span-3 md:row-span-2"
-                            type="button" data-project="resume" data-category="identity">
+                            class="project-card project-poster project-tall group relative text-left text-ink transition"
+                            type="button" data-project="resume" data-category="prototype app">
                             <span
-                                class="project-image absolute inset-0 grid place-items-center overflow-hidden bg-[#111319]">
-                                <img class="hidden h-full w-full object-cover" src="" alt="" data-empty data-fit="cover" />
-                                <span class="project-image-label font-mono text-xs uppercase text-ink/70">Drop project image</span>
+                                class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/PetsHealth.png" alt="Pet's Health" data-fit="cover" />
                             </span>
-                            <span class="project-content absolute inset-x-0 bottom-0 z-10 grid gap-2 p-5 sm:p-6">
-                                <small class="font-mono text-xs font-black uppercase text-ink/75">portfolio / identity</small>
-                                <strong class="max-w-[13ch] text-3xl font-black leading-[.95] sm:text-4xl">Creative
-                                    Resume</strong>
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.92] sm:text-4xl">Pet's Health</strong>
                                 <span
-                                    class="project-footer mt-1 flex max-w-md items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
-                                    <span>Design</span>
-                                    <span>2026</span>
+                                    class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Mobile App / Prototype</span>
+                                    <time datetime="2024">2024</time>
                                 </span>
                             </span>
                         </button>
+
+                        <button
+                            class="project-card project-poster project-long group relative text-left text-ink transition"
+                            type="button" data-project="archive" data-category="web prototype">
+                            <span
+                                class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/CECAM.png" alt="CECAM" data-fit="cover" />
+                            </span>
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.92] sm:text-4xl">CECAM</strong>
+                                <span
+                                    class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Web / Prototype</span>
+                                    <time datetime="2025">2025</time>
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="mt-10 border-b border-white/10 py-12" data-project-empty hidden>
+                        <p class="font-serif text-2xl text-ink">No projects match these filters.</p>
+                        <button class="mt-5 inline-flex min-h-11 items-center gap-3 rounded-md text-sm font-medium text-greenSoft transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-greenSoft"
+                            type="button" data-project-reset>View all projects <span aria-hidden="true">&rarr;</span></button>
+                    </div>
+                </section>
+
+                <section class="section reveal scroll-mt-28" id="certificates">
+                    <span
+                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;certificates/&gt;</span>
+
+                    <div class="grid items-end gap-7 xl:grid-cols-[minmax(0,.85fr)_minmax(320px,.55fr)]">
+                        <div>
+                            <p class="mb-4 font-mono text-xs uppercase text-goldSoft">Proof archive</p>
+                            <h2 class="max-w-5xl text-balance text-4xl font-black leading-tight sm:text-5xl xl:text-[58px]">
+                                A moving shelf for certificates, milestones, and learning proof.
+                            </h2>
+                        </div>
+                        <div class="certificate-controls justify-self-start xl:justify-self-end" aria-label="Certificate carousel controls">
+                            <button class="certificate-control" type="button" data-certificate-prev aria-label="Previous certificate">&lt;</button>
+                            <button class="certificate-control" type="button" data-certificate-next aria-label="Next certificate">&gt;</button>
+                        </div>
+                    </div>
+
+                    <div class="certificate-stage mt-12">
+                        <div class="certificate-rail" tabindex="0" aria-label="Certificate carousel">
+                            <button class="certificate-card is-active" type="button" data-certificate="logic-foundations">
+                                <span class="certificate-index">01</span>
+                                <span class="certificate-seal">DM</span>
+                                <small>course / foundation</small>
+                                <strong>Logic Foundations</strong>
+                                <span class="certificate-meta">Learning archive / 2026</span>
+                            </button>
+                            <button class="certificate-card" type="button" data-certificate="web-development">
+                                <span class="certificate-index">02</span>
+                                <span class="certificate-seal">WEB</span>
+                                <small>certificate / web</small>
+                                <strong>Web Development</strong>
+                                <span class="certificate-meta">Technical path / 2026</span>
+                            </button>
+                            <button class="certificate-card" type="button" data-certificate="creative-process">
+                                <span class="certificate-index">03</span>
+                                <span class="certificate-seal">ART</span>
+                                <small>workshop / creative</small>
+                                <strong>Creative Process</strong>
+                                <span class="certificate-meta">Creative archive / 2026</span>
+                            </button>
+                            <button class="certificate-card" type="button" data-certificate="academic-milestone">
+                                <span class="certificate-index">04</span>
+                                <span class="certificate-seal">EDU</span>
+                                <small>academic / milestone</small>
+                                <strong>Academic Milestone</strong>
+                                <span class="certificate-meta">Academic path / 2026</span>
+                            </button>
+                        </div>
+
+                        <div class="certificate-dots" aria-label="Certificate carousel position">
+                            <button class="is-active" type="button" data-certificate-dot="0" aria-label="Show certificate 1"></button>
+                            <button type="button" data-certificate-dot="1" aria-label="Show certificate 2"></button>
+                            <button type="button" data-certificate-dot="2" aria-label="Show certificate 3"></button>
+                            <button type="button" data-certificate-dot="3" aria-label="Show certificate 4"></button>
+                        </div>
                     </div>
                 </section>
 
@@ -374,10 +633,6 @@
                                 class="max-w-5xl text-balance text-4xl font-black leading-tight sm:text-5xl xl:text-6xl">
                                 Three creative portals connected to the same portfolio.</h2>
                         </div>
-                        <p class="max-w-3xl text-[17px] leading-8 text-muted">
-                            The technical side stays in the structure, projects, and interactions. These spaces give
-                            photography, drawing, stories, and poems their own atmosphere without leaving the index.
-                        </p>
                     </div>
 
                     <div class="skill-portals mt-14 grid gap-10 xl:gap-12">
@@ -391,10 +646,6 @@
                                             class="mt-8 max-w-xl text-balance text-4xl font-black leading-none sm:text-5xl xl:text-6xl">
                                             Light, grain, and captured memory.
                                         </h3>
-                                        <p class="mt-6 max-w-lg text-[17px] leading-8 text-[#e3d6bd]">
-                                            A visual archive for photographs, places, portraits, moods, and experiments
-                                            with light. This preview is built as a portal into the full photo gallery.
-                                        </p>
                                     </div>
                                     <a class="w-max rounded-lg border border-goldSoft/35 px-5 py-3 font-mono text-xs uppercase text-goldSoft transition hover:bg-goldSoft hover:text-night"
                                         href="photography.html">More</a>
@@ -403,19 +654,15 @@
                                 <div class="portal-gallery grid auto-rows-[150px] gap-4 md:grid-cols-4">
                                     <figure class="photo-frame md:col-span-2 md:row-span-2">
                                         <img src="" alt="Photography work preview" data-empty />
-                                        <figcaption>Series cover</figcaption>
                                     </figure>
                                     <figure class="photo-frame md:col-span-2">
                                         <img src="" alt="Photography work preview" data-empty />
-                                        <figcaption>Portrait study</figcaption>
                                     </figure>
                                     <figure class="photo-frame">
                                         <img src="" alt="Photography work preview" data-empty />
-                                        <figcaption>Street detail</figcaption>
                                     </figure>
                                     <figure class="photo-frame">
                                         <img src="" alt="Photography work preview" data-empty />
-                                        <figcaption>Light test</figcaption>
                                     </figure>
                                 </div>
                             </div>
@@ -431,10 +678,6 @@
                                             class="mt-8 max-w-xl text-balance text-4xl font-black leading-none sm:text-5xl xl:text-6xl">
                                             Paper marks, pencil pressure, quiet studies.
                                         </h3>
-                                        <p class="mt-6 max-w-lg text-[17px] leading-8 text-black/65">
-                                            A sketchbook-like space for photos of drawings, scanned pages, characters,
-                                            gestures, unfinished thoughts, and ink or pencil studies.
-                                        </p>
                                     </div>
                                     <a class="w-max rounded-lg border border-black/20 px-5 py-3 font-mono text-xs uppercase text-black/65 transition hover:bg-black hover:text-white"
                                         href="drawings.html">More</a>
@@ -470,66 +713,128 @@
                                             class="mt-8 max-w-xl text-balance text-4xl font-black leading-none sm:text-5xl xl:text-6xl">
                                             Writing pieces as a downloadable library.
                                         </h3>
-                                        <p class="mt-6 max-w-lg text-[17px] leading-8 text-muted">
-                                            Stories and poems live here as PDF pieces. Each preview card can show title,
-                                            mood, date, and a download link for the complete file.
-                                        </p>
                                     </div>
                                     <a class="w-max rounded-lg border border-roseSoft/35 px-5 py-3 font-mono text-xs uppercase text-roseSoft transition hover:bg-roseSoft hover:text-night"
                                         href="stories-poems.html">More</a>
                                 </div>
 
                                 <div class="grid gap-4 md:grid-cols-2">
-                                    <article class="pdf-card">
-                                        <span>poem / pdf</span>
-                                        <h2>Untitled Poem</h2>
-                                        <p>Preview the piece here, then attach the final PDF.</p>
-                                        <a href="pdfs/untitled-poem.pdf" download>Download PDF</a>
-                                    </article>
-                                    <article class="pdf-card">
-                                        <span>story / pdf</span>
-                                        <h2>Scene Fragment</h2>
-                                        <p>A slot for a story draft, chapter, or narrative experiment.</p>
-                                        <a href="pdfs/scene-fragment.pdf" download>Download PDF</a>
-                                    </article>
-                                    <article class="pdf-card">
-                                        <span>poem / pdf</span>
-                                        <h2>Night Notes</h2>
-                                        <p>Add a cover-like preview and link a downloadable PDF.</p>
-                                        <a href="pdfs/night-notes.pdf" download>Download PDF</a>
-                                    </article>
-                                    <article class="pdf-card">
-                                        <span>archive / pdf</span>
-                                        <h2>Writing Index</h2>
-                                        <p>Use this for a collection, table of contents, or longer work.</p>
-                                        <a href="pdfs/writing-index.pdf" download>Download PDF</a>
-                                    </article>
+                                    <article class="pdf-card"></article>
+                                    <article class="pdf-card"></article>
+                                    <article class="pdf-card"></article>
+                                    <article class="pdf-card"></article>
                                 </div>
                             </div>
                         </article>
                     </div>
                 </section>
 
-                <section class="section reveal scroll-mt-28" id="contact">
+                <section class="contact-section section reveal relative isolate scroll-mt-28" id="contact" aria-labelledby="contact-title">
                     <span
                         class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;contact/&gt;</span>
-                    <div
-                        class="grid items-end gap-6 rounded-lg border border-white/10 bg-white/[.04] bg-[linear-gradient(135deg,rgba(147,231,255,.08),transparent_42%)] p-6 sm:p-10 lg:grid-cols-[1fr_auto]">
+                    <div class="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,.8fr)] md:gap-12 xl:gap-20">
                         <div>
-                            <p class="mb-4 font-mono text-xs uppercase text-greenSoft">Next step</p>
-                            <h2
-                                class="max-w-4xl text-balance text-4xl font-black leading-tight sm:text-5xl xl:text-6xl">
-                                Let us build something clear, useful, and memorable.</h2>
-                            <p class="mt-5 max-w-2xl leading-8 text-muted">Open to internships, collaborations,
-                                freelance work, and honest feedback on web ideas.</p>
+                            <div class="contact-intro">
+                                <h2 class="text-[34px] font-medium leading-[1.15] text-ink sm:text-[44px]" id="contact-title">
+                                    Let's talk about<br />
+                                    <span class="font-serif italic text-ink/70">what's next.</span>
+                                </h2>
+                                <p class="mt-5 max-w-md text-sm leading-7 text-muted">
+                                    An opportunity, a collaboration, or an idea worth exploring.
+                                    A good conversation is a good place to start.
+                                </p>
+                            </div>
+
+                            <div class="contact-details mt-8">
+                                <div class="mb-1 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                                    <h3 class="font-mono text-[11px] uppercase text-muted">Direct contact</h3>
+                                    <span class="text-[11px] text-muted">Not active yet</span>
+                                </div>
+                                <dl class="divide-y divide-white/10">
+                                    <div class="relative min-w-0 py-4 pl-12 sm:pl-[52px]">
+                                        <dt class="mb-1 text-[11px] text-muted">
+                                            <img class="absolute left-1.5 top-1/2 h-6 w-6 -translate-y-1/2 object-contain opacity-75" src="images/Social/llamada-telefonica.png"
+                                                width="24" height="24" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                                            Phone
+                                        </dt>
+                                        <dd class="font-mono text-[16px] leading-7 text-ink sm:text-[18px]">+503 0000-0000</dd>
+                                    </div>
+                                    <div class="relative min-w-0 py-4 pl-12 sm:pl-[52px]">
+                                        <dt class="mb-1 text-[11px] text-muted">
+                                            <img class="absolute left-0.5 top-1/2 h-8 w-8 -translate-y-1/2 object-contain opacity-75" src="images/Social/correo.png"
+                                                width="32" height="32" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                                            Email
+                                        </dt>
+                                        <dd class="break-words text-[16px] leading-7 text-ink sm:text-[18px]">contacto@gmail.com</dd>
+                                    </div>
+                                </dl>
+                            </div>
                         </div>
-                        <div class="flex flex-wrap gap-3">
-                            <a class="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 bg-ink px-5 font-extrabold text-night shadow-[0_16px_40px_rgba(245,245,241,.12)] transition hover:-translate-y-0.5"
-                                href="mailto:david.menjivar@example.com">Send email</a>
-                            <a class="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 px-5 font-extrabold text-ink transition hover:-translate-y-0.5 hover:bg-white/5"
-                                href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
-                        </div>
+
+                        <nav class="contact-networks min-w-0 md:pt-2" aria-labelledby="contact-networks-title" aria-describedby="contact-networks-status">
+                            <div class="mb-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+                                <h3 class="font-mono text-[11px] uppercase text-muted" id="contact-networks-title">Elsewhere</h3>
+                                <p class="text-[11px] text-muted" id="contact-networks-status">Profiles coming soon</p>
+                            </div>
+
+                            <a class="contact-social group relative grid min-h-[92px] grid-cols-[40px_minmax(0,1fr)_24px] items-center gap-4 border-b border-white/10 py-5 [--contact-accent:#93e7ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft"
+                                href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"
+                                title="Temporary link to LinkedIn" aria-label="LinkedIn (temporary link, opens in a new tab)">
+                                <span class="grid h-10 w-10 place-items-center">
+                                    <img class="h-8 w-8 object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+                                        src="images/Social/in.png" width="32" height="32" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                                </span>
+                                <span class="min-w-0">
+                                    <strong class="contact-social-name block text-[15px] font-medium">LinkedIn</strong>
+                                    <span class="mt-1 block text-xs leading-5 text-muted">Professional connections</span>
+                                </span>
+                                <span class="contact-social-arrow justify-self-end text-xl text-muted" aria-hidden="true">&nearr;</span>
+                            </a>
+
+                            <a class="contact-social group relative grid min-h-[92px] grid-cols-[40px_minmax(0,1fr)_24px] items-center gap-4 border-b border-white/10 py-5 [--contact-accent:#ff9db5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-roseSoft"
+                                href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"
+                                title="Temporary link to Instagram" aria-label="Instagram (temporary link, opens in a new tab)">
+                                <span class="grid h-10 w-10 place-items-center">
+                                    <img class="h-[26px] w-[26px] object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+                                        src="images/Social/instagram.png" width="26" height="26" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                                </span>
+                                <span class="min-w-0">
+                                    <strong class="contact-social-name block text-[15px] font-medium">Instagram</strong>
+                                    <span class="mt-1 block text-xs leading-5 text-muted">Images, ideas &amp; everyday moments</span>
+                                </span>
+                                <span class="contact-social-arrow justify-self-end text-xl text-muted" aria-hidden="true">&nearr;</span>
+                            </a>
+
+                            <a class="contact-social group relative grid min-h-[92px] grid-cols-[40px_minmax(0,1fr)_24px] items-center gap-4 border-b border-white/10 py-5 [--contact-accent:#f2c766] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-goldSoft"
+                                href="https://vsco.co/" target="_blank" rel="noopener noreferrer"
+                                title="Temporary link to VSCO" aria-label="VSCO (temporary link, opens in a new tab)">
+                                <span class="grid h-10 w-10 place-items-center">
+                                    <img class="h-[30px] w-[30px] object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+                                        src="images/Social/vsco.png" width="30" height="30" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                                </span>
+                                <span class="min-w-0">
+                                    <strong class="contact-social-name block text-[15px] font-medium">VSCO</strong>
+                                    <span class="mt-1 block text-xs leading-5 text-muted">A photographic perspective</span>
+                                </span>
+                                <span class="contact-social-arrow justify-self-end text-xl text-muted" aria-hidden="true">&nearr;</span>
+                            </a>
+                        </nav>
                     </div>
+
+                    <footer class="contact-signature relative mt-10 flex flex-wrap items-end justify-between gap-x-8 gap-y-5 pt-6 sm:mt-12">
+                        <div>
+                            <p class="font-serif text-xl text-ink">David Menjivar</p>
+                            <p class="mt-2 text-[11px] text-muted">El Salvador &middot; English / Spanish</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-x-6 gap-y-4">
+                            <span class="inline-flex items-center gap-2 text-[11px] text-greenSoft">
+                                <span class="h-1.5 w-1.5 rounded-full bg-greenSoft" aria-hidden="true"></span>
+                                Open to internships
+                            </span>
+                            <a class="group inline-flex min-h-11 items-center gap-3 text-xs text-muted transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft"
+                                href="#start">Back to start <span class="transition-transform duration-300 motion-safe:group-hover:-translate-y-0.5" aria-hidden="true">&uarr;</span></a>
+                        </div>
+                    </footer>
                 </section>
             </div>
         </div>
@@ -543,28 +848,58 @@
                 type="button" aria-label="Close project details">x</button>
             <div
                 class="modal-media grid min-h-[280px] place-items-center rounded-md border border-white/10 bg-[#111319] text-center font-mono text-muted lg:min-h-[390px]">
-                <span id="modal-media-label">Project preview slot</span>
+                <span id="modal-media-label"></span>
             </div>
             <div class="self-center lg:pr-8">
-                <small id="modal-type" class="font-mono text-xs uppercase text-dim">case study</small>
-                <h2 id="modal-title" class="mt-3 text-4xl font-black leading-tight lg:text-5xl">Project title</h2>
-                <p id="modal-description" class="mt-4 leading-8 text-muted">Project description goes here.</p>
+                <small id="modal-type" class="font-mono text-xs uppercase text-dim"></small>
+                <h2 id="modal-title" class="mt-3 text-4xl font-black leading-tight lg:text-5xl"></h2>
+                <p id="modal-description" class="mt-4 leading-8 text-muted"></p>
                 <div class="mt-6 grid gap-3 sm:grid-cols-3">
                     <div class="rounded-md border border-white/10 bg-white/[.04] p-4"><span
                             class="font-mono text-xs text-dim">Role</span><strong id="modal-role"
-                            class="mt-2 block text-sm">Frontend</strong></div>
+                            class="mt-2 block text-sm"></strong></div>
                     <div class="rounded-md border border-white/10 bg-white/[.04] p-4"><span
                             class="font-mono text-xs text-dim">Stack</span><strong id="modal-stack"
-                            class="mt-2 block text-sm">HTML / CSS / JS</strong></div>
+                            class="mt-2 block text-sm"></strong></div>
                     <div class="rounded-md border border-white/10 bg-white/[.04] p-4"><span
                             class="font-mono text-xs text-dim">Status</span><strong id="modal-status"
-                            class="mt-2 block text-sm">Template</strong></div>
+                            class="mt-2 block text-sm"></strong></div>
                 </div>
                 <div class="mt-6 rounded-md border border-white/10 bg-white/[.04] p-4">
-                    <h3 class="font-extrabold">Detail template</h3>
-                    <p id="modal-next" class="mt-2 leading-7 text-muted">Add the problem, process, screenshots, links,
-                        and final outcome here.</p>
+                    <h3 class="font-extrabold"></h3>
+                    <p id="modal-next" class="mt-2 leading-7 text-muted"></p>
                 </div>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog
+        class="certificate-modal w-[min(calc(100%-28px),920px)] rounded-lg border border-white/15 bg-[#0c0e13]/95 p-0 text-ink shadow-[0_34px_130px_rgba(0,0,0,.74)] backdrop:bg-black/70">
+        <div class="relative grid gap-6 p-6 lg:grid-cols-[260px_minmax(0,1fr)]">
+            <button
+                class="certificate-modal-close absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/10 text-ink"
+                type="button" aria-label="Close certificate details">x</button>
+            <div class="certificate-modal-art">
+                <span id="certificate-modal-seal">DM</span>
+            </div>
+            <div class="self-center lg:pr-8">
+                <small id="certificate-modal-type" class="font-mono text-xs uppercase text-goldSoft"></small>
+                <h2 id="certificate-modal-title" class="mt-3 text-4xl font-black leading-tight lg:text-5xl"></h2>
+                <p id="certificate-modal-description" class="mt-4 leading-8 text-muted"></p>
+                <dl class="mt-6 grid gap-3 sm:grid-cols-3">
+                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4">
+                        <dt class="font-mono text-xs text-dim">Issuer</dt>
+                        <dd id="certificate-modal-issuer" class="mt-2 text-sm font-bold"></dd>
+                    </div>
+                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4">
+                        <dt class="font-mono text-xs text-dim">Year</dt>
+                        <dd id="certificate-modal-year" class="mt-2 text-sm font-bold"></dd>
+                    </div>
+                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4">
+                        <dt class="font-mono text-xs text-dim">Area</dt>
+                        <dd id="certificate-modal-area" class="mt-2 text-sm font-bold"></dd>
+                    </div>
+                </dl>
             </div>
         </div>
     </dialog>
