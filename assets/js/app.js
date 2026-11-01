@@ -142,6 +142,7 @@ function initializeHeroScroll() {
   let pinTop = 0;
   let distance = 1;
   let sceneHeight = 0;
+  let copyOffset = 0;
   let lastProgress = -1;
   let lastWidth = 0;
   let lastHeight = 0;
@@ -189,7 +190,7 @@ function initializeHeroScroll() {
       painted.set(name, next);
       root.style.setProperty(name, next);
     };
-    set("--hero-copy-y", Math.min(88, sceneHeight * .14) * (1 - copy), "px");
+    set("--hero-copy-y", copyOffset * (1 - copy), "px");
     set("--hero-identity-opacity", identity);
     set("--hero-identity-y", 22 * (1 - identity), "px");
     set("--hero-image-scale", 1 + .04 * (1 - smooth(.12, .6, progress)));
@@ -257,6 +258,18 @@ function initializeHeroScroll() {
       root.setAttribute("data-hero-scroll", "");
       enabled = true;
       trackTop = track.getBoundingClientRect().top + window.scrollY;
+      copyOffset = Math.min(88, sceneHeight * .14);
+      if (root.dataset?.mobileHero !== undefined) {
+        const heading = root.querySelector(".hero-copy");
+        if (heading) {
+          const bounds = heading.getBoundingClientRect();
+          const previousOffset = parseFloat(root.style.getPropertyValue("--hero-copy-y")) || 0;
+          const centerInScene = bounds.top - scene.getBoundingClientRect().top + bounds.height / 2 - previousOffset;
+          // Center the complete greeting in the initial viewport, then let the
+          // shared timeline move it into its final position as the portrait opens.
+          copyOffset = height / 2 - trackTop - centerInScene;
+        }
+      }
       lastProgress = -1;
       renderedProgress = null;
     }

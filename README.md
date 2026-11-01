@@ -7,6 +7,8 @@ Sitio estático compatible con GitHub Pages, sin backend ni compilación obligat
 | Contenido | Archivo o carpeta |
 | --- | --- |
 | Página principal, perfil y tarjetas de proyectos | `index.html` |
+| Versión de celular, estructura y contenido | `index-mobile.html` |
+| Diseño y comportamiento exclusivos de celular | `assets/css/mobile.css`, `assets/js/mobile.js` |
 | Fichas de proyectos | [`data/projects.js`](data/projects.js) |
 | Certificados, logros, logos y neón | [`data/credentials.json`](data/credentials.json) |
 | Respuestas personales del chatbot | [`data/assistant-knowledge.json`](data/assistant-knowledge.json) |
@@ -24,6 +26,7 @@ Las imágenes de reserva están en `images/backgrounds/`. Son fotografías disti
 
 ## Guías
 
+- [Versiones de escritorio y celular](docs/MOBILE.md)
 - [Editar proyectos](docs/PROJECTS.md)
 - [Editar certificados y logros](docs/CREDENTIALS.md)
 - [Enseñar respuestas al chatbot](docs/ASSISTANT.md)

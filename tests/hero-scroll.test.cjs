@@ -21,6 +21,7 @@ function element() {
     get writes() { return writes; },
     style: {
       setProperty(name, value) { properties.set(name, value); writes += 1; },
+      getPropertyValue(name) { return properties.get(name) || ""; },
       removeProperty(name) { properties.delete(name); }
     },
     setAttribute(name) { attributes.add(name); },
@@ -40,11 +41,13 @@ function element() {
 }
 
 function setup({ width = 1440, height = 900, naturalHeight = 580, reduced = false,
-  scrollY = 0, supported = true, frameDuration = 1000 / 60 } = {}) {
+  scrollY = 0, supported = true, frameDuration = 1000 / 60, mobile = false } = {}) {
   const root = element();
   const track = element();
   const scene = element();
   const content = element();
+  const heading = element();
+  root.dataset = mobile ? {mobileHero: ""} : {};
   const about = element();
   const document = element();
   const motion = element();
@@ -65,7 +68,8 @@ function setup({ width = 1440, height = 900, naturalHeight = 580, reduced = fals
   root.querySelector = (selector) => ({
     "[data-hero-story]": track,
     "[data-hero-scene]": scene,
-    "[data-hero-scene-content]": content
+    "[data-hero-scene-content]": content,
+    ".hero-copy": heading
   })[selector];
   root.contains = (target) => [root, track, scene, content].includes(target);
   root.nextElementSibling = about;
@@ -80,6 +84,11 @@ function setup({ width = 1440, height = 900, naturalHeight = 580, reduced = fals
     const top = documentTop - window.scrollY;
     return { top: enabled() ? Math.min(Math.max(top, inset()), top + trackHeight() - sceneHeight()) : top };
   };
+  heading.getBoundingClientRect = () => ({
+    top: scene.getBoundingClientRect().top + (sceneHeight() - content.offsetHeight) / 2 +
+      (Number.parseFloat(root.properties.get("--hero-copy-y")) || 0),
+    height: 120
+  });
   about.getBoundingClientRect = () => ({ top: documentTop + trackHeight() + 144 - window.scrollY });
   Object.assign(window, {
     innerWidth: width,
@@ -128,10 +137,24 @@ function setup({ width = 1440, height = 900, naturalHeight = 580, reduced = fals
   }
   const value = (name) => Number.parseFloat(root.properties.get(name));
   flush();
-  return { root, document, window, motion, content, about, observers, layouts,
+  return { root, document, window, motion, content, heading, about, observers, layouts,
     frames, scrollCalls, enabled, flush, tick, show, progress, value,
     time: () => now, fonts: () => fontReady?.() };
 }
+
+test("the mobile greeting starts at the viewport center and still completes and reverses its scroll story", () => {
+  for (const [width, height, naturalHeight] of [[320,640,380], [390,844,430], [430,932,440]]) {
+    const app = setup({width, height, naturalHeight, mobile: true});
+    const center = () => { const rect = app.heading.getBoundingClientRect(); return rect.top + rect.height / 2; };
+    assert(app.enabled());
+    assert(Math.abs(center() - height / 2) < .001);
+    app.show();app.progress(1);
+    assert.equal(app.value("--hero-copy-y"), 0);
+    assert.equal(app.value("--hero-identity-opacity"), 1);
+    app.window.scrollY = 0;app.window.emit("scroll");app.flush();
+    assert(Math.abs(center() - height / 2) < .001);
+  }
+});
 
 test("scroll builds the portrait and actions in order, then reverses naturally", () => {
   const app = setup();

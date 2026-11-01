@@ -18,6 +18,14 @@ body {
     #0b0d13;
 }
 
+.site-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  pointer-events: none;
+  background: radial-gradient(circle at 48% -12%, rgba(147, 231, 255, .12), transparent 34rem);
+}
+
 button {
   font: inherit;
 }
@@ -178,7 +186,7 @@ button {
 .hero-glitch-line {
   display: inline-flex;
   align-items: flex-start;
-  gap: .12em;
+  gap: 0;
   width: max-content;
   max-width: 100%;
 }

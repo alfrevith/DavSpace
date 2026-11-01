@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assets/js/device-router.js" data-layout="desktop"></script>
     <meta name="format-detection" content="telephone=no, email=no" />
     <title>David Menjivar</title>
     <link rel="preload" as="image" href="images/pfp.jpg" fetchpriority="high" />
@@ -52,7 +53,7 @@
 
 <body class="relative isolate flow-root min-h-screen overflow-x-hidden bg-night text-ink font-sans selection:bg-cyanSoft selection:text-night">
     <div
-        class="pointer-events-none fixed inset-0 -z-20 bg-[linear-gradient(90deg,rgba(255,255,255,.022)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,.018)_1px,transparent_1px),radial-gradient(circle_at_48%_-12%,rgba(147,231,255,.12),transparent_34rem)] bg-[size:72px_72px,72px_72px,auto]">
+        class="site-ambient">
     </div>
     <div
         class="pointer-events-none fixed inset-0 -z-10 opacity-30 [background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.018)_0_1px,transparent_1px_4px)]">
@@ -93,7 +94,7 @@
         </nav>
 
         <a class="group col-start-2 row-start-1 inline-flex items-center gap-2 justify-self-end text-[13px] font-semibold text-muted transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft md:col-start-3"
-            href="https://www.linkedin.com/in/david-menjivar-b0395b312" target="_blank" rel="noopener noreferrer">linkedin <span
+            href="https://www.linkedin.com/in/david-menjivar-b0395b312" target="_blank" rel="noopener noreferrer">LinkedIn <span
                 class="text-cyanSoft transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">&nearr;</span></a>
     </header>
 
@@ -115,7 +116,7 @@
                     class="hero-stage section relative min-w-0 scroll-mt-28"
                     id="start" aria-labelledby="hero-title">
                     <span
-                        class="hero-kicker mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;start/&gt;</span>
+                        class="hero-kicker mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">start/&gt;</span>
 
                     <div class="hero-scroll-track relative md:-ml-[60px] xl:-ml-[102px]" data-hero-story>
                         <div class="hero-scene relative grid min-h-[min(640px,calc(100svh-176px))] items-center" data-hero-scene>
@@ -136,11 +137,11 @@
                                             <span class="statement-text" data-intro-text="words">I'm a student and I turn ideas into</span>
                                         </p>
                                         <p class="hero-glitch-line font-mono text-[28px] font-semibold leading-[1.25] text-ink min-[360px]:text-[32px] sm:text-[36px] xl:text-[38px]">
-                                            <span class="hero-code-open pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">&lt;</span>
+                                            <span class="hero-code-open pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">&lt;/</span>
                                             <span class="glitch-output">
                                                 <span class="glitch-word text-white" data-glitch>websites</span>
                                             </span>
-                                            <span class="hero-code-close pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">/&gt;</span>
+                                            <span class="hero-code-close pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">&gt;</span>
                                         </p>
                                     </div>
                                 </div>
@@ -211,7 +212,7 @@
 
                 <section class="section scroll-mt-28" id="about-me" aria-labelledby="about-title">
                     <span
-                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;about-me/&gt;</span>
+                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">about-me/&gt;</span>
                     <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,.85fr)] lg:gap-12">
                         <h2 class="text-[32px] font-medium leading-[1.2] text-ink sm:text-[40px]" id="about-title">
                             <span class="about-heading-mask" data-about-reveal="heading"><span class="about-heading-line inline-block">A curious mind.</span></span>
@@ -423,7 +424,7 @@
                         <div class="project-particles absolute inset-0 overflow-hidden" data-project-particles></div>
                     </div>
                     <span
-                        class="reveal mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;projects/&gt;</span>
+                        class="reveal mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">projects/&gt;</span>
                     <div class="reveal flex flex-wrap items-end justify-between gap-x-8 gap-y-5">
                         <div class="min-w-0">
                             <h2 class="text-balance text-3xl font-semibold leading-tight sm:text-[40px]" id="projects-title">
@@ -581,7 +582,7 @@
                 </section>
 
                 <section class="section reveal scroll-mt-28 credential-section" id="certificates" aria-labelledby="credentials-heading" aria-busy="true">
-                    <span class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;certs-and-wins/&gt;</span>
+                    <span class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">certs-and-wins/&gt;</span>
                     <div class="credential-heading">
                         <div><p class="credential-eyebrow">A record of becoming</p><h2 id="credentials-heading">Certificates <span>&amp; Achievements.</span></h2></div>
                     </div>
@@ -610,7 +611,7 @@
 
                 <section class="contact-section section reveal relative isolate scroll-mt-28" id="contact" aria-labelledby="contact-title">
                     <span
-                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;contact/&gt;</span>
+                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">contact/&gt;</span>
                     <div class="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,.8fr)] md:gap-12 xl:gap-20">
                         <div>
                             <div class="contact-intro">

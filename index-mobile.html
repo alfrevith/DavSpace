@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html data-layout="mobile" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><script data-layout="mobile" src="assets/js/device-router.js"></script>
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>David Menjivar</title>
+    <link rel="preload" as="image" href="images/pfp.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="images/hero-contours.webp" fetchpriority="high">
+    <link rel="icon" type="image/png" href="images/ico.png">
+    <script>
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            document.documentElement.classList.add("intro-pending");
+            window.heroIntroFallback = window.setTimeout(() => {
+                document.documentElement.classList.remove("intro-pending", "intro-running");
+            }, 4000);
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: "#f5f5f1",
+                        muted: "#b4b7c3",
+                        dim: "#747986",
+                        night: "#0b0d13",
+                        cyanSoft: "#93e7ff",
+                        greenSoft: "#a7f3c5",
+                        roseSoft: "#ff9db5",
+                        goldSoft: "#f2c766"
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                        mono: ["SFMono-Regular", "Consolas", "Liberation Mono", "monospace"],
+                        serif: ["Georgia", "Times New Roman", "serif"]
+                    },
+                    boxShadow: {
+                        soft: "0 28px 100px rgba(0,0,0,.48)",
+                        lift: "0 28px 80px rgba(0,0,0,.34)"
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/credentials.css">
+    <link rel="stylesheet" href="assets/css/assistant.css">
+<link href="index.html" rel="canonical"><link href="assets/css/mobile.css" rel="stylesheet"><noscript><style>.mobile-site .reveal {opacity:1;transform:none}.mobile-filters{display:none}</style></noscript></head>
+
+<body class="relative isolate flow-root min-h-screen overflow-x-hidden bg-night text-ink font-sans selection:bg-cyanSoft selection:text-night mobile-site"><a href="#main-content" class="mobile-skip">Skip to content</a>
+    <div class="site-ambient">
+    </div>
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-30 [background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.018)_0_1px,transparent_1px_4px)]">
+    </div>
+    
+
+    <div class="hero-backdrop pointer-events-none absolute inset-x-0 top-0 z-0 overflow-hidden" aria-hidden="true">
+        <img class="absolute inset-0 h-full w-full object-cover object-[50%_64%] md:object-[50%_68%]" src="images/hero-contours.webp" alt="" decoding="async" fetchpriority="high">
+        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,13,19,.18),transparent_26%,rgba(11,13,19,.1)_50%,transparent_74%,rgba(11,13,19,.18))]"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,13,19,.04),transparent_28%,rgba(11,13,19,.12)_64%,#0b0d13_100%)]"></div>
+        <div class="hero-particles absolute inset-0" data-hero-particles=""></div>
+    </div>
+
+    <header class="site-header mobile-header"><a class="mobile-brand" href="#start" aria-label="David Menjivar home"><img src="images/mini-pfp.jpg" alt="" width="30" height="30"><strong>David Menjivar</strong></a><a rel="noopener noreferrer" target="_blank" class="mobile-header-contact" href="https://www.linkedin.com/in/david-menjivar-b0395b312">LinkedIn <span aria-hidden="true">↗</span></a></header><nav aria-label="Main navigation" class="nav mobile-nav"><div class="nav-track"><span class="nav-indicator" aria-hidden="true"></span><a href="#start" class="is-active" aria-current="location"><span aria-hidden="true" class="nav-slash font-mono">/</span><span>start</span></a><a href="#about-me"><span aria-hidden="true" class="nav-slash font-mono">/</span><span>about-me</span></a><a href="#projects"><span aria-hidden="true" class="nav-slash font-mono">/</span><span>projects</span></a><a href="#certificates" aria-label="Certificates and achievements"><span aria-hidden="true" class="nav-slash font-mono">/</span><span>certs + wins</span></a><a href="#contact"><span aria-hidden="true" class="nav-slash font-mono">/</span><span>contact</span></a></div></nav>
+
+    <main id="main-content" class="mobile-main"><div class="site-content mobile-sections"><section data-mobile-hero="" class="hero-stage section relative min-w-0 scroll-mt-28" id="start" aria-labelledby="hero-title">
+                    <span class="hero-kicker mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15 mobile-eyebrow">start/&gt;</span>
+
+                    <div class="hero-scroll-track relative md:-ml-[60px] xl:-ml-[102px]" data-hero-story="">
+                        <div class="hero-scene relative grid min-h-[min(640px,calc(100svh-176px))] items-center" data-hero-scene="">
+                            <div class="hero-scene-content relative z-10 grid w-full justify-items-center gap-7 py-5 sm:gap-8 sm:py-6 md:[@media(max-height:820px)]:gap-6 md:[@media(max-height:820px)]:py-4" data-hero-scene-content="">
+                                <div class="hero-copy relative z-10 flex w-full min-w-0 flex-col items-center">
+                                    <h1 class="hero-title w-full min-w-0 text-center tracking-normal" id="hero-title">
+                                        <span class="hero-intro-line flex flex-col items-center gap-3 leading-tight">
+                                            <span class="intro-greeting inline-flex items-center gap-3 text-lg font-medium text-ink/85 before:h-px before:w-6 before:bg-white/25 after:h-px after:w-6 after:bg-white/25 sm:text-xl">Hi, I'm</span>
+                                            <span class="name max-w-full font-serif text-[34px] font-normal leading-[1.08] text-ink min-[390px]:text-[40px] sm:text-[56px] md:text-[60px] lg:text-[72px] xl:text-[80px] 2xl:text-[88px] md:[@media(max-height:820px)]:text-[60px]" data-intro-text="words">David Menjivar</span>
+                                        </span>
+                                    </h1>
+                                    <div class="hero-statement mt-4 flex min-w-0 flex-col items-center gap-1 text-sm font-medium leading-relaxed text-ink/75 sm:mt-5 sm:text-base md:[@media(max-height:820px)]:mt-4">
+                                        <p class="statement-line min-w-0 text-center">
+                                            <span class="statement-text" data-intro-text="words">I'm a student and I turn ideas into</span>
+                                        </p>
+                                        <p class="hero-glitch-line font-mono text-[28px] font-semibold leading-[1.25] text-ink min-[360px]:text-[32px] sm:text-[36px] xl:text-[38px]">
+                                            <span class="hero-code-open pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">&lt;/</span>
+                                            <span class="glitch-output">
+                                                <span class="glitch-word text-white" data-glitch="">websites</span>
+                                            </span>
+                                            <span class="hero-code-close pt-[.08em] font-normal text-cyanSoft/[.55]" aria-hidden="true">&gt;</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="hero-identity relative z-10 grid w-full max-w-2xl grid-cols-[minmax(0,1fr)_112px_minmax(0,1fr)] items-center gap-x-3 sm:grid-cols-[minmax(0,1fr)_136px_minmax(0,1fr)] sm:gap-x-6 lg:grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)] md:[@media(max-height:820px)]:grid-cols-[minmax(0,1fr)_136px_minmax(0,1fr)]" role="group" aria-label="Profile summary">
+                                    <dl class="profile-facts min-w-0 text-right">
+                                        <div class="min-w-0">
+                                            <dt class="text-[11px] text-muted">Based in</dt>
+                                            <dd class="mt-2 text-[13px] font-medium text-ink/90 sm:text-sm">El Salvador</dd>
+                                        </div>
+                                    </dl>
+
+                                    <div class="hero-profile-shell relative w-full min-w-0">
+                                        <div class="profile-blueprint pointer-events-none absolute -inset-1.5" aria-hidden="true">
+                                            <span class="blueprint-edge blueprint-top"></span>
+                                            <span class="blueprint-edge blueprint-right"></span>
+                                            <span class="blueprint-edge blueprint-bottom"></span>
+                                            <span class="blueprint-edge blueprint-left"></span>
+                                        </div>
+                                        <a class="hero-profile profile-card relative block rounded-md border border-white/20 bg-night shadow-[0_12px_30px_rgba(0,0,0,.2)] transition-colors duration-300 hover:border-white/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft" href="#about-me" aria-label="Read about David Menjivar">
+                                            <div class="profile-photo relative aspect-[4/5] overflow-hidden rounded-[5px] bg-night">
+                                                <div class="profile-portrait absolute inset-0">
+                                                    <img class="h-full w-full object-cover object-[center_25%]" src="images/pfp.jpg" fetchpriority="high" decoding="async" alt="David Menjivar profile photo">
+                                                </div>
+                                                <div class="portrait-shutter pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+                                                    <span></span>
+                                                    <span></span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <dl class="profile-facts min-w-0 text-left">
+                                        <div class="min-w-0">
+                                            <dt class="text-[11px] text-muted">Education</dt>
+                                            <dd class="mt-2 text-[13px] font-medium text-ink/90 sm:text-sm">High School</dd>
+                                        </div>
+                                    </dl>
+
+                                    <dl class="profile-languages col-span-full mt-5 flex items-baseline justify-center gap-3 text-[11px] leading-5">
+                                        <dt class="text-muted">Languages</dt>
+                                        <dd class="text-xs font-medium text-ink/90">
+                                            English <span class="mx-1.5 text-white/25" aria-hidden="true">/</span> Spanish
+                                        </dd>
+                                    </dl>
+                                </div>
+
+                                <div class="hero-footer relative z-10 flex w-full min-w-0 flex-col items-center">
+                                    <div class="hero-actions grid w-full max-w-[336px] grid-cols-2 gap-3">
+                                        <a class="group inline-flex min-h-11 min-w-0 items-center justify-between gap-2 rounded-md border border-ink bg-ink px-3 text-xs font-semibold text-night transition-colors duration-200 hover:border-white hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft sm:px-4 sm:text-sm" href="#projects">Explore work <span class="text-lg transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">↗</span></a>
+                                        <a class="group inline-flex min-h-11 min-w-0 items-center justify-between gap-2 rounded-md border border-white/15 px-3 text-xs font-semibold text-ink transition-colors duration-200 hover:border-white/35 hover:bg-white/[.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft sm:px-4 sm:text-sm" href="#contact">Contact <span class="text-base text-muted transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span></a>
+                                    </div>
+                                    <p class="profile-status mt-3 flex items-center justify-center gap-2 text-[11px] font-medium leading-4 text-muted">
+                                        <span class="h-1 w-1 shrink-0 rounded-full bg-greenSoft" aria-hidden="true"></span>
+                                        Open to internships
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section><section class="section scroll-mt-28" id="about-me" aria-labelledby="about-title">
+                    <span class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15 mobile-eyebrow">about-me/&gt;</span>
+                    <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,.85fr)] lg:gap-12">
+                        <h2 class="text-[32px] font-medium leading-[1.2] text-ink sm:text-[40px]" id="about-title">
+                            <span class="about-heading-mask" data-about-reveal="heading"><span class="about-heading-line inline-block">A curious mind.</span></span>
+                            <span class="about-heading-mask" data-about-reveal="heading"><span class="about-heading-line inline-block font-serif italic text-ink/70">A practical approach.</span></span>
+                        </h2>
+                        <div class="about-introduction max-w-xl space-y-3 text-[15px] leading-7 text-muted">
+                            <p data-about-reveal="body">
+                                I'm David, a Salvadoran student with an analytical mind and a strong creative side.
+                                Mathematics, technology, and writing give me different ways to understand a problem or express an idea.
+                            </p>
+                            <p data-about-reveal="body">
+                                I'm drawn to things I can explore deeply, from the way a system fits together
+                                to the way a story takes shape. I enjoy connecting what I know with something I haven't tried yet.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="about-mindset mt-10 sm:mt-12" data-mindset="logic">
+                        <p class="mb-5 font-mono text-[11px] uppercase text-muted" id="mindset-label" data-about-reveal="caption">How I think</p>
+
+                        <div class="mind-tabs relative hidden grid-cols-3 border-b border-white/15" data-mind-tabs="" data-about-reveal="tabs">
+                            <button class="mind-tab group min-w-0 pb-5 pr-2 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft" type="button" id="mind-tab-logic" data-mind-tab="logic" aria-controls="mind-logic">
+                                <span class="mb-2 block font-mono text-[10px] text-dim" aria-hidden="true">01 /</span>
+                                <span class="font-serif text-[18px] min-[360px]:text-xl sm:text-[30px]">Logic</span>
+                            </button>
+                            <button class="mind-tab group min-w-0 pb-5 pr-2 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-roseSoft" type="button" id="mind-tab-creativity" data-mind-tab="creativity" aria-controls="mind-creativity">
+                                <span class="mb-2 block font-mono text-[10px] text-dim" aria-hidden="true">02 /</span>
+                                <span class="font-serif text-[18px] min-[360px]:text-xl sm:text-[30px]">Creativity</span>
+                            </button>
+                            <button class="mind-tab group min-w-0 pb-5 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-goldSoft" type="button" id="mind-tab-curiosity" data-mind-tab="curiosity" aria-controls="mind-curiosity">
+                                <span class="mb-2 block font-mono text-[10px] text-dim" aria-hidden="true">03 /</span>
+                                <span class="font-serif text-[18px] min-[360px]:text-xl sm:text-[30px]">Curiosity</span>
+                            </button>
+                            <span class="mind-tab-line pointer-events-none absolute -bottom-px left-0 h-px w-1/3" aria-hidden="true"></span>
+                        </div>
+
+                        <div class="mind-stage relative isolate grid gap-8" data-about-reveal="stage">
+                            <article class="mind-panel relative isolate min-w-0 py-8 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyanSoft/50 sm:py-10" id="mind-logic" data-mind-panel="logic" aria-labelledby="mind-logic-title">
+                                <div class="mind-contours pointer-events-none" aria-hidden="true">
+                                    <span class="mind-contour-source mind-contour-primary"></span>
+                                    <span class="mind-contour-source mind-contour-secondary"></span>
+                                </div>
+                                <div class="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,.75fr)] lg:gap-12">
+                                    <div class="mind-copy min-w-0">
+                                        <p class="mind-ink mb-3 font-mono text-[11px]">01 / Logic</p>
+                                        <h3 class="max-w-md text-2xl font-medium leading-snug sm:text-[30px]" id="mind-logic-title">Understand the problem.<br>Then find the pattern.</h3>
+                                        <p class="mt-4 max-w-lg text-sm leading-7 text-muted">
+                                            Analyzing and solving problems comes naturally to me. I'm strong in mathematics,
+                                            logical reasoning, and spatial thinking: visualizing how parts fit together,
+                                            recognizing patterns, and breaking complex questions into manageable steps.
+                                        </p>
+                                        <p class="mb-3 mt-6 text-[11px] font-medium text-muted">Personal strengths</p>
+                                        <ul class="mind-strengths grid gap-x-5 gap-y-3 text-[13px] leading-5 text-ink/90 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
+                                            <li>Analysis &amp; problem-solving</li>
+                                            <li>Mathematical reasoning</li>
+                                            <li>Spatial reasoning &amp; visualization</li>
+                                            <li>Logic &amp; pattern recognition</li>
+                                        </ul>
+                                    </div>
+                                    <details class="mobile-note"><summary>Systems &amp; web toolkit<span aria-hidden="true">+</span></summary><aside class="mind-note min-w-0 border-l border-white/10 pl-5 sm:pl-6" aria-labelledby="logic-note-title">
+                                        <p class="mind-ink mb-3 font-mono text-[10px] uppercase">Across physical &amp; digital systems</p>
+                                        <h4 class="font-serif text-[25px] leading-tight" id="logic-note-title">More than what's on a screen.</h4>
+                                        <dl class="mt-5 grid grid-cols-2 gap-x-5 gap-y-5">
+                                            <div>
+                                                <dt class="mb-1 text-[13px] font-medium text-ink">Electronics</dt>
+                                                <dd class="text-xs leading-5 text-muted">Circuits, components, and electrical relationships.</dd>
+                                            </div>
+                                            <div>
+                                                <dt class="mb-1 text-[13px] font-medium text-ink">Hardware</dt>
+                                                <dd class="text-xs leading-5 text-muted">Computer components and how they fit together.</dd>
+                                            </div>
+                                            <div>
+                                                <dt class="mb-1 text-[13px] font-medium text-ink">Software</dt>
+                                                <dd class="text-xs leading-5 text-muted">Applications, web technologies, and the logic behind them.</dd>
+                                            </div>
+                                            <div>
+                                                <dt class="mb-1 text-[13px] font-medium text-ink">Robotics</dt>
+                                                <dd class="text-xs leading-5 text-muted">How mechanisms, electronics, and code connect.</dd>
+                                            </div>
+                                        </dl>
+                                        <p class="mt-5 border-t border-white/10 pt-4 text-[11px] leading-5 text-muted">
+                                            <span class="mind-ink mb-1 block font-mono">Web toolkit</span>
+                                            HTML, CSS, JavaScript, Tailwind CSS, Node.js, AdonisJS, Python.
+                                        </p>
+                                    </aside></details>
+                                </div>
+                            </article>
+
+                            <article class="mind-panel relative isolate min-w-0 py-8 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-roseSoft/50 sm:py-10" id="mind-creativity" data-mind-panel="creativity" aria-labelledby="mind-creativity-title">
+                                <div class="mind-contours pointer-events-none" aria-hidden="true">
+                                    <span class="mind-contour-source mind-contour-primary"></span>
+                                    <span class="mind-contour-source mind-contour-secondary"></span>
+                                </div>
+                                <div class="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,.75fr)] lg:gap-12">
+                                    <div class="mind-copy min-w-0">
+                                        <p class="mind-ink mb-3 font-mono text-[11px]">02 / Creativity</p>
+                                        <h3 class="max-w-md text-2xl font-medium leading-snug sm:text-[30px]" id="mind-creativity-title">Find the words.<br>Give the idea a shape.</h3>
+                                        <p class="mt-4 max-w-lg text-sm leading-7 text-muted">
+                                            Writing and expressing ideas clearly are strengths of mine. I enjoy giving thoughts
+                                            structure and a voice, whether through stories, poems, images, or something I haven't
+                                            tried before. Creativity is also a reason to experiment.
+                                        </p>
+                                        <p class="mb-3 mt-6 text-[11px] font-medium text-muted">Personal strengths</p>
+                                        <ul class="mind-strengths grid gap-x-5 gap-y-3 text-[13px] leading-5 text-ink/90 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
+                                            <li>Writing &amp; composition</li>
+                                            <li>Clear expression of ideas</li>
+                                            <li>Visual thinking &amp; storytelling</li>
+                                            <li>Creative experimentation</li>
+                                        </ul>
+                                    </div>
+                                    <details class="mobile-note"><summary>Creative interests<span aria-hidden="true">+</span></summary><aside class="mind-note min-w-0 border-l border-white/10 pl-5 sm:pl-6" aria-labelledby="creativity-note-title">
+                                        <p class="mind-ink mb-3 font-mono text-[10px] uppercase">Other ways to say it</p>
+                                        <h4 class="font-serif text-[25px] leading-tight" id="creativity-note-title">Not every idea starts with code.</h4>
+                                        <div role="group" class="mt-5 grid grid-cols-2 gap-x-5 gap-y-4" aria-label="David's creative interests">
+                                            <div class="mind-interest min-w-0 border-b border-white/10 pb-3">
+                                                <span class="flex items-center justify-between gap-1 text-[13px] font-medium">Photography</span>
+                                                <span class="mt-2 block text-xs leading-5 text-muted">Light, framing, and everyday details.</span>
+                                            </div>
+                                            <div class="mind-interest min-w-0 border-b border-white/10 pb-3">
+                                                <span class="flex items-center justify-between gap-1 text-[13px] font-medium">Drawing</span>
+                                                <span class="mt-2 block text-xs leading-5 text-muted">Form, lines, and visual ideas.</span>
+                                            </div>
+                                            <div class="mind-interest min-w-0 border-b border-white/10 pb-3">
+                                                <span class="flex items-center justify-between gap-1 text-[13px] font-medium">Stories</span>
+                                                <span class="mt-2 block text-xs leading-5 text-muted">Characters and other perspectives.</span>
+                                            </div>
+                                            <div class="mind-interest min-w-0 border-b border-white/10 pb-3">
+                                                <span class="flex items-center justify-between gap-1 text-[13px] font-medium">Poems</span>
+                                                <span class="mt-2 block text-xs leading-5 text-muted">A feeling, a rhythm, a few words.</span>
+                                            </div>
+                                        </div>
+                                    </aside></details>
+                                </div>
+                            </article>
+
+                            <article class="mind-panel relative isolate min-w-0 py-8 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-goldSoft/50 sm:py-10" id="mind-curiosity" data-mind-panel="curiosity" aria-labelledby="mind-curiosity-title">
+                                <div class="mind-contours pointer-events-none" aria-hidden="true">
+                                    <span class="mind-contour-source mind-contour-primary"></span>
+                                    <span class="mind-contour-source mind-contour-secondary"></span>
+                                </div>
+                                <div class="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,.75fr)] lg:gap-12">
+                                    <div class="mind-copy min-w-0">
+                                        <p class="mind-ink mb-3 font-mono text-[11px]">03 / Curiosity</p>
+                                        <h3 class="max-w-md text-2xl font-medium leading-snug sm:text-[30px]" id="mind-curiosity-title">Follow the interest.<br>Go past the surface.</h3>
+                                        <p class="mt-4 max-w-lg text-sm leading-7 text-muted">
+                                            When a subject genuinely interests me, I want more than a quick explanation.
+                                            I learn on my own, put effort into understanding it, and keep exploring until
+                                            the ideas start to connect. I'm willing to try unfamiliar things along the way.
+                                        </p>
+                                        <p class="mb-3 mt-6 text-[11px] font-medium text-muted">Personal strengths</p>
+                                        <ul class="mind-strengths grid gap-x-5 gap-y-3 text-[13px] leading-5 text-ink/90 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
+                                            <li>Self-directed learning</li>
+                                            <li>Persistence &amp; follow-through</li>
+                                            <li>Openness to new experiences</li>
+                                            <li>Adaptability &amp; initiative</li>
+                                        </ul>
+                                    </div>
+                                    <details class="mobile-note"><summary>My direction<span aria-hidden="true">+</span></summary><aside class="mind-note min-w-0 border-l border-white/10 pl-5 sm:pl-6" aria-labelledby="curiosity-note-title">
+                                        <p class="mind-ink mb-3 font-mono text-[10px] uppercase">Still becoming</p>
+                                        <h4 class="font-serif text-[25px] leading-tight" id="curiosity-note-title">My own pace. A clear direction.</h4>
+                                        <dl class="mt-6 space-y-5">
+                                            <div>
+                                                <dt class="mb-1 text-[11px] text-muted">My academic path</dt>
+                                                <dd class="text-[13px] leading-6 text-ink/90">High school student, working toward software engineering.</dd>
+                                            </div>
+                                            <div>
+                                                <dt class="mb-1 text-[11px] text-muted">Beyond the syllabus</dt>
+                                                <dd class="text-[13px] leading-6 text-ink/90">My interests give me reasons to keep learning outside the classroom.</dd>
+                                            </div>
+                                            <div>
+                                                <dt class="mb-1 text-[11px] text-muted">What I'm looking for</dt>
+                                                <dd class="text-[13px] leading-6 text-ink/90">An internship where I can learn, contribute, and keep growing.</dd>
+                                            </div>
+                                        </dl>
+                                    </aside></details>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <div class="about-personal grid gap-8 border-t border-white/15 pt-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,.75fr)] lg:gap-12">
+                        <div data-about-reveal="personal">
+                            <p class="mb-3 font-mono text-[11px] uppercase text-greenSoft">A little more personal</p>
+                            <h3 class="text-xl font-medium">The person, not just the skill set.</h3>
+                            <p class="mt-3 max-w-lg text-sm leading-7 text-muted">
+                                I consider myself analytical, responsible, and determined. I care about explaining
+                                my ideas clearly, paying attention to details, and following through on what I start.
+                                I don't see analytical thinking and creative expression as opposites; both are part of who I am.
+                            </p>
+                        </div>
+                        <div data-about-reveal="personal">
+                            <p class="mb-3 font-mono text-[11px] uppercase text-muted">Let's connect</p>
+                            <p class="max-w-sm text-sm leading-7 text-muted">
+                                Have a question, an opportunity, or an idea worth exploring?
+                                I'd be happy to start a conversation.
+                            </p>
+                            <a class="group mt-3 inline-flex min-h-11 items-center gap-4 text-sm font-medium text-ink underline decoration-white/25 underline-offset-8 transition-colors duration-300 hover:text-greenSoft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-greenSoft" href="#contact">Say hello <span class="transition-transform duration-300 motion-safe:group-hover:translate-x-1" aria-hidden="true">→</span></a>
+                        </div>
+                    </div>
+                </section><section class="section relative isolate min-w-0 scroll-mt-28" id="projects" aria-labelledby="projects-title">
+                    <div class="project-atmosphere pointer-events-none absolute -inset-x-6 -inset-y-12 -z-10" data-project-ambience="" aria-hidden="true">
+                        <div class="project-light-field absolute inset-0"></div>
+                        <div class="project-particles absolute inset-0 overflow-hidden" data-project-particles=""></div>
+                    </div>
+                    <span class="reveal mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15 mobile-eyebrow">projects/&gt;</span>
+                    <div class="reveal flex flex-wrap items-end justify-between gap-x-8 gap-y-5">
+                        <div class="min-w-0">
+                            <h2 class="text-balance text-3xl font-semibold leading-tight sm:text-[40px]" id="projects-title">
+                                Ideas <span class="font-serif italic text-greenSoft">in action.</span>
+                            </h2>
+                            <p class="mt-3 max-w-lg text-sm leading-relaxed text-muted sm:text-base">
+                                From web experiences to hands-on electronics.
+                            </p>
+                        </div>
+                        <p class="shrink-0 font-mono text-xs tabular-nums text-muted" data-project-count="" role="status" aria-live="polite" aria-atomic="true">5 projects</p>
+                    </div>
+
+                    <details class="mobile-filters"><summary><span>Filter projects</span><span class="mobile-filter-selection" data-mobile-filter-label="">All projects</span><span aria-hidden="true">+</span></summary><div class="reveal mt-7 grid gap-5 border-y border-white/10 py-5 sm:grid-cols-[auto_minmax(0,1fr)] xl:grid-cols-[auto_minmax(0,1fr)_auto] xl:gap-7" role="group" aria-label="Project filters">
+                        <div>
+                            <p class="mb-2 font-mono text-[10px] uppercase text-dim" id="project-overview-label">Overview</p>
+                            <div role="group" aria-labelledby="project-overview-label">
+                                <button class="filter is-active min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-filter="all" aria-pressed="true" aria-controls="project-list">All</button>
+                            </div>
+                        </div>
+
+                        <div class="min-w-0">
+                            <p class="mb-2 font-mono text-[10px] uppercase text-dim" id="project-software-label">Software</p>
+                            <div class="flex flex-wrap gap-1" role="group" aria-labelledby="project-software-label">
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-filter="web" aria-pressed="false" aria-controls="project-list">Web</button>
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-filter="web-app" aria-pressed="false" aria-controls="project-list">Web App</button>
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-filter="app" aria-pressed="false" aria-controls="project-list">App</button>
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-filter="prototype" aria-pressed="false" aria-controls="project-list">Prototype</button>
+                            </div>
+                        </div>
+
+                        <div class="min-w-0 sm:col-start-2 xl:col-start-auto">
+                            <p class="mb-2 font-mono text-[10px] uppercase text-dim" id="project-hardware-label">Hardware</p>
+                            <div class="flex flex-wrap gap-1" role="group" aria-labelledby="project-hardware-label">
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-filter="electronics" aria-pressed="false" aria-controls="project-list">Electronics</button>
+                                <button class="filter min-h-10 rounded-md border border-transparent px-3.5 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-filter="robotics" aria-pressed="false" aria-controls="project-list">Robotics</button>
+                            </div>
+                        </div>
+
+                        <div class="col-span-full flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[.06] pt-4" role="group" aria-labelledby="project-year-label">
+                            <p class="font-mono text-[10px] uppercase text-dim" id="project-year-label">Year</p>
+                            <div class="flex flex-wrap gap-1">
+                                <button class="filter is-active min-h-9 rounded-md border border-transparent px-3 text-xs font-medium text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-project-year="all" aria-pressed="true" aria-controls="project-list">All years</button>
+                                <button class="filter min-h-9 rounded-md border border-transparent px-3 text-xs font-medium tabular-nums text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-project-year="2024" aria-pressed="false" aria-controls="project-list">2024</button>
+                                <button class="filter min-h-9 rounded-md border border-transparent px-3 text-xs font-medium tabular-nums text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-project-year="2025" aria-pressed="false" aria-controls="project-list">2025</button>
+                                <button class="filter min-h-9 rounded-md border border-transparent px-3 text-xs font-medium tabular-nums text-muted transition-colors duration-200 hover:bg-white/[.05] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenSoft" type="button" data-project-year="2026" aria-pressed="false" aria-controls="project-list">2026</button>
+                            </div>
+                        </div>
+                    </div></details>
+
+                    <!-- Categories may overlap; the footer's time element supplies the filter year. -->
+                    <div class="project-board mt-12 grid grid-cols-1 gap-x-10 gap-y-20 md:grid-cols-12 md:gap-y-24 xl:gap-x-14" id="project-list" aria-label="Project list">
+                        <button class="project-card project-poster project-wide group relative text-left text-ink transition" type="button" data-project="beyond" data-category="web">
+                            <span class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/Beyond.png" alt="Beyond" data-fit="cover">
+                            </span>
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.92] sm:text-4xl">Beyond</strong>
+                                <span class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Web</span>
+                                    <time datetime="2026">2026</time>
+                                </span>
+                            </span>
+                        </button>
+
+                        <button class="project-card project-poster project-compact group relative text-left text-ink transition" type="button" data-project="plant-bud" data-category="web web-app">
+                            <span class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/PlantBud.png" alt="Plant Bud" data-fit="cover">
+                            </span>
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.9] sm:text-4xl">Plant
+                                    Bud</strong>
+                                <span class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Web / PWA</span>
+                                    <time datetime="2026">2026</time>
+                                </span>
+                            </span>
+                        </button>
+
+                        <button class="project-card project-poster project-wide group relative text-left text-ink transition" type="button" data-project="pot-c" data-category="web electronics">
+                            <span class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/POT-C.png" alt="POT-C" data-fit="cover">
+                            </span>
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.92] sm:text-4xl">POT-C</strong>
+                                <span class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Informative Web / Smart Bin</span>
+                                    <time datetime="2025">2025</time>
+                                </span>
+                            </span>
+                        </button>
+
+                        <button class="project-card project-poster project-compact group relative text-left text-ink transition" type="button" data-project="cecam" data-category="web prototype">
+                            <span class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/CECAM.png" alt="CECAM" data-fit="cover">
+                            </span>
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.92] sm:text-4xl">CECAM</strong>
+                                <span class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Web / Prototype</span>
+                                    <time datetime="2025">2025</time>
+                                </span>
+                            </span>
+                        </button>
+
+                        <button class="project-card project-poster project-tall group relative text-left text-ink transition" type="button" data-project="pets-health" data-category="prototype app">
+                            <span class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/PetsHealth.png" alt="Pet's Health" data-fit="cover">
+                            </span>
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.92] sm:text-4xl">Pet's Health</strong>
+                                <span class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Mobile App / Prototype</span>
+                                    <time datetime="2024">2024</time>
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="mt-10 border-b border-white/10 py-12" data-project-empty="" hidden>
+                        <p class="font-serif text-2xl text-ink">No projects match these filters.</p>
+                        <button class="mt-5 inline-flex min-h-11 items-center gap-3 rounded-md text-sm font-medium text-greenSoft transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-greenSoft" type="button" data-project-reset="">View all projects <span aria-hidden="true">→</span></button>
+                    </div>
+                </section><section class="section reveal scroll-mt-28 credential-section" id="certificates" aria-labelledby="credentials-heading" aria-busy="true">
+                    <span class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15 mobile-eyebrow">certs-and-wins/&gt;</span>
+                    <div class="credential-heading">
+                        <div><p class="credential-eyebrow">A record of becoming</p><h2 id="credentials-heading">Certificates <span>&amp; Achievements.</span></h2></div>
+                    </div>
+                    <div class="credential-lane" data-credential-lane="certificates" role="region" aria-roledescription="carousel" aria-label="Certificates">
+                        <div class="credential-lane-heading"><div class="credential-lane-label"><span aria-hidden="true">01</span><h3>Certificates</h3><span data-lane-count="">Learning on record</span></div>
+                            <div class="credential-lane-tools"><span class="credential-lane-state" data-lane-state="">Slowly in motion</span>
+                                <button type="button" data-lane-pause="" aria-label="Pause automatic movement" aria-pressed="false"><svg class="credential-pause-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5v10m6-10v10" /></svg><svg class="credential-play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 8 6-8 6Z" /></svg></button>
+                                <button type="button" data-lane-prev="" aria-label="Previous certificate"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 5-5 5 5 5" /></svg></button>
+                                <button type="button" data-lane-next="" aria-label="Next certificate"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg></button>
+                            </div>
+                        </div>
+                        <div class="credential-viewport" tabindex="0" aria-label="Certificate cards. Drag or use the arrow keys to explore."><div class="credential-track"></div></div>
+                    </div>
+                    <div class="credential-lane" data-credential-lane="achievements" role="region" aria-roledescription="carousel" aria-label="Achievements">
+                        <div class="credential-lane-heading"><div class="credential-lane-label"><span aria-hidden="true">02</span><h3>Achievements</h3><span data-lane-count="">Spaces for future milestones</span></div>
+                            <div class="credential-lane-tools"><span class="credential-lane-state" data-lane-state="">Slowly in motion</span>
+                                <button type="button" data-lane-pause="" aria-label="Pause automatic movement" aria-pressed="false"><svg class="credential-pause-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5v10m6-10v10" /></svg><svg class="credential-play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 8 6-8 6Z" /></svg></button>
+                                <button type="button" data-lane-prev="" aria-label="Previous achievement"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 5-5 5 5 5" /></svg></button>
+                                <button type="button" data-lane-next="" aria-label="Next achievement"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg></button>
+                            </div>
+                        </div>
+                        <div class="credential-viewport" tabindex="0" aria-label="Achievement cards. Drag or use the arrow keys to explore."><div class="credential-track"></div></div>
+                    </div>
+                    <noscript><p>Enable JavaScript to explore these records. <a href="certifications/Excel/MOS Excel Expert.pdf">Open Excel Expert PDF</a> · <a href="certifications/Excel/MOS Excel.pdf">Open Excel PDF</a></p></noscript>
+                </section><section class="contact-section section reveal relative isolate scroll-mt-28" id="contact" aria-labelledby="contact-title">
+                    <span class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15 mobile-eyebrow">contact/&gt;</span>
+                    <div class="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,.8fr)] md:gap-12 xl:gap-20"><div class="contact-intro">
+                                <h2 class="text-[34px] font-medium leading-[1.15] text-ink sm:text-[44px]" id="contact-title">
+                                    Let's talk about<br>
+                                    <span class="font-serif italic text-ink/70">what's next.</span>
+                                </h2>
+                                <p class="mt-5 max-w-md text-sm leading-7 text-muted">
+                                    An opportunity, a collaboration, or an idea worth exploring.
+                                    A good conversation is a good place to start.
+                                </p>
+                            </div><nav class="contact-networks min-w-0 md:pt-2" aria-labelledby="contact-networks-title" aria-describedby="contact-networks-status">
+                            <div class="mb-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+                                <h3 class="font-mono text-[11px] uppercase text-muted" id="contact-networks-title">Elsewhere</h3>
+                                <p class="text-[11px] text-muted" id="contact-networks-status">Find me here</p>
+                            </div>
+
+                            <a class="contact-social group relative grid min-h-[92px] grid-cols-[40px_minmax(0,1fr)_24px] items-center gap-4 border-b border-white/10 py-5 [--contact-accent:#93e7ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft" href="https://www.linkedin.com/in/david-menjivar-b0395b312" target="_blank" rel="noopener noreferrer" title="David Menjivar on LinkedIn" aria-label="LinkedIn (opens in a new tab)">
+                                <span class="grid h-10 w-10 place-items-center">
+                                    <img class="h-8 w-8 object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100" src="images/Social/in.png" width="32" height="32" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                </span>
+                                <span class="min-w-0">
+                                    <strong class="contact-social-name block text-[15px] font-medium">LinkedIn</strong>
+                                    <span class="mt-1 block text-xs leading-5 text-muted">Professional connections</span>
+                                </span>
+                                <span class="contact-social-arrow justify-self-end text-xl text-muted" aria-hidden="true">↗</span>
+                            </a>
+
+                            <a class="contact-social group relative grid min-h-[92px] grid-cols-[40px_minmax(0,1fr)_24px] items-center gap-4 border-b border-white/10 py-5 [--contact-accent:#ff9db5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-roseSoft" href="https://www.instagram.com/alfrevith/" target="_blank" rel="noopener noreferrer" title="alfrevith on Instagram" aria-label="Instagram (opens in a new tab)">
+                                <span class="grid h-10 w-10 place-items-center">
+                                    <img class="h-[26px] w-[26px] object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100" src="images/Social/instagram.png" width="26" height="26" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                </span>
+                                <span class="min-w-0">
+                                    <strong class="contact-social-name block text-[15px] font-medium">Instagram</strong>
+                                    <span class="mt-1 block text-xs leading-5 text-muted">Images, ideas &amp; everyday moments</span>
+                                </span>
+                                <span class="contact-social-arrow justify-self-end text-xl text-muted" aria-hidden="true">↗</span>
+                            </a>
+
+                            <a class="contact-social group relative grid min-h-[92px] grid-cols-[40px_minmax(0,1fr)_24px] items-center gap-4 border-b border-white/10 py-5 [--contact-accent:#f2c766] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-goldSoft" href="https://vsco.co/alfrevith" target="_blank" rel="noopener noreferrer" title="alfrevith on VSCO" aria-label="VSCO (opens in a new tab)">
+                                <span class="grid h-10 w-10 place-items-center">
+                                    <img class="h-[30px] w-[30px] object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100" src="images/Social/vsco.png" width="30" height="30" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                </span>
+                                <span class="min-w-0">
+                                    <strong class="contact-social-name block text-[15px] font-medium">VSCO</strong>
+                                    <span class="mt-1 block text-xs leading-5 text-muted">A photographic perspective</span>
+                                </span>
+                                <span class="contact-social-arrow justify-self-end text-xl text-muted" aria-hidden="true">↗</span>
+                            </a>
+                        </nav><div class="contact-details mt-8">
+                                <div class="mb-1 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                                    <h3 class="font-mono text-[11px] uppercase text-muted">Direct contact</h3>
+                                    <span class="text-[11px] text-muted">Not active yet</span>
+                                </div>
+                                <dl class="divide-y divide-white/10">
+                                    <div class="relative min-w-0 py-4 pl-12 sm:pl-[52px]">
+                                        <dt class="mb-1 text-[11px] text-muted">
+                                            <img class="absolute left-1.5 top-1/2 h-6 w-6 -translate-y-1/2 object-contain opacity-75" src="images/Social/llamada-telefonica.png" width="24" height="24" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                            Phone
+                                        </dt>
+                                        <dd class="font-mono text-[16px] leading-7 text-ink sm:text-[18px]">+503 0000-0000</dd>
+                                    </div>
+                                    <div class="relative min-w-0 py-4 pl-12 sm:pl-[52px]">
+                                        <dt class="mb-1 text-[11px] text-muted">
+                                            <img class="absolute left-0.5 top-1/2 h-8 w-8 -translate-y-1/2 object-contain opacity-75" src="images/Social/correo.png" width="32" height="32" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                            Email
+                                        </dt>
+                                        <dd class="break-words text-[16px] leading-7 text-ink sm:text-[18px]">contacto@gmail.com</dd>
+                                    </div>
+                                </dl>
+                            </div></div>
+
+                    <footer class="contact-signature relative mt-10 flex flex-wrap items-end justify-between gap-x-8 gap-y-5 pt-6 sm:mt-12">
+                        <div>
+                            <p class="font-serif text-xl text-ink">David Menjivar</p>
+                            <p class="mt-2 text-[11px] text-muted">El Salvador · English / Spanish</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-x-6 gap-y-4">
+                            <span class="inline-flex items-center gap-2 text-[11px] text-greenSoft">
+                                <span class="h-1.5 w-1.5 rounded-full bg-greenSoft" aria-hidden="true"></span>
+                                Open to internships
+                            </span>
+                            <a class="group inline-flex min-h-11 items-center gap-3 text-xs text-muted transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyanSoft" href="#start">Back to start <span class="transition-transform duration-300 motion-safe:group-hover:-translate-y-0.5" aria-hidden="true">↑</span></a>
+                        </div>
+                    <a href="index.html?view=desktop" class="mobile-version-link">View desktop version ↗</a></footer>
+                </section></div></main>
+
+    <dialog class="project-modal" id="project-dialog" aria-labelledby="project-dialog-title">
+        <div class="project-window">
+            <div class="project-hologram" aria-hidden="true">
+                <span class="project-neon-corner project-neon-nw"></span>
+                <span class="project-neon-corner project-neon-ne"></span>
+                <span class="project-neon-corner project-neon-sw"></span>
+                <span class="project-neon-corner project-neon-se"></span>
+            </div>
+            <header class="project-window-bar">
+                <p class="project-file-label"><span class="project-file-mark" aria-hidden="true"></span>PROJECT FILE <span class="project-file-number" data-project-number=""></span></p>
+                <div class="project-window-actions">
+                    <span class="project-escape-hint"><kbd>esc</kbd> to close</span>
+                    <button class="project-close" type="button" aria-label="Close project details" autofocus>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+                    </button>
+                </div>
+            </header>
+            <div class="project-workspace">
+                <section class="project-details" aria-label="Project information" tabindex="0">
+                    <div class="project-detail-heading" data-project-reveal="">
+                        <p class="project-eyebrow">The project, in detail</p>
+                        <div class="project-title-row">
+                            <div class="project-title-lockup">
+                                <h2 id="project-dialog-title"></h2>
+                                <span class="project-title-echo project-title-echo-upper" data-project-title-echo="" aria-hidden="true"></span>
+                                <span class="project-title-echo project-title-echo-lower" data-project-title-echo="" aria-hidden="true"></span>
+                            </div>
+                            <span class="project-detail-logo" data-project-logo="" aria-hidden="true" hidden></span>
+                        </div>
+                        <span class="project-heading-rule" aria-hidden="true"></span>
+                    </div>
+                    <dl class="project-facts">
+                        <div class="project-fact project-fact-status" data-project-reveal="">
+                            <dt>Status</dt>
+                            <dd><span class="project-status" data-project-status=""></span></dd>
+                        </div>
+                        <div class="project-fact" data-project-reveal="">
+                            <dt>Role</dt>
+                            <dd data-project-role=""></dd>
+                        </div>
+                        <div class="project-fact" data-project-reveal="">
+                            <dt>Project type</dt>
+                            <dd data-project-type=""></dd>
+                        </div>
+                        <div class="project-fact" data-project-reveal="">
+                            <dt>Development date</dt>
+                            <dd data-project-date=""></dd>
+                        </div>
+                        <div class="project-fact" data-project-reveal="">
+                            <dt>Collaboration</dt>
+                            <dd data-project-mode=""></dd>
+                        </div>
+                        <div class="project-fact project-fact-full" data-project-reveal="">
+                            <dt>Technologies</dt>
+                            <dd><ul class="project-technologies" data-project-technologies="" aria-label="Technologies used"></ul><span data-project-no-technologies="">Not specified yet</span></dd>
+                        </div>
+                        <div class="project-fact project-fact-full project-description" data-project-reveal="">
+                            <dt>Description</dt>
+                            <dd data-project-description=""></dd>
+                        </div>
+                    </dl>
+                    <p class="project-details-end" aria-hidden="true"><span></span>End of project file <span>✦</span></p>
+                </section>
+                <section class="project-archive" aria-label="Project document"><h3 class="mobile-document-heading">Visual documentation</h3>
+                    <div class="project-document-stage">
+                        <a class="project-pdf-link project-native-open" data-project-pdf-link="" target="_blank" rel="noopener noreferrer" hidden>Open PDF <span aria-hidden="true">↗</span></a>
+                        <div class="project-document-empty" data-project-pdf-empty="">
+                            <div class="project-document-art" aria-hidden="true">
+                                <span class="project-document-orbit"></span>
+                                <svg viewBox="0 0 120 150" fill="none"><path d="M24 10h48l26 26v104H24z" /><path d="M72 10v26h26M39 58h44M39 67h28" /><rect x="39" y="83" width="44" height="35" rx="2" /><path d="m39 110 13-13 10 9 8-7 13 13" /><circle cx="72" cy="92" r="3" /></svg>
+                                <span class="project-document-badge">PDF</span>
+                            </div>
+                            <p class="project-document-kicker">Behind the project</p>
+                            <h4>A little more perspective.</h4>
+                            <p>Images, screens, and the story behind the work.<br>Visual documentation is coming soon.</p>
+                        </div>
+                        <div class="project-pdf-mount" data-project-pdf-mount="" hidden></div>
+                    </div>
+                    <div class="project-archive-footer"><span><i aria-hidden="true"></i><span data-project-document-label="">Visual documentation</span></span><span>PDF / <span data-project-document-state="">Pending</span></span></div>
+                </section>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog class="credential-modal" id="credential-dialog" aria-labelledby="credential-title" aria-describedby="credential-description">
+        <div class="credential-folio">
+            <header class="credential-folio-header">
+                <span class="credential-folio-mark" aria-hidden="true">D/M <i></i> Selected records</span>
+                <span class="credential-record-status" data-credential-status="">Personal archive</span>
+                <button class="credential-close" type="button" aria-label="Close record"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
+            </header>
+            <div class="credential-workspace"><section class="credential-metadata" aria-label="Record details">
+                    <div class="credential-detail-lead">
+                        <p class="credential-detail-kind"><span data-credential-kind="">Certificate</span><i aria-hidden="true"></i> The story behind it</p>
+                        <span class="credential-detail-logo" data-credential-logo="" aria-hidden="true" hidden></span>
+                    </div>
+                    <h2 id="credential-title"></h2>
+                    <p class="credential-detail-subtitle" data-credential-subtitle=""></p>
+                    <div class="credential-detail-year"><span>Year</span><strong data-credential-year=""></strong></div>
+                    <div class="credential-detail-description"><h3>About this record</h3><p id="credential-description" data-credential-description=""></p></div>
+                    <a class="credential-full-link" data-credential-full="" target="_blank" rel="noopener noreferrer" hidden>Open original document <span aria-hidden="true">↗</span></a>
+                    <p class="credential-endnote" aria-hidden="true">Small steps. Lasting evidence.<span>Keep becoming.</span></p>
+                </section>
+                <section class="credential-document" aria-label="Supporting PDF document"><h3 class="mobile-document-heading">Visual documentation</h3>
+                    <div class="credential-document-empty">
+                        <div class="credential-blank-page" aria-hidden="true"><span>Room for<br><em>what comes next.</em></span><small>Document pending</small></div>
+                        <p>The document will appear here once it is added.</p>
+                    </div>
+                    <div class="credential-pdf-mount" data-credential-pdf="" hidden></div>
+                </section>
+                
+            </div>
+        </div>
+    </dialog>
+
+    <script src="data/projects.js"></script>
+    <script src="assets/js/project-pdf-viewer.js"></script>
+    <script src="assets/js/project-dialog.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/credentials.js" defer></script>
+    <script src="assets/js/assistant-core.js" defer></script>
+    <script src="assets/js/assistant.js" defer></script>
+<script defer src="assets/js/mobile.js"></script></body>
+
+</html>
