@@ -12,8 +12,8 @@ function fixture() {
     <section class="section" id="about-me"><h2>About</h2><div class="about-introduction"><p>Mathematics, technology, and writing are my interests.</p></div><article class="mind-panel" aria-hidden="true">Creative thinking</article><span aria-hidden="true">decorative duplicate</span></section>
     <section class="section" id="projects"><div id="project-list">${Object.entries(projects).map(([id,p])=>`<button data-project="${id}"><strong class="project-title">${p.title}</strong><span class="project-footer"><span>Web</span><time>${p.date}</time></span></button>`).join("")}</div></section>
     <section class="section" id="contact"><div class="contact-details">Not active yet <p>contacto@gmail.com +503 0000-0000</p></div><p>Contact David</p></section>
-    <a href="photography.html">Photos</a></main></html>`);
-  const sources=[...core.extractDocument(doc),...core.projectSources(projects,doc),core.profileSource(doc),...core.extractDocument(parse('<main><h1>Photography</h1><p>Photo gallery</p></main>'),"photography.html")];
+    </main></html>`);
+  const sources=[...core.extractDocument(doc),...core.projectSources(projects,doc),core.profileSource(doc)];
   return {doc,sources};
 }
 const ask=(question,options={})=>core.answer(fixture().sources,question,options);
@@ -95,12 +95,11 @@ test("new sections are immediately searchable as honest quotes, without generate
   assert.match(result.answer,/original language/);assert.match(result.answer,/three notebooks/);
   assert.equal(result.sources[0].href,"index.html#new-publication");
 });
-test("gallery navigation is allowed, while placeholders and decorative text never become personal facts",()=>{
+test("placeholders and decorative text never become personal facts",()=>{
   const {sources}=fixture();
-  assert.equal(core.answer(sources,"Show me photography").sources[0].href,"photography.html");
   assert(!sources.some(s=>s.text.includes("contacto@gmail.com")||s.text.includes("decorative duplicate")));
   assert(sources.some(s=>s.text.includes("Creative thinking")));
-  assert.equal(core.profileSource(parse('<title>Drawings</title><main>Gallery</main>')),null);
+  assert.equal(core.profileSource(parse('<title>Documents</title><main>Archive</main>')),null);
   assert(!core.answer(sources,"What is his email?").answer.includes("contacto@gmail.com"));
 });
 test("fresh project data parses as literals, rejects executable code and retains punctuation in strings",async()=>{

@@ -446,7 +446,7 @@ const navigationTrack = document.querySelector(".nav-track");
 const heroBackdrop = document.querySelector(".hero-backdrop");
 const filters = [...document.querySelectorAll("[data-filter]")];
 const projectCards = [...document.querySelectorAll(".project-card")];
-const magneticItems = [...document.querySelectorAll(".magnetic")].filter(item => !item.closest("#skills"));
+const magneticItems = [...document.querySelectorAll(".magnetic")];
 const siteHeader = document.querySelector(".site-header");
 const cursorLight = document.querySelector(".cursor-light");
 const railProgress = document.querySelector(".rail-progress");

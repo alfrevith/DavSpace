@@ -70,32 +70,71 @@
   function createLane(root, items, direction) {
     const viewport=root.querySelector(".credential-viewport"), track=root.querySelector(".credential-track");
     const pause=root.querySelector("[data-lane-pause]"), status=root.querySelector("[data-lane-state]");
-    const reasons=new Set();
     let period=0, frame=0, lastTime=0, position=0, visible=false, paused=false, held=false, holdTimer=0, width=0, dragging=null, suppress=false;
-    const active=()=>visible&&!paused&&!held&&!motion.matches&&!document.hidden&&!dialog.open&&!reasons.size&&period>0;
-    function paint(time) {
-      frame=0;if(!active()){lastTime=0;return;}
-      if(lastTime)position+=direction*Math.min(40,time-lastTime)*.024;
-      lastTime=time;
-      if(position<period*.5)position+=period;
-      if(position>period*2.5)position-=period;
+    let hovered=false, pointerType="", keyboard=false, navigation=null, revealTimer=0;
+    root.dataset.credentialMotion=motion.matches?"visible":"pending";
+    const canMove=()=>visible&&!dragging&&!document.hidden&&!dialog.open&&period>0;
+    const active=()=>canMove()&&!paused&&!held&&!motion.matches&&!hovered&&!(keyboard&&viewport.contains(document.activeElement));
+    // Keep a full repeated set on either side, even when one set barely fills
+    // the viewport. Normalize before writing so a long drag never hits an edge.
+    const wrap=value=>period?period+((value-period)%period+period)%period:value;
+    function move(value) {
+      position=wrap(value);
       viewport.scrollLeft=position;
-      frame=requestAnimationFrame(paint);
+    }
+    function finishReveal() {
+      clearTimeout(revealTimer);
+      root.dataset.credentialMotion="visible";
+    }
+    function reveal() {
+      if(root.dataset.credentialMotion!=="pending")return;
+      if(motion.matches){finishReveal();return;}
+      const left=viewport.getBoundingClientRect().left;
+      track.querySelectorAll(".credential-card").forEach(button=>{
+        const rect=button.getBoundingClientRect(), stride=rect.width+18;
+        // Matching copies must unfold together, including across a loop seam.
+        const offset=((rect.left-left)%period+period)%period;
+        const slot=Math.round(offset/stride);
+        button.style.setProperty("--credential-delay",`${Math.min(slot,3)*70}ms`);
+      });
+      root.dataset.credentialMotion="revealing";
+      revealTimer=setTimeout(finishReveal,1100);
+    }
+    function paint(time) {
+      frame=0;
+      if(navigation&&canMove()){
+        navigation.start??=time;
+        const progress=Math.min(1,(time-navigation.start)/360);
+        const distance=navigation.distance*(1-Math.pow(1-progress,3));
+        move(navigation.from+distance);
+        navigation.travelled=distance;
+        if(progress===1)navigation=null;
+        lastTime=0;
+      }else if(active()){
+        if(lastTime)move(position+direction*Math.min(40,time-lastTime)*.024);
+        lastTime=time;
+      }else{lastTime=0;return;}
+      if(navigation||active())frame=requestAnimationFrame(paint);
     }
     function update() {
+      // Modal inertness and pointer capture can skip enter/leave events. Read
+      // the current hover/focus state instead of retaining stale pause reasons.
+      hovered=pointerType==="mouse"&&root.matches(":hover");
+      if(!canMove())navigation=null;
       pause.setAttribute("aria-pressed",String(paused));
       pause.setAttribute("aria-label",paused?"Resume automatic movement":"Pause automatic movement");
       pause.title=motion.matches?"Automatic movement is off for reduced motion":paused?"Resume automatic movement":"Pause automatic movement";
       pause.dataset.paused=String(paused);
       status.textContent=motion.matches?"Manual navigation":paused?"Autoplay paused":active()?"Slowly in motion":"Paused while you explore";
-      if(active()){if(!frame){position=viewport.scrollLeft;lastTime=0;frame=requestAnimationFrame(paint);}}
+      if(active()||navigation){if(!frame){position=viewport.scrollLeft;lastTime=0;frame=requestAnimationFrame(paint);}}
       else {cancelAnimationFrame(frame);frame=0;lastTime=0;}
     }
-    function hold() {held=true;clearTimeout(holdTimer);update();holdTimer=setTimeout(()=>{held=false;update();},4500);}
+    function hold() {held=true;clearTimeout(holdTimer);update();holdTimer=setTimeout(()=>{held=false;update();},1500);}
     function rebuild() {
       const nextWidth=viewport.clientWidth;if(nextWidth===width&&period)return;width=nextWidth;
       const focused=viewport.contains(document.activeElement)?document.activeElement.closest("[data-credential]")?.dataset.credential:null;
-      cancelAnimationFrame(frame);frame=0;dragging=null;viewport.classList.remove("is-dragging");
+      finishDrag();cancelAnimationFrame(frame);frame=0;navigation=null;
+      if(root.dataset.credentialMotion==="revealing")finishReveal();
       track.replaceChildren();
       if(!items.length){const empty=document.createElement("p");empty.className="credential-lane-empty";empty.textContent="A new chapter will appear here.";track.append(empty);period=0;root.querySelectorAll("button").forEach(b=>b.disabled=true);return;}
       track.append(card(items[0],0,false));
@@ -108,50 +147,65 @@
         track.append(set);
       }
       period=track.firstElementChild.getBoundingClientRect().width;
-      viewport.scrollLeft=period;position=period;
+      move(period);
       if(focused)track.querySelector(`[data-credential="${focused}"]:not([aria-hidden])`)?.focus({preventScroll:true});
       update();
     }
-    function step(sign) {hold();const stride=(track.querySelector(".credential-card")?.getBoundingClientRect().width||300)+18;viewport.scrollBy({left:sign*stride,behavior:motion.matches?"auto":"smooth"});}
+    function step(sign) {
+      const remaining=navigation?navigation.distance-navigation.travelled:0;
+      hold();reveal();
+      const distance=remaining+sign*((track.querySelector(".credential-card")?.getBoundingClientRect().width||300)+18);
+      if(motion.matches){move(viewport.scrollLeft+distance);navigation=null;}
+      else navigation={from:viewport.scrollLeft,distance,travelled:0,start:null};
+      update();
+    }
     root.querySelector("[data-lane-prev]").addEventListener("click",()=>step(-1));
     root.querySelector("[data-lane-next]").addEventListener("click",()=>step(1));
     pause.addEventListener("click",()=>{paused=!paused;update();});
-    root.addEventListener("pointerenter",event=>{if(event.pointerType==="mouse"){reasons.add("hover");update();}});
-    root.addEventListener("pointerleave",event=>{if(event.pointerType==="mouse"){reasons.delete("hover");update();}});
-    viewport.addEventListener("focusin",()=>{reasons.add("focus");update();});
-    viewport.addEventListener("focusout",()=>{queueMicrotask(()=>{if(!viewport.contains(document.activeElement)){reasons.delete("focus");update();}});});
+    function syncPointer(event) {
+      pointerType=event.pointerType;
+      if(hovered!==(pointerType==="mouse"&&root.matches(":hover")))update();
+    }
+    root.addEventListener("pointerenter",syncPointer);
+    root.addEventListener("pointerleave",syncPointer);
+    window.addEventListener("pointermove",syncPointer,{passive:true});
+    window.addEventListener("pointerdown",event=>{keyboard=false;pointerType=event.pointerType;update();},{passive:true});
+    window.addEventListener("keydown",event=>{if(event.key!=="Escape"&&!dialog.open){keyboard=true;update();}});
+    viewport.addEventListener("focusin",()=>{finishReveal();update();});
+    viewport.addEventListener("focusout",()=>{queueMicrotask(update);});
     viewport.addEventListener("keydown",event=>{if(event.key==="ArrowLeft"||event.key==="ArrowRight"){event.preventDefault();step(event.key==="ArrowLeft"?-1:1);}});
-    viewport.addEventListener("wheel",event=>{if(Math.abs(event.deltaX)>1)hold();},{passive:true});
+    viewport.addEventListener("wheel",event=>{if(Math.abs(event.deltaX)>1){navigation=null;hold();}},{passive:true});
     viewport.addEventListener("pointerdown",event=>{
-      hold();if(event.pointerType!=="mouse"||event.button!==0)return;
-      dragging={id:event.pointerId,x:event.clientX,scroll:viewport.scrollLeft,moved:false};
+      navigation=null;keyboard=false;suppress=false;hold();if(event.button!==0)return;
+      dragging={id:event.pointerId,type:event.pointerType,x:event.clientX,lastX:event.clientX,moved:false};
     });
     viewport.addEventListener("pointermove",event=>{
-      if(!dragging||event.pointerId!==dragging.id)return;
+      if(!dragging||dragging.type!=="mouse"||event.pointerId!==dragging.id)return;
       const delta=event.clientX-dragging.x;
       if(Math.abs(delta)>6&&!dragging.moved){dragging.moved=true;viewport.setPointerCapture(event.pointerId);viewport.classList.add("is-dragging");}
-      if(dragging.moved){event.preventDefault();viewport.scrollLeft=dragging.scroll-delta;}
+      if(dragging.moved){event.preventDefault();move(viewport.scrollLeft-(event.clientX-dragging.lastX));dragging.lastX=event.clientX;}
     });
-    function finishDrag(){if(!dragging)return;const id=dragging.id;suppress=dragging.moved;dragging=null;if(viewport.hasPointerCapture(id))viewport.releasePointerCapture(id);viewport.classList.remove("is-dragging");hold();}
+    function finishDrag(event){if(!dragging||(event?.pointerId!=null&&event.pointerId!==dragging.id))return;const id=dragging.id;suppress=dragging.moved;dragging=null;if(viewport.hasPointerCapture(id))viewport.releasePointerCapture(id);viewport.classList.remove("is-dragging");hold();}
     window.addEventListener("pointerup",finishDrag);window.addEventListener("pointercancel",finishDrag);viewport.addEventListener("lostpointercapture",finishDrag);
+    window.addEventListener("blur",()=>{finishDrag();navigation=null;update();});
     viewport.addEventListener("click",event=>{if(suppress){suppress=false;event.preventDefault();event.stopPropagation();}},{capture:true});
     viewport.addEventListener("scroll",()=>{
-      const current=viewport.scrollLeft;let delta=0;
-      if(period&&current<period*.5)delta=period;
-      else if(period&&current>period*2.5)delta=-period;
-      if(delta){viewport.scrollLeft=current+delta;if(dragging)dragging.scroll+=delta;}
+      const current=viewport.scrollLeft;
+      // Ignore subpixel rounding near a seam; otherwise the normalization
+      // itself would keep generating scroll events on fractional layouts.
+      if(period&&(current<period-1||current>=period*2+1))viewport.scrollLeft=wrap(current);
       // Keep fractional autoplay positions: browsers may round scrollLeft to
       // whole pixels, which otherwise cancels motion on high-refresh displays.
-      if(!active())position=viewport.scrollLeft;
+      if(!active()&&!navigation)position=viewport.scrollLeft;
     },{passive:true});
     viewport.addEventListener("click",event=>{const button=event.target.closest("[data-credential]");if(button)openRecord(button.dataset.credential,button);});
-    const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;update();},{threshold:.01});observer.observe(viewport);
+    const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(entry.intersectionRatio>=.12)reveal();update();},{threshold:[0,.12]});observer.observe(viewport);
     const resize=new ResizeObserver(rebuild);resize.observe(viewport);
-    motion.addEventListener("change",update);
-    document.addEventListener("visibilitychange",update);
-    window.addEventListener("pagehide",()=>{visible=false;update();});
-    window.addEventListener("pageshow",()=>{visible=viewport.getBoundingClientRect().bottom>0&&viewport.getBoundingClientRect().top<innerHeight;update();});
-    rebuild();return {update};
+    motion.addEventListener("change",()=>{if(motion.matches){navigation=null;finishReveal();}update();});
+    document.addEventListener("visibilitychange",()=>{if(document.hidden)finishDrag();update();});
+    window.addEventListener("pagehide",()=>{visible=false;finishDrag();update();});
+    window.addEventListener("pageshow",()=>{visible=viewport.getBoundingClientRect().bottom>0&&viewport.getBoundingClientRect().top<innerHeight;if(visible)reveal();update();});
+    rebuild();return {update,resume(){held=false;clearTimeout(holdTimer);update();}};
   }
 
   function cleanReader() {clearTimeout(readerTimer);reader?.destroy();reader=null;dialog.querySelector("[data-credential-pdf]").replaceChildren();}
@@ -206,7 +260,7 @@
   const outside=event=>{const r=dialog.getBoundingClientRect();return event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom;};
   dialog.addEventListener("pointerdown",event=>{outsideDown=event.target===dialog&&outside(event);});
   dialog.addEventListener("click",event=>{if(outsideDown&&outside(event))closeRecord();outsideDown=false;});
-  dialog.addEventListener("close",()=>{cleanReader();transition?.cancel();transition=null;closing=false;document.documentElement.classList.remove("credential-dialog-open");const restore=opener?.isConnected?opener:section.querySelector(`[data-credential="${opener?.dataset.credential}"]:not([aria-hidden])`);restore?.focus({preventScroll:true});opener=null;lanes.forEach(lane=>lane.update());});
+  dialog.addEventListener("close",()=>{cleanReader();transition?.cancel();transition=null;closing=false;document.documentElement.classList.remove("credential-dialog-open");const restore=opener?.isConnected?opener:section.querySelector(`[data-credential="${opener?.dataset.credential}"]:not([aria-hidden])`);restore?.focus({preventScroll:true});opener=null;lanes.forEach(lane=>lane.resume());});
   motion.addEventListener("change",()=>{if(motion.matches){transition?.cancel();if(closing)dialog.close();}});
 
   fetch(new URL("data/credentials.json",base),{cache:"no-store"}).then(response=>{if(!response.ok)throw Error();return response.json();}).then(data=>{

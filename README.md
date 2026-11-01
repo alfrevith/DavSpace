@@ -18,8 +18,6 @@ Sitio estático compatible con GitHub Pages, sin backend ni compilación obligat
 | Documentos de futuros logros | `achievements/` |
 | Pruebas | `tests/` |
 
-Las páginas de fotografía, dibujos, informática e historias permanecen en la raíz para conservar sus enlaces. `assets/photography/`, `assets/drawings/` y `assets/informatics/` quedan disponibles para el contenido de esas galerías.
-
 Las rutas de imágenes y PDFs escritas en los datos se calculan desde la raíz del sitio: por ejemplo, `images/icons/Excel.png`, **sin** anteponer `../` por estar el JSON en `data/`. Respeta mayúsculas y minúsculas para GitHub Pages.
 
 Las imágenes de reserva están en `images/backgrounds/`. Son fotografías distintas, conservadas con nombres descriptivos. El fondo actual sigue en `images/hero-contours.webp`.
@@ -46,5 +44,3 @@ Las dependencias de npm se utilizan para desarrollo y pruebas. `node_modules/` e
 ## Publicación
 
 Publica la raíz del repositorio en GitHub Pages, incluyendo `assets/`, `data/`, `images/` y los documentos. Las rutas también funcionan cuando el sitio se aloja bajo una subcarpeta como `/Portafolio/`.
-
-Pendiente ya existente: `data/projects.js` apunta a `pdfs/Beyond.pdf`, pero ese archivo no está en la carpeta actual. Añadir el PDF con ese nombre exacto resuelve esa ruta y su prueba; la reorganización conserva la configuración.

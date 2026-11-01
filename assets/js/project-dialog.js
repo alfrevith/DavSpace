@@ -8,7 +8,9 @@
   const pdfMount = dialog.querySelector("[data-project-pdf-mount]");
   const pdfEmpty = dialog.querySelector("[data-project-pdf-empty]");
   const pdfLink = dialog.querySelector("[data-project-pdf-link]");
+  const logoMount = dialog.querySelector("[data-project-logo]");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const entranceDuration = 1000;
   const statusLabels = {
     "in-development": "In development",
     prototype: "Prototype",
@@ -39,6 +41,27 @@
     } catch {
       return null;
     }
+  }
+
+  function setLogo(value, whiteBackground, doubleSize) {
+    logoMount.replaceChildren();
+    logoMount.hidden = true;
+    logoMount.dataset.whiteBackground = String(whiteBackground === true);
+    logoMount.dataset.doubleSize = String(doubleSize === true);
+    const url = documentURL(value);
+    if (!url) return;
+    const image = document.createElement("img");
+    image.alt = "";
+    image.decoding = "async";
+    image.addEventListener("error", () => {
+      // A late error from a previous project must not hide the current logo.
+      if (logoMount.firstElementChild !== image) return;
+      logoMount.replaceChildren();
+      logoMount.hidden = true;
+    }, {once: true});
+    image.src = url.href;
+    logoMount.append(image);
+    logoMount.hidden = false;
   }
 
   function clearDocument() {
@@ -106,6 +129,7 @@
     dialog.style.setProperty("--file-accent", accent);
     dialog.style.setProperty("--file-accent-rgb", rgb);
     setText("#project-dialog-title", title);
+    setLogo(project.logo, project.logoWhiteBackground, project.logoDoubleSize);
     dialog.querySelectorAll("[data-project-title-echo]").forEach((echo) => { echo.textContent = title; });
     setText("[data-project-number]", `${String(cards.indexOf(card) + 1).padStart(2, "0")} / ${String(cards.length).padStart(2, "0")}`);
     const status = dialog.querySelector("[data-project-status]");
@@ -144,13 +168,21 @@
       const target = dialog.getBoundingClientRect();
       const dx = Math.max(-70, Math.min(70, (source.left + source.width / 2 - target.left - target.width / 2) * .14));
       const dy = Math.max(-45, Math.min(45, (source.top + source.height / 2 - target.top - target.height / 2) * .12));
+      const originX = Math.max(15, Math.min(85, (source.left + source.width / 2 - target.left) / target.width * 100));
+      const originY = Math.max(15, Math.min(85, (source.top + source.height / 2 - target.top) / target.height * 100));
+      windowPanel.style.setProperty("transform-origin", `${originX}% ${originY}%`);
+      // A bright central seam expands into the full workspace. The title,
+      // document and illuminated contour enter in coordinated CSS stages.
       transition = windowPanel.animate([
-        { opacity: 0, transform: `translate3d(${dx}px, ${dy}px, 0) scale(.92)` },
-        { opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }
-      ], { duration: 680, easing: "cubic-bezier(.16, 1, .3, 1)" });
+        { offset: 0, opacity: 0, transform: `perspective(1400px) translate3d(${dx}px, ${dy}px, 0) scale(.9) rotateX(6deg)`, clipPath: "inset(49.7% 42% 49.7% 42% round 12px)", easing: "ease-out" },
+        { offset: .14, opacity: 1, transform: `perspective(1400px) translate3d(${dx * .4}px, ${dy * .4}px, 0) scale(.95) rotateX(3deg)`, clipPath: "inset(49.5% 8% 49.5% 8% round 12px)", easing: "cubic-bezier(.16, 1, .3, 1)" },
+        { offset: .62, opacity: 1, transform: "perspective(1400px) translate3d(0, 3px, 0) scale(.995) rotateX(.5deg)", clipPath: "inset(0 0 0 0 round 16px)", easing: "ease-out" },
+        { offset: .86, opacity: 1, transform: "none", clipPath: "inset(0 0 0 0 round 0px)" },
+        { offset: 1, opacity: 1, transform: "none", clipPath: "inset(0 0 0 0 round 0px)" }
+      ], { duration: entranceDuration, easing: "linear" });
     }
     // Create the native PDF viewer after the entrance, never on the initial page load.
-    if (pdf) pdfTimer = window.setTimeout(() => mountDocument(pdf, title), reducedMotion.matches ? 0 : 560);
+    if (pdf) pdfTimer = window.setTimeout(() => mountDocument(pdf, title), reducedMotion.matches ? 0 : entranceDuration);
   }
 
   function finishClose() {
@@ -163,6 +195,9 @@
     if (!dialog.open || closing) return;
     closing = true;
     window.clearTimeout(pdfTimer);
+    // Preserve an interrupted entrance instead of flashing the full panel.
+    const current = window.getComputedStyle(windowPanel);
+    const from = {opacity: current.opacity, transform: current.transform, clipPath: current.clipPath};
     transition?.cancel();
     dialog.classList.add("is-closing");
     if (reducedMotion.matches || typeof windowPanel.animate !== "function") {
@@ -170,10 +205,13 @@
       return;
     }
     transition = windowPanel.animate([
-      { opacity: 1, transform: "translateY(0) scale(1)" },
-      { opacity: 0, transform: "translateY(12px) scale(.975)" }
+      from,
+      { opacity: 0, transform: "translateY(12px) scale(.975)", clipPath: from.clipPath }
     ], { duration: 190, easing: "cubic-bezier(.4, 0, 1, 1)", fill: "forwards" });
-    transition.finished.then(finishClose, () => {});
+    const exit = transition;
+    exit.finished.then(() => {
+      if (closing && transition === exit) finishClose();
+    }, () => {});
   }
 
   dialog.querySelectorAll("[data-project-reveal]").forEach((item, index) => {

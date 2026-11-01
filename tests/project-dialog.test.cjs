@@ -15,6 +15,7 @@ function element() {
   const properties = new Map();
   return {
     textContent: "", dataset: {}, children: [], hidden: false, focused: false,
+    get firstElementChild() { return this.children[0] || null; },
     attributes: new Map(), scrollTop: 30, animations: [],
     properties,
     style: { setProperty(name, value) { properties.set(name, value); } },
@@ -32,7 +33,7 @@ function element() {
     getBoundingClientRect: () => ({ left: 20, top: 20, right: 980, bottom: 780, width: 960, height: 760 }),
     animate(frames, options) {
       let resolve;
-      const animation = { frames, options, finished: new Promise(done => { resolve = done; }), cancel() {}, finish() { resolve(); } };
+      const animation = { frames, options, cancelled: false, finished: new Promise(done => { resolve = done; }), cancel() { this.cancelled = true; }, finish() { resolve(); } };
       this.animations.push(animation);
       return animation;
     }
@@ -62,6 +63,7 @@ function setup({ reduced = true, fine = true } = {}) {
   pointer.matches = fine;
   const window = {
     matchMedia: query => query.includes("prefers-reduced-motion") ? motion : pointer,
+    getComputedStyle: node => node.computedStyle || {opacity: "1", transform: "none", clipPath: "none"},
     requestAnimationFrame(fn) { frames.set(++frameId, fn); return frameId; },
     cancelAnimationFrame(id) { frames.delete(id); },
     setTimeout(fn) { const id = timers.size + 1; timers.set(id, fn); return id; },
@@ -123,6 +125,42 @@ test("clicking different cards refreshes all content without carrying over techn
   s.escape();
   s.open("beyond");
   assert.equal(s.get("[data-project-status]").dataset.status, "completed");
+});
+
+test("project logos are configurable independently and never carry over between records", () => {
+  const s = setup(), mount = s.get("[data-project-logo]");
+  s.window.PORTFOLIO_PROJECTS.beyond.logo = "images/Projects/beyond-logo.svg";
+  s.open("beyond");
+  assert.equal(mount.hidden, false);
+  assert.equal(mount.children.length, 1);
+  assert.equal(mount.firstElementChild.src, "http://localhost/portfolio/images/Projects/beyond-logo.svg");
+  assert.equal(mount.firstElementChild.alt, "");
+  const previous = mount.firstElementChild;
+  s.escape();
+  s.window.PORTFOLIO_PROJECTS.cecam.logo = "images/Projects/cecam-logo.png";
+  s.open("cecam");
+  previous.emit("error");
+  assert.equal(mount.hidden, false, "a stale image error cannot hide a different project's logo");
+  assert.equal(mount.firstElementChild.src, "http://localhost/portfolio/images/Projects/cecam-logo.png");
+  mount.firstElementChild.emit("error");
+  assert.equal(mount.hidden, true);
+  assert.equal(mount.children.length, 0);
+  s.escape();
+  s.window.PORTFOLIO_PROJECTS["plant-bud"].logo = "";
+  s.open("plant-bud");
+  assert.equal(mount.hidden, true);
+  assert.equal(mount.children.length, 0);
+});
+
+test("empty, missing and invalid logo values leave the title usable without a broken image", () => {
+  for (const logo of ["", undefined, {}, "javascript:alert(1)", "data:text/html,test", "http://["]) {
+    const s = setup();
+    s.window.PORTFOLIO_PROJECTS.beyond.logo = logo;
+    s.open("beyond");
+    assert.equal(s.get("[data-project-logo]").hidden, true);
+    assert.equal(s.get("[data-project-logo]").children.length, 0);
+    assert.equal(s.get("#project-dialog-title").textContent, "Beyond");
+  }
 });
 
 test("missing entries and empty or malformed fields keep the project usable", () => {
@@ -280,4 +318,49 @@ test("fast animated closing cancels a pending PDF and completes once; reduced mo
   reduced.open("beyond");
   reduced.escape();
   assert.equal(reduced.get(".project-window").animations.length, 0);
+});
+
+test("the staged entrance unfolds fully before mounting a PDF, and replays cleanly on another project", async () => {
+  const s = setup({reduced: false}), panel = s.get(".project-window");
+  s.cards[0].getBoundingClientRect = () => ({left: -600, top: -400, width: 300, height: 200});
+  s.open("beyond");
+  const entrance = panel.animations[0];
+  assert.equal(entrance.options.duration, 1000);
+  assert.equal(entrance.frames.length, 5);
+  assert.match(entrance.frames[0].clipPath, /49\.7%/);
+  assert.equal(entrance.frames.at(-1).transform, "none");
+  assert.equal(entrance.frames.at(-1).opacity, 1);
+  assert.equal(entrance.frames.at(-1).clipPath, "inset(0 0 0 0 round 0px)");
+  assert.equal(panel.properties.get("transform-origin"), "15% 15%");
+  assert.equal(s.get("[data-project-pdf-mount]").children.length, 0);
+  entrance.finish();
+  s.flushTimers();
+  assert.equal(s.get("[data-project-pdf-mount]").children.length, 1);
+  s.escape();
+  panel.animations.at(-1).finish();
+  await Promise.resolve();
+  s.open("plant-bud");
+  assert.equal(panel.animations.length, 3);
+  assert.equal(panel.animations.at(-1).frames[0].opacity, 0);
+  assert.equal(s.get("[data-project-pdf-mount]").children.length, 0);
+});
+
+test("closing an interrupted entrance preserves its current aperture and preference changes finish safely", async () => {
+  const s = setup({reduced: false}), panel = s.get(".project-window");
+  s.open("beyond");
+  panel.computedStyle = {opacity: ".62", transform: "matrix(0.95, 0, 0, 0.95, 0, 12)", clipPath: "inset(40% 8% 40% 8% round 12px)"};
+  s.escape();
+  const exit = panel.animations.at(-1);
+  assert.equal(panel.animations[0].cancelled, true);
+  assert.deepEqual({...exit.frames[0]}, panel.computedStyle);
+  assert.equal(exit.frames[1].clipPath, panel.computedStyle.clipPath);
+  s.motion.matches = true;
+  s.motion.emit("change");
+  assert.equal(s.dialog.open, false);
+  assert.equal(s.timers.size, 0);
+  // Completing a cancelled exit later cannot close a newly opened project.
+  s.open("cecam");
+  exit.finish();
+  await Promise.resolve();
+  assert.equal(s.dialog.open, true);
 });

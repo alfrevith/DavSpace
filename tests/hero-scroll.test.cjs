@@ -349,7 +349,7 @@ test("focus reveals every action only while navigation stays inside the hero", (
 });
 
 test("section links release the focus override even when the clicked link retains focus", () => {
-  for (const href of ["#start", "#about-me", "#projects", "#certificates", "#skills", "#contact"]) {
+  for (const href of ["#start", "#about-me", "#projects", "#certificates", "#contact"]) {
     const app = setup();
     app.show();
     app.root.emit("focusin", { target: app.content });

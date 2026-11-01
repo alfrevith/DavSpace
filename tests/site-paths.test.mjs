@@ -8,6 +8,13 @@ const pages = fs.readdirSync(root).filter(file => file.endsWith(".html"));
 // Simulate a GitHub Pages project URL rather than assuming domain-root hosting.
 const site = "https://example.test/Portafolio/";
 
+test("main navigation matches the published portfolio sections", () => {
+  const document = new DOMParser().parseFromString(fs.readFileSync(new URL("index.html",root),"utf8"),"text/html");
+  const ids = ["start", "about-me", "projects", "certificates", "contact"];
+  assert.deepEqual([...document.querySelectorAll("main .section[id]")].map(section=>section.id),ids);
+  assert.deepEqual([...document.querySelectorAll(".nav a")].map(link=>link.getAttribute("href")),ids.map(id=>"#"+id));
+});
+
 function existingPath(relative) {
   let directory = root;
   for (const [index, part] of relative.split("/").entries()) {
@@ -23,7 +30,7 @@ for (const page of pages) {
   test(`${page}: local scripts, styles and images resolve under a project subdirectory`, () => {
     for (const node of document.querySelectorAll("script[src], link[href], img[src]")) {
       const value = node.getAttribute(node.tagName === "LINK" ? "href" : "src");
-      if (!value) continue; // Intentionally empty gallery images are editable slots.
+      if (!value) continue;
       const url = new URL(value,site+page);
       if (url.origin !== new URL(site).origin) continue;
       assert(url.href.startsWith(site), `Resource escapes the project base: ${value}`);

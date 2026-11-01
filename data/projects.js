@@ -1,13 +1,19 @@
 // Edit each project independently here. Keep its key equal to the card's data-project.
 // Empty strings/arrays display a neutral placeholder. All visitor-facing text is English.
 // accent: a six-digit hex color for this project's neon lighting, e.g. "#93e7ff".
+// logo: a PNG/WebP/SVG path from the site root, or "images/icons" to leave the title without a logo.
+// logoWhiteBackground: true adds a soft white glow behind this project's menu logo.
+// logoDoubleSize: true doubles this project's menu logo size (also on mobile).
 // status: "in-development" | "prototype" | "completed" | ""
 // mode: "individual" | "team" | ""
 // pdf: a local path such as "pdfs/beyond.pdf", or an HTTPS PDF URL that allows embedding.
 window.PORTFOLIO_PROJECTS = {
   beyond: {
     title: "Beyond",
-    accent: "#93e7ff",
+    logoDoubleSize: false,
+    logo: "images/icons/beyond.png",
+    logoWhiteBackground: false,
+    accent: "#E8B566",
     status: "completed",
     role: "Frontend / Backend",
     type: ["Web"],
@@ -19,6 +25,9 @@ window.PORTFOLIO_PROJECTS = {
   },
   "plant-bud": {
     title: "Plant Bud",
+    logoDoubleSize: false,
+    logo: "images/icons/plant-bud.png",
+    logoWhiteBackground: false,
     accent: "#a7f3c5",
     status: "",
     role: "Frontend / Backend",
@@ -31,7 +40,10 @@ window.PORTFOLIO_PROJECTS = {
   },
   "pot-c": {
     title: "POT-C",
-    accent: "#f2c766",
+    logoDoubleSize: false,
+    logo: "images/icons/POT-C.png",
+    logoWhiteBackground: false,
+    accent: "#03fc13",
     status: "",
     role: "",
     type: ["Informative Web", "Smart Bin"],
@@ -43,7 +55,10 @@ window.PORTFOLIO_PROJECTS = {
   },
   cecam: {
     title: "CECAM",
-    accent: "#b1a4ff",
+    logoDoubleSize: false,
+    logo: "",
+    logoWhiteBackground: false,
+    accent: "#0800f2",
     status: "prototype",
     role: "",
     type: ["Web", "Prototype"],
@@ -55,7 +70,10 @@ window.PORTFOLIO_PROJECTS = {
   },
   "pets-health": {
     title: "Pet's Health",
-    accent: "#ff9db5",
+    logoDoubleSize: true,
+    logo: "images/icons/pets-health.png",
+    logoWhiteBackground: true,
+    accent: "#EDDAAC",
     status: "prototype",
     role: "",
     type: ["Mobile App", "Prototype"],

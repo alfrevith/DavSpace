@@ -7,6 +7,9 @@ All project-window content lives in `data/projects.js`. Each key matches a card'
 ```js
 beyond: {
   title: "Beyond",
+  logo: "images/Projects/beyond-logo.svg",
+  logoWhiteBackground: false,
+  logoDoubleSize: false,
   accent: "#93e7ff",
   status: "in-development",
   role: "Frontend developer",
@@ -24,7 +27,18 @@ The values above illustrate the format; fill in the actual project information.
 - `accent`: a six-digit hex color, such as `"#93e7ff"`. It controls this project's
   neon corners, ambient lighting, and title accents.
   Each project has its own color; missing or invalid colors use cyan.
+- `logo`: an image next to the name inside the project window. Place a transparent
+  PNG, WebP or SVG in `images/Projects/` and enter its path from the site root.
+  Each project starts with `logo: ""`; empty, missing or broken images hide the
+  logo space. Logos retain their proportions and use a transparent background by default.
+  Paths and filenames must match case exactly for GitHub Pages.
 - `status`: `"in-development"`, `"prototype"`, or `"completed"`.
+- `logoDoubleSize`: set to `true` to double the menu logo from 72 to 144 px
+  (56 to 112 px on mobile). Defaults to `false` and works with the white glow.
+- `logoWhiteBackground`: set to `true` to add a soft white glow behind this
+  project's menu logo. The compact rectangular light fades smoothly into the panel without
+  a solid plate or border and preserves the logo's full size. Use it for black or dark logos.
+  Defaults to `false` (transparent) when omitted; each project is independent.
 - `mode`: `"individual"` or `"team"`.
 - `type` and `technologies`: lists of independent labels.
 - `date`: English text such as `"2026"` or `"January – March 2026"`.
@@ -58,6 +72,10 @@ The window closes with its close button, Escape, or a click outside its frame.
 Keyboard focus is contained by the native dialog and returns to the project
 card on close. Reduced-motion preferences disable the entrance and exit motion.
 
-The title's brief glitch plays once when the file opens. Its decorative text
-copies are hidden from screen readers. The corner lighting stays static; no cursor-following reflection covers the PDF.
+The opening unfolds from a central seam into the workspace, followed by the
+illuminated contour, document, logo and staggered project details. The title's
+brief color separation settles once; its decorative copies are hidden from
+screen readers. All entrance effects finish automatically. Closing during the
+entrance fades from its current pose. The corner lighting then stays static;
+no cursor-following reflection covers the PDF.
 PDF pages are rendered on an opaque white canvas without tinted overlays.

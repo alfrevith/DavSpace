@@ -8,8 +8,8 @@
   let request;
   let version = 0;
   const copy = {
-    es:{open:"Abrir chat",name:"Guía de David",heading:"¿Qué te gustaría saber?",welcome:"Proyectos, habilidades o un poco más sobre David.",suggestions:["Muéstrame los proyectos","¿Quién es David?"],placeholder:"Escribe tu pregunta…",send:"Enviar",close:"Cerrar chat",reset:"Nueva conversación",you:"Tú",guide:"Guía",loading:"Consultando el portafolio…",failed:"No pude consultar los archivos del portafolio. Inténtalo otra vez.",source:"Ver sección",project:"Ver proyecto"},
-    en:{open:"Open chat",name:"David's guide",heading:"What would you like to know?",welcome:"Projects, skills, or a little more about David.",suggestions:["Show me the projects","Who is David?"],placeholder:"Ask a question…",send:"Send",close:"Close chat",reset:"New conversation",you:"You",guide:"Guide",loading:"Checking the portfolio…",failed:"I couldn't read the portfolio files. Please try again.",source:"View section",project:"View project"}
+    es:{open:"Abrir chat",name:"Guía de David",heading:"¿Qué te gustaría saber?",welcome:"Proyectos, certificados o un poco más sobre David.",suggestions:["Muéstrame los proyectos","¿Quién es David?"],placeholder:"Escribe tu pregunta…",send:"Enviar",close:"Cerrar chat",reset:"Nueva conversación",you:"Tú",guide:"Guía",loading:"Consultando el portafolio…",failed:"No pude consultar los archivos del portafolio. Inténtalo otra vez.",source:"Ver sección",project:"Ver proyecto"},
+    en:{open:"Open chat",name:"David's guide",heading:"What would you like to know?",welcome:"Projects, certificates, or a little more about David.",suggestions:["Show me the projects","Who is David?"],placeholder:"Ask a question…",send:"Send",close:"Close chat",reset:"New conversation",you:"You",guide:"Guide",loading:"Checking the portfolio…",failed:"I couldn't read the portfolio files. Please try again.",source:"View section",project:"View project"}
   };
   const root = document.createElement("div");
   root.className = "portfolio-assistant";
@@ -17,8 +17,10 @@
   root.innerHTML = `
     <button class="assistant-launcher" type="button" aria-controls="assistant-panel" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 5.5h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-7l-5 3v-3a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z"/><path d="M8 10h8m-8 3h5"/></svg></button>
     <section class="assistant-panel" id="assistant-panel" role="dialog" aria-modal="false" aria-labelledby="assistant-name" hidden>
+      <span class="assistant-transmission" aria-hidden="true"></span>
       <header class="assistant-header"><span class="assistant-light" aria-hidden="true"></span><h2 id="assistant-name"></h2><button class="assistant-icon-button assistant-reset" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg></button><button class="assistant-icon-button assistant-close" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header>
-      <div class="assistant-scroll"><div class="assistant-welcome"><h3></h3><p></p><div class="assistant-suggestions"></div></div><div class="assistant-log" role="log" aria-live="polite" aria-relevant="additions"></div></div>
+      <div class="assistant-scroll"><div class="assistant-welcome">
+        <h3></h3><p></p><div class="assistant-suggestions"></div></div><div class="assistant-log" role="log" aria-live="polite" aria-relevant="additions"></div></div>
       <form class="assistant-form"><label class="assistant-sr-only" for="assistant-question"></label><textarea id="assistant-question" maxlength="1000" rows="1" required></textarea><button class="assistant-send" type="submit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form>
     </section>`;
   document.body.append(root);
@@ -29,6 +31,36 @@
   const log = $(".assistant-log");
   const scroll = $(".assistant-scroll");
   const welcome = $(".assistant-welcome");
+  const motion = matchMedia("(prefers-reduced-motion: reduce)");
+  let panelAnimation=null, closing=false;
+  function settlePanel() {
+    panelAnimation?.cancel();panelAnimation=null;
+    delete panel.dataset.motion;
+    if(closing){panel.hidden=true;closing=false;}
+  }
+  function animatePanel(opening) {
+    panelAnimation?.cancel();panelAnimation=null;
+    if(motion.matches||!panel.animate){settlePanel();return;}
+    panel.dataset.motion=opening?"opening":"closing";
+    const frames=opening?[
+      {offset:0,opacity:0,clipPath:"inset(94% 0 0 0)",transform:"translateY(10px) scaleX(.7)"},
+      {offset:.2,opacity:1,clipPath:"inset(94% 0 0 0)",transform:"none"},
+      {offset:.3,opacity:1,clipPath:"inset(35% 0 3% 0)",transform:"translateX(-3px)",easing:"steps(1,end)"},
+      {offset:.36,opacity:1,clipPath:"inset(35% 0 3% 0)",transform:"translateX(2px)"},
+      {offset:.57,opacity:1,clipPath:"inset(0)",transform:"translateX(-1px)"},
+      {offset:1,opacity:1,clipPath:"inset(0)",transform:"none"}
+    ]:[
+      {offset:0,opacity:1,clipPath:"inset(0)",transform:"none"},
+      {offset:.2,opacity:1,clipPath:"inset(0)",transform:"translateX(-3px)",easing:"steps(1,end)"},
+      {offset:.3,opacity:1,clipPath:"inset(12% 0 8% 0)",transform:"translateX(2px)"},
+      {offset:.7,opacity:1,clipPath:"inset(49% 0 49% 0)",transform:"none"},
+      {offset:1,opacity:0,clipPath:"inset(49.8% 0 49.8% 0)",transform:"scaleX(.65)"}
+    ];
+    const animation=panel.animate(frames,{duration:opening?580:300,easing:"linear",fill:"both"});
+    panelAnimation=animation;
+    animation.finished.then(()=>{if(panelAnimation===animation)settlePanel();},()=>{});
+  }
+  motion.addEventListener("change",()=>{if(motion.matches)settlePanel();});
   const t = () => copy[lang];
   function translate() {
     panel.lang = lang;
@@ -55,12 +87,14 @@
     log.querySelector(".assistant-thinking")?.remove();log.removeAttribute("aria-busy");
   }
   function close({focus=true}={}) {
-    stop();panel.hidden=true;launcher.setAttribute("aria-expanded","false");
+    stop();launcher.setAttribute("aria-expanded","false");
     if(focus) launcher.focus({preventScroll:true});
+    if(panel.hidden||closing)return;
+    closing=true;panel.inert=true;animatePanel(false);
   }
   launcher.addEventListener("click",()=>{
-    if(!panel.hidden) return close();
-    panel.hidden=false;launcher.setAttribute("aria-expanded","true");
+    if(!panel.hidden&&!closing) return close();
+    closing=false;panel.hidden=false;panel.inert=false;launcher.setAttribute("aria-expanded","true");animatePanel(true);
     if(!matchMedia("(pointer: coarse)").matches) input.focus({preventScroll:true});
   });
   $(".assistant-close").addEventListener("click",()=>close());
@@ -89,10 +123,14 @@
       });
       links.append(link);
     }
-    if(links.children.length) article.append(links);
+    if(links.children.length) {
+      const label=document.createElement("span");label.className="assistant-action-label";label.textContent=messageLang==="es"?"Abrir contenido":"Explore the portfolio";
+      links.prepend(label);article.append(links);
+    }
     if(role==="assistant"&&suggestions.length){
       log.querySelectorAll(".assistant-followups").forEach(node=>node.remove());
       const next=document.createElement("div");next.className="assistant-suggestions assistant-followups";
+      const label=document.createElement("span");label.className="assistant-action-label";label.textContent=messageLang==="es"?"Sigue conversando":"Keep the conversation going";next.append(label);
       for(const question of suggestions.slice(0,2)){
         if(typeof question!=="string")continue;
         const button=document.createElement("button");button.type="button";button.textContent=question;
