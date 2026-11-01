@@ -1,0 +1,283 @@
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+const test = require("node:test");
+const vm = require("node:vm");
+
+const root = path.join(__dirname, "..");
+const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+const dataSource = fs.readFileSync(path.join(root, "data/projects.js"), "utf8");
+const controller = fs.readFileSync(path.join(root, "assets/js/project-dialog.js"), "utf8");
+
+function element() {
+  const listeners = new Map();
+  const classes = new Set();
+  const properties = new Map();
+  return {
+    textContent: "", dataset: {}, children: [], hidden: false, focused: false,
+    attributes: new Map(), scrollTop: 30, animations: [],
+    properties,
+    style: { setProperty(name, value) { properties.set(name, value); } },
+    classList: { add: name => classes.add(name), remove: name => classes.delete(name), contains: name => classes.has(name) },
+    setAttribute(name, value) { this.attributes.set(name, value); },
+    removeAttribute(name) { this.attributes.delete(name); },
+    replaceChildren(...nodes) { this.children = nodes; },
+    append(...nodes) { this.children.push(...nodes); },
+    focus() { this.focused = true; },
+    addEventListener(name, listener) {
+      if (!listeners.has(name)) listeners.set(name, []);
+      listeners.get(name).push(listener);
+    },
+    emit(name, event = {}) { (listeners.get(name) || []).forEach(listener => listener(event)); },
+    getBoundingClientRect: () => ({ left: 20, top: 20, right: 980, bottom: 780, width: 960, height: 760 }),
+    animate(frames, options) {
+      let resolve;
+      const animation = { frames, options, finished: new Promise(done => { resolve = done; }), cancel() {}, finish() { resolve(); } };
+      this.animations.push(animation);
+      return animation;
+    }
+  };
+}
+
+function setup({ reduced = true, fine = true } = {}) {
+  const nodes = new Map();
+  const get = selector => {
+    if (!nodes.has(selector)) nodes.set(selector, element());
+    return nodes.get(selector);
+  };
+  const dialog = get("#project-dialog");
+  dialog.id = "project-dialog";
+  dialog.open = false;
+  dialog.querySelector = get;
+  dialog.querySelectorAll = () => Array.from({ length: 9 }, element);
+  dialog.showModal = () => { dialog.open = true; };
+  dialog.close = () => { dialog.open = false; dialog.emit("close"); };
+  const documentElement = element();
+  const timers = new Map();
+  const frames = new Map();
+  let frameId = 0;
+  const motion = element();
+  motion.matches = reduced;
+  const pointer = element();
+  pointer.matches = fine;
+  const window = {
+    matchMedia: query => query.includes("prefers-reduced-motion") ? motion : pointer,
+    requestAnimationFrame(fn) { frames.set(++frameId, fn); return frameId; },
+    cancelAnimationFrame(id) { frames.delete(id); },
+    setTimeout(fn) { const id = timers.size + 1; timers.set(id, fn); return id; },
+    clearTimeout(id) { timers.delete(id); }
+  };
+  const context = vm.createContext({ window, URL, location: { protocol: "http:" } });
+  vm.runInContext(dataSource, context);
+  const cards = Object.entries(window.PORTFOLIO_PROJECTS).map(([key, project]) => {
+    const card = element();
+    card.dataset.project = key;
+    card.querySelector = selector => ({ textContent: selector === ".project-title" ? project.title : selector === "time" ? project.date : project.type.join(" / ") });
+    return card;
+  });
+  context.document = {
+    baseURI: "http://localhost/portfolio/index.html",
+    documentElement,
+    querySelector: get,
+    querySelectorAll: () => cards,
+    createElement(tag) { const node = element(); node.tag = tag; return node; }
+  };
+  vm.runInContext(controller, context);
+  return {
+    get, dialog, cards, window, timers, frames, documentElement, motion,
+    open(key) { cards.find(card => card.dataset.project === key).emit("click"); },
+    escape() { const event = { prevented: false, preventDefault() { this.prevented = true; } }; dialog.emit("cancel", event); return event; },
+    flushTimers() { for (const [id, fn] of [...timers]) { timers.delete(id); fn(); } },
+    flushFrames() { for (const [id, fn] of [...frames]) { frames.delete(id); fn(); } }
+  };
+}
+
+test("every project card has its own data entry and the requested field order", () => {
+  const ctx = vm.createContext({ window: {} });
+  vm.runInContext(dataSource, ctx);
+  const cards = [...html.matchAll(/data-project="([^"]+)"/g)].map(match => match[1]);
+  assert.deepEqual(cards, ["beyond", "plant-bud", "pot-c", "cecam", "pets-health"]);
+  assert.deepEqual(Object.keys(ctx.window.PORTFOLIO_PROJECTS), cards);
+  const template = html.slice(html.indexOf('<dialog class="project-modal"'), html.indexOf("</dialog>", html.indexOf('<dialog class="project-modal"')));
+  assert.deepEqual([...template.matchAll(/<dt>(.*?)<\/dt>/g)].map(match => match[1]),
+    ["Status", "Role", "Project type", "Development date", "Collaboration", "Technologies", "Description"]);
+  assert(template.indexOf('id="project-dialog-title"') < template.indexOf("<dt>Status"));
+  assert(html.indexOf('src="data/projects.js"') < html.indexOf('src="assets/js/project-dialog.js"'));
+});
+
+test("clicking different cards refreshes all content without carrying over technologies or status", () => {
+  const s = setup();
+  s.open("plant-bud");
+  assert.equal(s.get("#project-dialog-title").textContent, "Plant Bud");
+  assert.equal(s.get("[data-project-role]").textContent, "Frontend / Backend");
+  assert.equal(s.get("[data-project-type]").textContent, "Web / PWA");
+  assert.equal(s.get("[data-project-date]").textContent, "2026");
+  assert.equal(s.get("[data-project-technologies]").children.length, 6);
+  s.escape();
+  s.open("cecam");
+  assert.equal(s.get("#project-dialog-title").textContent, "CECAM");
+  assert.equal(s.get("[data-project-status]").textContent, "Prototype");
+  assert.equal(s.get("[data-project-date]").textContent, "2025");
+  assert.equal(s.get("[data-project-technologies]").children.length, 0);
+  assert.equal(s.get("[data-project-no-technologies]").hidden, false);
+  s.escape();
+  s.open("beyond");
+  assert.equal(s.get("[data-project-status]").dataset.status, "completed");
+});
+
+test("missing entries and empty or malformed fields keep the project usable", () => {
+  const s = setup();
+  delete s.window.PORTFOLIO_PROJECTS.beyond;
+  s.open("beyond");
+  assert.equal(s.get("#project-dialog-title").textContent, "Beyond");
+  assert.equal(s.get("[data-project-type]").textContent, "Web");
+  assert.equal(s.get("[data-project-description]").textContent, "The story behind this project is coming soon.");
+  s.escape();
+  s.window.PORTFOLIO_PROJECTS.beyond = { technologies: "not a list", type: null, role: {}, status: "unknown", mode: "unknown" };
+  s.open("beyond");
+  assert.equal(s.get("[data-project-role]").textContent, "Not specified yet");
+  assert.equal(s.get("[data-project-mode]").textContent, "Not specified yet");
+  assert.equal(s.get("[data-project-technologies]").hidden, true);
+});
+
+test("editable text remains plain text, and status and collaboration have English labels", () => {
+  const s = setup();
+  Object.assign(s.window.PORTFOLIO_PROJECTS.beyond, {
+    status: "in-development", mode: "team", description: "<img src=x onerror=alert(1)>\nSecond paragraph",
+    technologies: ["JavaScript", "", null]
+  });
+  s.open("beyond");
+  assert.equal(s.get("[data-project-status]").textContent, "In development");
+  assert.equal(s.get("[data-project-mode]").textContent, "Team project");
+  assert.equal(s.get("[data-project-description]").children.length, 0);
+  assert.match(s.get("[data-project-description]").textContent, /^<img/);
+  assert.equal(s.get("[data-project-technologies]").children.length, 1);
+});
+
+test("PDFs mount lazily, have an external-reader fallback, and are released on close", () => {
+  const s = setup();
+  s.window.PORTFOLIO_PROJECTS.beyond.pdf = "pdfs/beyond.pdf";
+  s.open("beyond");
+  const mount = s.get("[data-project-pdf-mount]");
+  assert.equal(mount.children.length, 0);
+  assert.equal(s.get("[data-project-pdf-link]").href, "http://localhost/portfolio/pdfs/beyond.pdf");
+  s.flushTimers();
+  assert.equal(mount.hidden, false);
+  const pdf = mount.children[0];
+  assert.equal(pdf.type, "application/pdf");
+  assert.match(pdf.data, /beyond\.pdf#view=FitH&toolbar=1&navpanes=0$/);
+  assert.equal(pdf.children[0].children[1].target, "_blank");
+  s.escape();
+  assert.equal(mount.children.length, 0);
+  assert.equal(s.get("[data-project-pdf-link]").hidden, true);
+  s.open("plant-bud");
+  s.flushTimers();
+  assert.equal(mount.children.length, 0);
+  assert.equal(s.get("[data-project-pdf-empty]").hidden, false);
+});
+
+test("unsafe or invalid PDF URLs never create a viewer or link", () => {
+  for (const url of ["javascript:alert(1)", "data:text/html,test", "http://[", " "]) {
+    const s = setup();
+    s.window.PORTFOLIO_PROJECTS.beyond.pdf = url;
+    s.open("beyond");
+    s.flushTimers();
+    assert.equal(s.get("[data-project-pdf-link]").hidden, true);
+    assert.equal(s.get("[data-project-pdf-mount]").children.length, 0);
+  }
+});
+
+test("the custom reader is created only after the entrance and destroyed on close", () => {
+  const s = setup();
+  let options;
+  let destroyed = false;
+  s.window.ProjectPDFViewer = {create(input) {options = input;return {destroy() {destroyed = true;}};}};
+  s.window.PORTFOLIO_PROJECTS.beyond.pdf = "pdfs/Beyond.pdf";
+  s.open("beyond");
+  assert.equal(options, undefined);
+  s.flushTimers();
+  assert.equal(options.title, "Beyond");
+  assert.equal(options.url.href, "http://localhost/portfolio/pdfs/Beyond.pdf");
+  assert.equal(options.dialog, s.dialog);
+  assert.equal(destroyed, false);
+  s.escape();
+  assert.equal(destroyed, true);
+});
+
+test("local PDF paths match filename casing for GitHub Pages", () => {
+  const context = {window:{}};
+  vm.runInNewContext(dataSource, context);
+  for (const project of Object.values(context.window.PORTFOLIO_PROJECTS)) {
+    if (!project.pdf || /^https?:/.test(project.pdf)) continue;
+    const folder = path.dirname(path.join(root, project.pdf));
+    assert(fs.readdirSync(folder).includes(path.basename(project.pdf)), `PDF path casing must match: ${project.pdf}`);
+  }
+});
+
+test("each project resets its neon theme, including missing or invalid colors", () => {
+  const s = setup();
+  s.window.PORTFOLIO_PROJECTS.beyond.accent = "#12ABef";
+  s.open("beyond");
+  assert.equal(s.dialog.properties.get("--file-accent"), "#12ABef");
+  assert.equal(s.dialog.properties.get("--file-accent-rgb"), "18 171 239");
+  s.escape();
+  s.open("plant-bud");
+  assert.equal(s.dialog.properties.get("--file-accent"), "#a7f3c5");
+  s.escape();
+  s.window.PORTFOLIO_PROJECTS.beyond.accent = "red; background: url(test)";
+  s.open("beyond");
+  assert.equal(s.dialog.properties.get("--file-accent"), "#93e7ff");
+  assert.equal(s.dialog.properties.get("--file-accent-rgb"), "147 231 255");
+  s.escape();
+  delete s.window.PORTFOLIO_PROJECTS.beyond;
+  s.open("beyond");
+  assert.equal(s.dialog.properties.get("--file-accent"), "#93e7ff");
+});
+
+test("Escape, close button and backdrop release the scroll lock and return focus", () => {
+  const s = setup();
+  s.open("beyond");
+  assert(s.documentElement.classList.contains("project-dialog-open"));
+  assert.equal(s.get(".project-details").scrollTop, 0);
+  assert(s.escape().prevented);
+  assert(!s.dialog.open);
+  assert(!s.documentElement.classList.contains("project-dialog-open"));
+  assert(s.cards[0].focused);
+  s.open("beyond");
+  s.get(".project-close").emit("click");
+  assert(!s.dialog.open);
+  s.open("beyond");
+  const event = { target: s.dialog, clientX: 1, clientY: 1 };
+  s.dialog.emit("pointerdown", event);
+  s.dialog.emit("click", event);
+  assert(!s.dialog.open);
+});
+
+test("dragging from inside to the backdrop does not dismiss the file", () => {
+  const s = setup();
+  s.open("beyond");
+  s.dialog.emit("pointerdown", { target: s.get(".project-details"), clientX: 100, clientY: 100 });
+  s.dialog.emit("click", { target: s.dialog, clientX: 1, clientY: 1 });
+  assert(s.dialog.open);
+});
+
+test("fast animated closing cancels a pending PDF and completes once; reduced motion has no JS animation", async () => {
+  const s = setup({ reduced: false });
+  s.window.PORTFOLIO_PROJECTS.beyond.pdf = "pdfs/beyond.pdf";
+  s.open("beyond");
+  const panel = s.get(".project-window");
+  assert.equal(panel.animations.length, 1);
+  s.escape();
+  s.escape();
+  assert.equal(panel.animations.length, 2);
+  s.flushTimers();
+  assert.equal(s.get("[data-project-pdf-mount]").children.length, 0);
+  panel.animations[1].finish();
+  await Promise.resolve();
+  assert(!s.dialog.open);
+  assert(!s.documentElement.classList.contains("project-dialog-open"));
+  const reduced = setup();
+  reduced.open("beyond");
+  reduced.escape();
+  assert.equal(reduced.get(".project-window").animations.length, 0);
+});

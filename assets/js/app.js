@@ -446,97 +446,11 @@ const navigationTrack = document.querySelector(".nav-track");
 const heroBackdrop = document.querySelector(".hero-backdrop");
 const filters = [...document.querySelectorAll("[data-filter]")];
 const projectCards = [...document.querySelectorAll(".project-card")];
-const certificateCards = [...document.querySelectorAll(".certificate-card")];
-const certificateDots = [...document.querySelectorAll("[data-certificate-dot]")];
-const certificatePrev = document.querySelector("[data-certificate-prev]");
-const certificateNext = document.querySelector("[data-certificate-next]");
-const magneticItems = [...document.querySelectorAll(".magnetic")];
+const magneticItems = [...document.querySelectorAll(".magnetic")].filter(item => !item.closest("#skills"));
 const siteHeader = document.querySelector(".site-header");
 const cursorLight = document.querySelector(".cursor-light");
 const railProgress = document.querySelector(".rail-progress");
 const glitchTarget = document.querySelector("[data-glitch]");
-const modal = document.querySelector(".project-modal");
-const modalClose = document.querySelector(".modal-close");
-const certificateModal = document.querySelector(".certificate-modal");
-const certificateModalClose = document.querySelector(".certificate-modal-close");
-
-const projectData = {
-  taskflow: {
-    type: "web app / responsive",
-    title: "Plant Bud",
-    description: "",
-    role: "Frontend / Backend",
-    stack: "HTML / CSS / JS / NODEJS / ADONISJS / PY",
-    status: "",
-    next: ""
-  },
-  nova: {
-    type: "electronics / web",
-    title: "POT-C",
-    description: "",
-    role: "",
-    stack: "",
-    status: "",
-    next: ""
-  },
-  resume: {
-    type: "mobile / prototype",
-    title: "Pet's Health",
-    description: "",
-    role: "",
-    stack: "",
-    status: "",
-    next: ""
-  },
-  archive: {
-    type: "web / prototype",
-    title: "CECAM",
-    description: "",
-    role: "",
-    stack: "",
-    status: "",
-    next: ""
-  }
-};
-
-const certificateData = {
-  "logic-foundations": {
-    type: "course / foundation",
-    title: "Logic Foundations",
-    description: "Recognition for work connected to reasoning, problem analysis, algorithms, and structured thinking.",
-    issuer: "Learning archive",
-    year: "2026",
-    area: "Logic",
-    seal: "DM"
-  },
-  "web-development": {
-    type: "certificate / web",
-    title: "Web Development",
-    description: "A technical milestone focused on interface structure, web foundations, and practical software growth.",
-    issuer: "Technical path",
-    year: "2026",
-    area: "Software",
-    seal: "WEB"
-  },
-  "creative-process": {
-    type: "workshop / creative",
-    title: "Creative Process",
-    description: "A creative milestone connected to visual thinking, artistic process, storytelling, and experimentation.",
-    issuer: "Creative archive",
-    year: "2026",
-    area: "Creative",
-    seal: "ART"
-  },
-  "academic-milestone": {
-    type: "academic / milestone",
-    title: "Academic Milestone",
-    description: "A record for academic recognitions, school achievements, competitions, and meaningful learning events.",
-    issuer: "Academic path",
-    year: "2026",
-    area: "Academic",
-    seal: "EDU"
-  }
-};
 
 let sectionPositions = [];
 let activeSectionId = "";
@@ -1278,61 +1192,8 @@ projectCards.forEach((card) => {
     card.style.setProperty("--my", "50%");
   });
 
-  card.addEventListener("click", () => openProject(card.dataset.project));
+
 });
-
-let activeCertificateIndex = 0;
-
-function setActiveCertificate(index) {
-  if (!certificateCards.length) return;
-
-  activeCertificateIndex = (index + certificateCards.length) % certificateCards.length;
-
-  certificateCards.forEach((card, cardIndex) => {
-    const isActive = cardIndex === activeCertificateIndex;
-    card.classList.toggle("is-active", isActive);
-    card.setAttribute("aria-current", isActive ? "true" : "false");
-  });
-
-  certificateDots.forEach((dot, dotIndex) => {
-    dot.classList.toggle("is-active", dotIndex === activeCertificateIndex);
-  });
-
-  certificateCards[activeCertificateIndex].scrollIntoView({
-    behavior: "smooth",
-    block: "nearest",
-    inline: "center"
-  });
-}
-
-function openCertificate(certificateKey) {
-  const certificate = certificateData[certificateKey];
-  if (!certificate || !certificateModal) return;
-
-  document.querySelector("#certificate-modal-seal").textContent = certificate.seal;
-  document.querySelector("#certificate-modal-type").textContent = certificate.type;
-  document.querySelector("#certificate-modal-title").textContent = certificate.title;
-  document.querySelector("#certificate-modal-description").textContent = certificate.description;
-  document.querySelector("#certificate-modal-issuer").textContent = certificate.issuer;
-  document.querySelector("#certificate-modal-year").textContent = certificate.year;
-  document.querySelector("#certificate-modal-area").textContent = certificate.area;
-
-  if (typeof certificateModal.showModal === "function") certificateModal.showModal();
-}
-
-certificateCards.forEach((card, index) => {
-  card.addEventListener("click", () => {
-    setActiveCertificate(index);
-    openCertificate(card.dataset.certificate);
-  });
-});
-
-certificateDots.forEach((dot) => {
-  dot.addEventListener("click", () => setActiveCertificate(Number(dot.dataset.certificateDot)));
-});
-
-certificatePrev?.addEventListener("click", () => setActiveCertificate(activeCertificateIndex - 1));
-certificateNext?.addEventListener("click", () => setActiveCertificate(activeCertificateIndex + 1));
 
 magneticItems.forEach((item) => {
   item.addEventListener("pointermove", (event) => {
@@ -1342,41 +1203,8 @@ magneticItems.forEach((item) => {
     item.style.setProperty("--magnet-x", `${x}px`);
     item.style.setProperty("--magnet-y", `${y}px`);
   });
-
   item.addEventListener("pointerleave", () => {
     item.style.setProperty("--magnet-x", "0px");
     item.style.setProperty("--magnet-y", "0px");
   });
-});
-
-function openProject(projectKey) {
-  const project = projectData[projectKey];
-  if (!project || !modal) return;
-
-  document.querySelector("#modal-type").textContent = project.type;
-  document.querySelector("#modal-title").textContent = project.title;
-  document.querySelector("#modal-description").textContent = project.description;
-  document.querySelector("#modal-role").textContent = project.role;
-  document.querySelector("#modal-stack").textContent = project.stack;
-  document.querySelector("#modal-status").textContent = project.status;
-  document.querySelector("#modal-next").textContent = project.next;
-  document.querySelector("#modal-media-label").textContent = "";
-
-  if (typeof modal.showModal === "function") modal.showModal();
-}
-
-modalClose?.addEventListener("click", () => modal.close());
-certificateModalClose?.addEventListener("click", () => certificateModal.close());
-
-modal?.addEventListener("click", (event) => {
-  if (event.target === modal) modal.close();
-});
-
-certificateModal?.addEventListener("click", (event) => {
-  if (event.target === certificateModal) certificateModal.close();
-});
-
-window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && modal?.open) modal.close();
-  if (event.key === "Escape" && certificateModal?.open) certificateModal.close();
 });

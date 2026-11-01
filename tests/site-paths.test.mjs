@@ -1,0 +1,44 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import {DOMParser} from "linkedom";
+
+const root = new URL("../", import.meta.url);
+const pages = fs.readdirSync(root).filter(file => file.endsWith(".html"));
+// Simulate a GitHub Pages project URL rather than assuming domain-root hosting.
+const site = "https://example.test/Portafolio/";
+
+function existingPath(relative) {
+  let directory = root;
+  for (const [index, part] of relative.split("/").entries()) {
+    assert(fs.readdirSync(directory).includes(part), `Missing or incorrect casing: ${relative}`);
+    const final = index === relative.split("/").length - 1;
+    directory = new URL(encodeURIComponent(part) + (final ? "" : "/"), directory);
+  }
+  return directory;
+}
+
+for (const page of pages) {
+  const document = new DOMParser().parseFromString(fs.readFileSync(new URL(page,root),"utf8"),"text/html");
+  test(`${page}: local scripts, styles and images resolve under a project subdirectory`, () => {
+    for (const node of document.querySelectorAll("script[src], link[href], img[src]")) {
+      const value = node.getAttribute(node.tagName === "LINK" ? "href" : "src");
+      if (!value) continue; // Intentionally empty gallery images are editable slots.
+      const url = new URL(value,site+page);
+      if (url.origin !== new URL(site).origin) continue;
+      assert(url.href.startsWith(site), `Resource escapes the project base: ${value}`);
+      existingPath(decodeURIComponent(url.pathname.slice(new URL(site).pathname.length)));
+    }
+  });
+  test(`${page}: local navigation still reaches existing pages and sections`, () => {
+    for (const link of document.querySelectorAll("a[href]")) {
+      const url = new URL(link.getAttribute("href"),site+page);
+      if (url.origin !== new URL(site).origin || !url.pathname.endsWith(".html")) continue;
+      assert(url.href.startsWith(site));
+      const target = existingPath(decodeURIComponent(url.pathname.slice(new URL(site).pathname.length)));
+      if (!url.hash) continue;
+      const targetDocument = new DOMParser().parseFromString(fs.readFileSync(target,"utf8"),"text/html");
+      assert(targetDocument.getElementById(decodeURIComponent(url.hash.slice(1))), `Missing section: ${url.href}`);
+    }
+  });
+}

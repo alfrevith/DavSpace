@@ -45,7 +45,9 @@
             }
         };
     </script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/credentials.css" />
+    <link rel="stylesheet" href="assets/css/assistant.css" />
 </head>
 
 <body class="relative isolate flow-root min-h-screen overflow-x-hidden bg-night text-ink font-sans selection:bg-cyanSoft selection:text-night">
@@ -84,7 +86,7 @@
                 <a class="group relative z-10 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full border border-transparent px-3 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft"
                     href="#projects"><span class="nav-slash font-mono" aria-hidden="true">/</span>projects</a>
                 <a class="group relative z-10 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full border border-transparent px-3 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft"
-                    href="#certificates"><span class="nav-slash font-mono" aria-hidden="true">/</span>certificates</a>
+                    href="#certificates" aria-label="Certificates and achievements"><span class="nav-slash font-mono" aria-hidden="true">/</span>certs + wins</a>
                 <a class="group relative z-10 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full border border-transparent px-3 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft"
                     href="#skills"><span class="nav-slash font-mono" aria-hidden="true">/</span>skills</a>
                 <a class="group relative z-10 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full border border-transparent px-3 text-[13px] font-medium text-muted transition-colors duration-200 hover:bg-white/[.035] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-cyanSoft"
@@ -110,7 +112,7 @@
                     class="absolute left-1/2 top-3 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-ink bg-night shadow-[0_0_0_5px_#0b0d13,0_0_28px_rgba(255,255,255,.24)]"></span>
             </aside>
 
-            <div class="grid gap-24 md:gap-36">
+            <div class="grid min-w-0 grid-cols-1 gap-24 md:gap-36">
                 <section
                     class="hero-stage section relative min-w-0 scroll-mt-28"
                     id="start" aria-labelledby="hero-title">
@@ -433,7 +435,7 @@
                                 From web experiences to hands-on electronics.
                             </p>
                         </div>
-                        <p class="shrink-0 font-mono text-xs tabular-nums text-muted" data-project-count role="status" aria-live="polite" aria-atomic="true">4 projects</p>
+                        <p class="shrink-0 font-mono text-xs tabular-nums text-muted" data-project-count role="status" aria-live="polite" aria-atomic="true">5 projects</p>
                     </div>
 
                     <div class="reveal mt-7 grid gap-5 border-y border-white/10 py-5 sm:grid-cols-[auto_minmax(0,1fr)] xl:grid-cols-[auto_minmax(0,1fr)_auto] xl:gap-7" role="group" aria-label="Project filters">
@@ -489,7 +491,24 @@
                         id="project-list" aria-label="Project list">
                         <button
                             class="project-card project-poster project-wide group relative text-left text-ink transition"
-                            type="button" data-project="taskflow" data-category="web web-app">
+                            type="button" data-project="beyond" data-category="web">
+                            <span
+                                class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/Beyond.png" alt="Beyond" data-fit="cover" />
+                            </span>
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.92] sm:text-4xl">Beyond</strong>
+                                <span
+                                    class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Web</span>
+                                    <time datetime="2026">2026</time>
+                                </span>
+                            </span>
+                        </button>
+
+                        <button
+                            class="project-card project-poster project-compact group relative text-left text-ink transition"
+                            type="button" data-project="plant-bud" data-category="web web-app">
                             <span
                                 class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
                                 <img class="h-full w-full object-cover" src="images/Projects/PlantBud.png" alt="Plant Bud" data-fit="cover" />
@@ -506,8 +525,8 @@
                         </button>
 
                         <button
-                            class="project-card project-poster project-compact group relative text-left text-ink transition"
-                            type="button" data-project="nova" data-category="web electronics">
+                            class="project-card project-poster project-wide group relative text-left text-ink transition"
+                            type="button" data-project="pot-c" data-category="web electronics">
                             <span
                                 class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
                                 <img class="h-full w-full object-cover" src="images/Projects/POT-C.png" alt="POT-C" data-fit="cover" />
@@ -523,25 +542,8 @@
                         </button>
 
                         <button
-                            class="project-card project-poster project-tall group relative text-left text-ink transition"
-                            type="button" data-project="resume" data-category="prototype app">
-                            <span
-                                class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
-                                <img class="h-full w-full object-cover" src="images/Projects/PetsHealth.png" alt="Pet's Health" data-fit="cover" />
-                            </span>
-                            <span class="project-content grid gap-1">
-                                <strong class="project-title text-3xl font-black leading-[.92] sm:text-4xl">Pet's Health</strong>
-                                <span
-                                    class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
-                                    <span>Mobile App / Prototype</span>
-                                    <time datetime="2024">2024</time>
-                                </span>
-                            </span>
-                        </button>
-
-                        <button
-                            class="project-card project-poster project-long group relative text-left text-ink transition"
-                            type="button" data-project="archive" data-category="web prototype">
+                            class="project-card project-poster project-compact group relative text-left text-ink transition"
+                            type="button" data-project="cecam" data-category="web prototype">
                             <span
                                 class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
                                 <img class="h-full w-full object-cover" src="images/Projects/CECAM.png" alt="CECAM" data-fit="cover" />
@@ -555,6 +557,23 @@
                                 </span>
                             </span>
                         </button>
+
+                        <button
+                            class="project-card project-poster project-tall group relative text-left text-ink transition"
+                            type="button" data-project="pets-health" data-category="prototype app">
+                            <span
+                                class="project-image grid place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111319]">
+                                <img class="h-full w-full object-cover" src="images/Projects/PetsHealth.png" alt="Pet's Health" data-fit="cover" />
+                            </span>
+                            <span class="project-content grid gap-1">
+                                <strong class="project-title text-3xl font-black leading-[.92] sm:text-4xl">Pet's Health</strong>
+                                <span
+                                    class="project-footer flex items-center justify-between gap-4 border-t-4 border-ink pt-2 font-mono text-xs font-black uppercase text-ink">
+                                    <span>Mobile App / Prototype</span>
+                                    <time datetime="2024">2024</time>
+                                </span>
+                            </span>
+                        </button>
                     </div>
                     <div class="mt-10 border-b border-white/10 py-12" data-project-empty hidden>
                         <p class="font-serif text-2xl text-ink">No projects match these filters.</p>
@@ -563,62 +582,32 @@
                     </div>
                 </section>
 
-                <section class="section reveal scroll-mt-28" id="certificates">
-                    <span
-                        class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;certificates/&gt;</span>
-
-                    <div class="grid items-end gap-7 xl:grid-cols-[minmax(0,.85fr)_minmax(320px,.55fr)]">
-                        <div>
-                            <p class="mb-4 font-mono text-xs uppercase text-goldSoft">Proof archive</p>
-                            <h2 class="max-w-5xl text-balance text-4xl font-black leading-tight sm:text-5xl xl:text-[58px]">
-                                A moving shelf for certificates, milestones, and learning proof.
-                            </h2>
-                        </div>
-                        <div class="certificate-controls justify-self-start xl:justify-self-end" aria-label="Certificate carousel controls">
-                            <button class="certificate-control" type="button" data-certificate-prev aria-label="Previous certificate">&lt;</button>
-                            <button class="certificate-control" type="button" data-certificate-next aria-label="Next certificate">&gt;</button>
-                        </div>
+                <section class="section reveal scroll-mt-28 credential-section" id="certificates" aria-labelledby="credentials-heading" aria-busy="true">
+                    <span class="mb-7 inline-flex items-center gap-3 font-mono text-sm text-muted before:h-px before:w-8 before:bg-white/15">&lt;certs-and-wins/&gt;</span>
+                    <div class="credential-heading">
+                        <div><p class="credential-eyebrow">A record of becoming</p><h2 id="credentials-heading">Certificates <span>&amp; Achievements.</span></h2></div>
                     </div>
-
-                    <div class="certificate-stage mt-12">
-                        <div class="certificate-rail" tabindex="0" aria-label="Certificate carousel">
-                            <button class="certificate-card is-active" type="button" data-certificate="logic-foundations">
-                                <span class="certificate-index">01</span>
-                                <span class="certificate-seal">DM</span>
-                                <small>course / foundation</small>
-                                <strong>Logic Foundations</strong>
-                                <span class="certificate-meta">Learning archive / 2026</span>
-                            </button>
-                            <button class="certificate-card" type="button" data-certificate="web-development">
-                                <span class="certificate-index">02</span>
-                                <span class="certificate-seal">WEB</span>
-                                <small>certificate / web</small>
-                                <strong>Web Development</strong>
-                                <span class="certificate-meta">Technical path / 2026</span>
-                            </button>
-                            <button class="certificate-card" type="button" data-certificate="creative-process">
-                                <span class="certificate-index">03</span>
-                                <span class="certificate-seal">ART</span>
-                                <small>workshop / creative</small>
-                                <strong>Creative Process</strong>
-                                <span class="certificate-meta">Creative archive / 2026</span>
-                            </button>
-                            <button class="certificate-card" type="button" data-certificate="academic-milestone">
-                                <span class="certificate-index">04</span>
-                                <span class="certificate-seal">EDU</span>
-                                <small>academic / milestone</small>
-                                <strong>Academic Milestone</strong>
-                                <span class="certificate-meta">Academic path / 2026</span>
-                            </button>
+                    <div class="credential-lane" data-credential-lane="certificates" role="region" aria-roledescription="carousel" aria-label="Certificates">
+                        <div class="credential-lane-heading"><div class="credential-lane-label"><span aria-hidden="true">01</span><h3>Certificates</h3><span data-lane-count>Learning on record</span></div>
+                            <div class="credential-lane-tools"><span class="credential-lane-state" data-lane-state>Slowly in motion</span>
+                                <button type="button" data-lane-pause aria-label="Pause automatic movement" aria-pressed="false"><svg class="credential-pause-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5v10m6-10v10" /></svg><svg class="credential-play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 8 6-8 6Z" /></svg></button>
+                                <button type="button" data-lane-prev aria-label="Previous certificate"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 5-5 5 5 5" /></svg></button>
+                                <button type="button" data-lane-next aria-label="Next certificate"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg></button>
+                            </div>
                         </div>
-
-                        <div class="certificate-dots" aria-label="Certificate carousel position">
-                            <button class="is-active" type="button" data-certificate-dot="0" aria-label="Show certificate 1"></button>
-                            <button type="button" data-certificate-dot="1" aria-label="Show certificate 2"></button>
-                            <button type="button" data-certificate-dot="2" aria-label="Show certificate 3"></button>
-                            <button type="button" data-certificate-dot="3" aria-label="Show certificate 4"></button>
-                        </div>
+                        <div class="credential-viewport" tabindex="0" aria-label="Certificate cards. Drag or use the arrow keys to explore."><div class="credential-track"></div></div>
                     </div>
+                    <div class="credential-lane" data-credential-lane="achievements" role="region" aria-roledescription="carousel" aria-label="Achievements">
+                        <div class="credential-lane-heading"><div class="credential-lane-label"><span aria-hidden="true">02</span><h3>Achievements</h3><span data-lane-count>Spaces for future milestones</span></div>
+                            <div class="credential-lane-tools"><span class="credential-lane-state" data-lane-state>Slowly in motion</span>
+                                <button type="button" data-lane-pause aria-label="Pause automatic movement" aria-pressed="false"><svg class="credential-pause-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5v10m6-10v10" /></svg><svg class="credential-play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 8 6-8 6Z" /></svg></button>
+                                <button type="button" data-lane-prev aria-label="Previous achievement"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 5-5 5 5 5" /></svg></button>
+                                <button type="button" data-lane-next aria-label="Next achievement"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg></button>
+                            </div>
+                        </div>
+                        <div class="credential-viewport" tabindex="0" aria-label="Achievement cards. Drag or use the arrow keys to explore."><div class="credential-track"></div></div>
+                    </div>
+                    <noscript><p>Enable JavaScript to explore these records. <a href="certifications/Excel/MOS Excel Expert.pdf">Open Excel Expert PDF</a> · <a href="certifications/Excel/MOS Excel.pdf">Open Excel PDF</a></p></noscript>
                 </section>
 
                 <section class="section reveal scroll-mt-28" id="skills">
@@ -636,7 +625,7 @@
 
                     <div class="skill-portals mt-14 grid gap-10 xl:gap-12">
                         <article
-                            class="skill-portal portal-photo magnetic relative min-h-[540px] overflow-hidden rounded-lg border border-white/10 p-5 sm:p-8 xl:min-h-[590px] xl:p-10">
+                            class="skill-portal portal-photo relative min-h-[540px] overflow-hidden rounded-lg border border-white/10 p-5 sm:p-8 xl:min-h-[590px] xl:p-10">
                             <div class="relative z-10 grid h-full gap-8 xl:grid-cols-[.68fr_1.32fr] xl:items-end">
                                 <div class="flex h-full flex-col justify-between gap-12">
                                     <div>
@@ -652,23 +641,23 @@
 
                                 <div class="portal-gallery grid auto-rows-[150px] gap-4 md:grid-cols-4">
                                     <figure class="photo-frame md:col-span-2 md:row-span-2">
-                                        <img src="" alt="Photography work preview" data-empty />
+                                        <img loading="lazy" decoding="async" src="" alt="Photography work preview" data-empty />
                                     </figure>
                                     <figure class="photo-frame md:col-span-2">
-                                        <img src="" alt="Photography work preview" data-empty />
+                                        <img loading="lazy" decoding="async" src="" alt="Photography work preview" data-empty />
                                     </figure>
                                     <figure class="photo-frame">
-                                        <img src="" alt="Photography work preview" data-empty />
+                                        <img loading="lazy" decoding="async" src="" alt="Photography work preview" data-empty />
                                     </figure>
                                     <figure class="photo-frame">
-                                        <img src="" alt="Photography work preview" data-empty />
+                                        <img loading="lazy" decoding="async" src="" alt="Photography work preview" data-empty />
                                     </figure>
                                 </div>
                             </div>
                         </article>
 
                         <article
-                            class="skill-portal portal-draw magnetic relative min-h-[540px] overflow-hidden rounded-lg border border-white/10 bg-[#eee9df] p-5 text-[#171717] sm:p-8 xl:min-h-[560px] xl:p-10">
+                            class="skill-portal portal-draw relative min-h-[540px] overflow-hidden rounded-lg border border-white/10 bg-[#eee9df] p-5 text-[#171717] sm:p-8 xl:min-h-[560px] xl:p-10">
                             <div class="relative z-10 grid h-full gap-8 xl:grid-cols-[.72fr_1.28fr] xl:items-end">
                                 <div class="flex h-full flex-col justify-between gap-12">
                                     <div>
@@ -684,26 +673,26 @@
 
                                 <div class="grid gap-4 md:grid-cols-4">
                                     <article class="sketch-page drawing-frame min-h-[260px] md:col-span-2">
-                                        <img src="" alt="Drawing work preview" data-empty />
+                                        <img loading="lazy" decoding="async" src="" alt="Drawing work preview" data-empty />
                                     </article>
                                     <article class="sketch-page drawing-frame min-h-[260px]">
-                                        <img src="" alt="Drawing work preview" data-empty />
+                                        <img loading="lazy" decoding="async" src="" alt="Drawing work preview" data-empty />
                                     </article>
                                     <article class="sketch-page drawing-frame min-h-[260px]">
-                                        <img src="" alt="Drawing work preview" data-empty />
+                                        <img loading="lazy" decoding="async" src="" alt="Drawing work preview" data-empty />
                                     </article>
                                     <article class="sketch-page drawing-frame min-h-[240px] md:col-span-2">
-                                        <img src="" alt="Drawing work preview" data-empty />
+                                        <img loading="lazy" decoding="async" src="" alt="Drawing work preview" data-empty />
                                     </article>
                                     <article class="sketch-page drawing-frame min-h-[240px] md:col-span-2">
-                                        <img src="" alt="Drawing work preview" data-empty />
+                                        <img loading="lazy" decoding="async" src="" alt="Drawing work preview" data-empty />
                                     </article>
                                 </div>
                             </div>
                         </article>
 
                         <article
-                            class="skill-portal portal-writing magnetic relative min-h-[540px] overflow-hidden rounded-lg border border-white/10 p-5 sm:p-8 xl:min-h-[570px] xl:p-10">
+                            class="skill-portal portal-writing relative min-h-[540px] overflow-hidden rounded-lg border border-white/10 p-5 sm:p-8 xl:min-h-[570px] xl:p-10">
                             <div class="relative z-10 grid h-full gap-8 xl:grid-cols-[.68fr_1.32fr] xl:items-end">
                                 <div class="flex h-full flex-col justify-between gap-12">
                                     <div>
@@ -839,71 +828,125 @@
         </div>
     </main>
 
-    <dialog
-        class="project-modal w-[min(calc(100%-28px),1060px)] rounded-lg border border-white/15 bg-[#0c0e13]/95 p-0 text-ink shadow-[0_34px_130px_rgba(0,0,0,.74)] backdrop:bg-black/70">
-        <div class="relative grid gap-6 p-6 lg:grid-cols-[minmax(280px,.95fr)_minmax(0,1.05fr)]">
-            <button
-                class="modal-close absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/10 text-ink"
-                type="button" aria-label="Close project details">x</button>
-            <div
-                class="modal-media grid min-h-[280px] place-items-center rounded-md border border-white/10 bg-[#111319] text-center font-mono text-muted lg:min-h-[390px]">
-                <span id="modal-media-label"></span>
+    <dialog class="project-modal" id="project-dialog" aria-labelledby="project-dialog-title">
+        <div class="project-window">
+            <div class="project-hologram" aria-hidden="true">
+                <span class="project-neon-corner project-neon-nw"></span>
+                <span class="project-neon-corner project-neon-ne"></span>
+                <span class="project-neon-corner project-neon-sw"></span>
+                <span class="project-neon-corner project-neon-se"></span>
             </div>
-            <div class="self-center lg:pr-8">
-                <small id="modal-type" class="font-mono text-xs uppercase text-dim"></small>
-                <h2 id="modal-title" class="mt-3 text-4xl font-black leading-tight lg:text-5xl"></h2>
-                <p id="modal-description" class="mt-4 leading-8 text-muted"></p>
-                <div class="mt-6 grid gap-3 sm:grid-cols-3">
-                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4"><span
-                            class="font-mono text-xs text-dim">Role</span><strong id="modal-role"
-                            class="mt-2 block text-sm"></strong></div>
-                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4"><span
-                            class="font-mono text-xs text-dim">Stack</span><strong id="modal-stack"
-                            class="mt-2 block text-sm"></strong></div>
-                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4"><span
-                            class="font-mono text-xs text-dim">Status</span><strong id="modal-status"
-                            class="mt-2 block text-sm"></strong></div>
+            <header class="project-window-bar">
+                <p class="project-file-label"><span class="project-file-mark" aria-hidden="true"></span>PROJECT FILE <span class="project-file-number" data-project-number></span></p>
+                <div class="project-window-actions">
+                    <span class="project-escape-hint"><kbd>esc</kbd> to close</span>
+                    <button class="project-close" type="button" aria-label="Close project details" autofocus>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+                    </button>
                 </div>
-                <div class="mt-6 rounded-md border border-white/10 bg-white/[.04] p-4">
-                    <h3 class="font-extrabold"></h3>
-                    <p id="modal-next" class="mt-2 leading-7 text-muted"></p>
-                </div>
+            </header>
+            <div class="project-workspace">
+                <section class="project-details" aria-label="Project information" tabindex="0">
+                    <div class="project-detail-heading" data-project-reveal>
+                        <p class="project-eyebrow">The project, in detail</p>
+                        <div class="project-title-lockup">
+                            <h2 id="project-dialog-title"></h2>
+                            <span class="project-title-echo project-title-echo-upper" data-project-title-echo aria-hidden="true"></span>
+                            <span class="project-title-echo project-title-echo-lower" data-project-title-echo aria-hidden="true"></span>
+                        </div>
+                        <span class="project-heading-rule" aria-hidden="true"></span>
+                    </div>
+                    <dl class="project-facts">
+                        <div class="project-fact project-fact-status" data-project-reveal>
+                            <dt>Status</dt>
+                            <dd><span class="project-status" data-project-status></span></dd>
+                        </div>
+                        <div class="project-fact" data-project-reveal>
+                            <dt>Role</dt>
+                            <dd data-project-role></dd>
+                        </div>
+                        <div class="project-fact" data-project-reveal>
+                            <dt>Project type</dt>
+                            <dd data-project-type></dd>
+                        </div>
+                        <div class="project-fact" data-project-reveal>
+                            <dt>Development date</dt>
+                            <dd data-project-date></dd>
+                        </div>
+                        <div class="project-fact" data-project-reveal>
+                            <dt>Collaboration</dt>
+                            <dd data-project-mode></dd>
+                        </div>
+                        <div class="project-fact project-fact-full" data-project-reveal>
+                            <dt>Technologies</dt>
+                            <dd><ul class="project-technologies" data-project-technologies aria-label="Technologies used"></ul><span data-project-no-technologies>Not specified yet</span></dd>
+                        </div>
+                        <div class="project-fact project-fact-full project-description" data-project-reveal>
+                            <dt>Description</dt>
+                            <dd data-project-description></dd>
+                        </div>
+                    </dl>
+                    <p class="project-details-end" aria-hidden="true"><span></span>End of project file <span>&#10022;</span></p>
+                </section>
+                <section class="project-archive" aria-label="Project document">
+                    <div class="project-document-stage">
+                        <a class="project-pdf-link project-native-open" data-project-pdf-link target="_blank" rel="noopener noreferrer" hidden>Open PDF <span aria-hidden="true">&#8599;</span></a>
+                        <div class="project-document-empty" data-project-pdf-empty>
+                            <div class="project-document-art" aria-hidden="true">
+                                <span class="project-document-orbit"></span>
+                                <svg viewBox="0 0 120 150" fill="none"><path d="M24 10h48l26 26v104H24z" /><path d="M72 10v26h26M39 58h44M39 67h28" /><rect x="39" y="83" width="44" height="35" rx="2" /><path d="m39 110 13-13 10 9 8-7 13 13" /><circle cx="72" cy="92" r="3" /></svg>
+                                <span class="project-document-badge">PDF</span>
+                            </div>
+                            <p class="project-document-kicker">Behind the project</p>
+                            <h4>A little more perspective.</h4>
+                            <p>Images, screens, and the story behind the work.<br />Visual documentation is coming soon.</p>
+                        </div>
+                        <div class="project-pdf-mount" data-project-pdf-mount hidden></div>
+                    </div>
+                    <div class="project-archive-footer"><span><i aria-hidden="true"></i><span data-project-document-label>Visual documentation</span></span><span>PDF / <span data-project-document-state>Pending</span></span></div>
+                </section>
             </div>
         </div>
     </dialog>
 
-    <dialog
-        class="certificate-modal w-[min(calc(100%-28px),920px)] rounded-lg border border-white/15 bg-[#0c0e13]/95 p-0 text-ink shadow-[0_34px_130px_rgba(0,0,0,.74)] backdrop:bg-black/70">
-        <div class="relative grid gap-6 p-6 lg:grid-cols-[260px_minmax(0,1fr)]">
-            <button
-                class="certificate-modal-close absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/10 text-ink"
-                type="button" aria-label="Close certificate details">x</button>
-            <div class="certificate-modal-art">
-                <span id="certificate-modal-seal">DM</span>
-            </div>
-            <div class="self-center lg:pr-8">
-                <small id="certificate-modal-type" class="font-mono text-xs uppercase text-goldSoft"></small>
-                <h2 id="certificate-modal-title" class="mt-3 text-4xl font-black leading-tight lg:text-5xl"></h2>
-                <p id="certificate-modal-description" class="mt-4 leading-8 text-muted"></p>
-                <dl class="mt-6 grid gap-3 sm:grid-cols-3">
-                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4">
-                        <dt class="font-mono text-xs text-dim">Issuer</dt>
-                        <dd id="certificate-modal-issuer" class="mt-2 text-sm font-bold"></dd>
+    <dialog class="credential-modal" id="credential-dialog" aria-labelledby="credential-title" aria-describedby="credential-description">
+        <div class="credential-folio">
+            <header class="credential-folio-header">
+                <span class="credential-folio-mark" aria-hidden="true">D/M <i></i> Selected records</span>
+                <span class="credential-record-status" data-credential-status>Personal archive</span>
+                <button class="credential-close" type="button" aria-label="Close record"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
+            </header>
+            <div class="credential-workspace">
+                <section class="credential-document" aria-label="Supporting PDF document">
+                    <div class="credential-document-empty">
+                        <div class="credential-blank-page" aria-hidden="true"><span>Room for<br /><em>what comes next.</em></span><small>Document pending</small></div>
+                        <p>The document will appear here once it is added.</p>
                     </div>
-                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4">
-                        <dt class="font-mono text-xs text-dim">Year</dt>
-                        <dd id="certificate-modal-year" class="mt-2 text-sm font-bold"></dd>
+                    <div class="credential-pdf-mount" data-credential-pdf hidden></div>
+                </section>
+                <section class="credential-metadata" aria-label="Record details">
+                    <div class="credential-detail-lead">
+                        <p class="credential-detail-kind"><span data-credential-kind>Certificate</span><i aria-hidden="true"></i> The story behind it</p>
+                        <span class="credential-detail-logo" data-credential-logo aria-hidden="true" hidden></span>
                     </div>
-                    <div class="rounded-md border border-white/10 bg-white/[.04] p-4">
-                        <dt class="font-mono text-xs text-dim">Area</dt>
-                        <dd id="certificate-modal-area" class="mt-2 text-sm font-bold"></dd>
-                    </div>
-                </dl>
+                    <h2 id="credential-title"></h2>
+                    <p class="credential-detail-subtitle" data-credential-subtitle></p>
+                    <div class="credential-detail-year"><span>Year</span><strong data-credential-year></strong></div>
+                    <div class="credential-detail-description"><h3>About this record</h3><p id="credential-description" data-credential-description></p></div>
+                    <a class="credential-full-link" data-credential-full target="_blank" rel="noopener noreferrer" hidden>Open original document <span aria-hidden="true">&nearr;</span></a>
+                    <p class="credential-endnote" aria-hidden="true">Small steps. Lasting evidence.<span>Keep becoming.</span></p>
+                </section>
             </div>
         </div>
     </dialog>
 
-    <script src="app.js"></script>
+    <script src="data/projects.js"></script>
+    <script src="assets/js/project-pdf-viewer.js"></script>
+    <script src="assets/js/project-dialog.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/credentials.js" defer></script>
+    <script src="assets/js/assistant-core.js" defer></script>
+    <script src="assets/js/assistant.js" defer></script>
 </body>
 
 </html>

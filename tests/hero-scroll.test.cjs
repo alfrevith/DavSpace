@@ -4,7 +4,7 @@ const path = require("node:path");
 const test = require("node:test");
 const vm = require("node:vm");
 
-const source = fs.readFileSync(path.join(__dirname, "..", "app.js"), "utf8");
+const source = fs.readFileSync(path.join(__dirname, "..", "assets/js/app.js"), "utf8");
 const start = source.indexOf("function initializeHeroScroll()");
 const end = source.indexOf("\ninitializeHeroScroll();", start);
 assert(start >= 0 && end > start);
