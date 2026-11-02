@@ -1,0 +1,27 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {runInNewContext} from 'node:vm';
+import {DOMParser} from 'linkedom';
+const source=await readFile(new URL('../assets/js/project-pdf-viewer.js',import.meta.url),'utf8');
+test('PDF progress handles unknown sizes, real percentages, failures and destroyed readers',async()=>{
+  const document=new DOMParser().parseFromString('<body><dialog><section class="project-details"></section><div id="mount"></div></dialog></body>','text/html');
+  Object.defineProperty(document,'currentScript',{value:{src:'https://example.test/assets/js/project-pdf-viewer.js'}});
+  let reject, destroyed=false;
+  const loading={promise:new Promise((_,no)=>{reject=no;}),destroy:async()=>{destroyed=true;}};
+  const window={addEventListener(){},removeEventListener(){},devicePixelRatio:1,__pdfjs:{GlobalWorkerOptions:{},getDocument:()=>loading}};
+  const executable=source.replace('import(new URL("pdf.min.mjs", assets).href)','Promise.resolve(window.__pdfjs)');
+  assert.notEqual(executable,source);
+  runInNewContext(executable,{document,window,URL,setTimeout,clearTimeout});
+  const mount=document.querySelector('#mount');
+  const reader=window.ProjectPDFViewer.create({mount,url:new URL('https://example.test/file.pdf'),title:'Test',dialog:document.querySelector('dialog')});
+  await new Promise(resolve=>setImmediate(resolve));
+  const label=mount.querySelector('[data-reader-loading-label]'),bar=mount.querySelector('progress');
+  loading.onProgress({loaded:200,total:1000});assert.equal(bar.value,20);assert.match(label.textContent,/20%/);
+  loading.onProgress({loaded:300,total:0});assert(!bar.hasAttribute('value'));assert.match(label.textContent,/Loading PDF/);
+  loading.onProgress({loaded:1000,total:1000});assert.equal(bar.value,100);assert.match(label.textContent,/first page/);
+  reject(new Error('Network failed'));await new Promise(resolve=>setImmediate(resolve));
+  assert.match(mount.textContent,/Open full PDF/);assert(!mount.querySelector('.project-reader-viewport').hasAttribute('aria-busy'));
+  reader.destroy();assert(destroyed);assert.equal(mount.children.length,0);
+  loading.onProgress({loaded:1,total:100});assert.equal(mount.children.length,0);
+});

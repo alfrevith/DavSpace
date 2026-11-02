@@ -107,6 +107,33 @@ test("every project card has its own data entry and the requested field order", 
   assert(html.indexOf('src="data/projects.js"') < html.indexOf('src="assets/js/project-dialog.js"'));
 });
 
+test("only POT-C offers the 3D section and never loads a frame just by opening", () => {
+  const s=setup();
+  for(const key of ["beyond","plant-bud","pot-c","cecam","pets-health"]){
+    s.open(key);
+    assert.equal(s.get("[data-project-model]").hidden,key!=="pot-c");
+    assert.equal(s.get("[data-project-model-mount]").children.length,0);
+    assert.equal(s.get("[data-project-model-toggle]").attributes.get("aria-expanded"),"false");
+    s.escape();
+  }
+});
+test("show creates one local frame, hide destroys it, and closing always resets it", () => {
+  const s=setup(),mount=s.get("[data-project-model-mount]"),toggle=s.get("[data-project-model-toggle]");
+  s.open("pot-c");toggle.emit("click");
+  assert.equal(mount.children.length,1);assert.equal(mount.hidden,false);
+  assert.equal(mount.children[0].src,"http://localhost/portfolio/assets/3D/viewer.html");
+  toggle.emit("click");assert.equal(mount.children.length,0);assert.equal(mount.hidden,true);
+  toggle.emit("click");s.escape();assert.equal(mount.children.length,0);
+  s.open("pot-c");assert.equal(mount.hidden,true);assert.equal(mount.children.length,0);
+});
+test("3D resources are local, self-contained and use the exact published GLB casing", () => {
+  const viewer=fs.readFileSync(path.join(root,"assets/3D/viewer.html"),"utf8");
+  assert(viewer.includes('src="Basurero.glb"'));assert(viewer.includes("camera-controls"));
+  assert(fs.existsSync(path.join(root,"assets/3D/Basurero.glb")));
+  assert(fs.existsSync(path.join(root,"assets/model-viewer/model-viewer.min.js")));
+  for(const name of ["index.html","index-mobile.html"]){const page=fs.readFileSync(path.join(root,name),"utf8");assert(!page.includes('src="assets/model-viewer/'));assert(!page.includes('src="assets/3D/Basurero.glb"'));}
+});
+
 test("clicking different cards refreshes all content without carrying over technologies or status", () => {
   const s = setup();
   s.open("plant-bud");
@@ -208,6 +235,7 @@ test("PDFs mount lazily, have an external-reader fallback, and are released on c
   s.escape();
   assert.equal(mount.children.length, 0);
   assert.equal(s.get("[data-project-pdf-link]").hidden, true);
+  s.window.PORTFOLIO_PROJECTS["plant-bud"].pdf = "";
   s.open("plant-bud");
   s.flushTimers();
   assert.equal(mount.children.length, 0);
@@ -250,6 +278,43 @@ test("local PDF paths match filename casing for GitHub Pages", () => {
     const folder = path.dirname(path.join(root, project.pdf));
     assert(fs.readdirSync(folder).includes(path.basename(project.pdf)), `PDF path casing must match: ${project.pdf}`);
   }
+});
+
+function arrow(s,key,extra={}) {
+  const event={key,prevented:false,preventDefault(){this.prevented=true;},...extra};
+  s.dialog.emit("keydown",event);return event;
+}
+test("arrows switch inside the same modal, wrap in both directions and restore focus to the current project",()=>{
+  const s=setup();s.open("beyond");
+  let closes=0; s.dialog.addEventListener("close",()=>closes++);
+  assert(arrow(s,"ArrowLeft").prevented);assert.equal(s.get("#project-dialog-title").textContent,"Pet's Health");
+  arrow(s,"ArrowRight");assert.equal(s.get("#project-dialog-title").textContent,"Beyond");
+  arrow(s,"ArrowRight");assert.equal(s.get("#project-dialog-title").textContent,"Plant Bud");
+  assert(s.dialog.open);assert.equal(closes,0);assert(s.documentElement.classList.contains("project-dialog-open"));
+  s.escape();assert(s.cards[1].focused);
+});
+test("PDF page keys, editable controls, handled events and modifier shortcuts never switch projects",()=>{
+  const s=setup();s.open("beyond");
+  for(const extra of [{defaultPrevented:true},{ctrlKey:true},{altKey:true},{metaKey:true},{shiftKey:true},{target:{closest:()=>({})}}]){
+    const event=arrow(s,"ArrowRight",extra);assert(!event.prevented);assert.equal(s.get("#project-dialog-title").textContent,"Beyond");
+  }
+});
+test("rapid switches release old readers and models and only mount the final document",()=>{
+  const s=setup();let mounted=[],destroyed=0;
+  s.window.ProjectPDFViewer={create:({title})=>{mounted.push(title);return{destroy(){destroyed++;}};}};
+  s.open("beyond");s.flushTimers();arrow(s,"ArrowRight");arrow(s,"ArrowRight");
+  s.get("[data-project-model-toggle]").emit("click");assert.equal(s.get("[data-project-model-mount]").children.length,1);
+  arrow(s,"ArrowRight");assert.equal(s.get("[data-project-model-mount]").children.length,0);
+  s.flushTimers();assert.deepEqual(mounted,["Beyond","CECAM"]);assert.equal(destroyed,1);
+  assert.equal(s.get("[data-project-model]").hidden,true);
+});
+test("switches use directional transitions, cancel interrupted animation and honor reduced motion",()=>{
+  const s=setup({reduced:false}),panel=s.get(".project-window");s.open("beyond");
+  arrow(s,"ArrowRight");assert(panel.animations[0].cancelled);assert.equal(panel.animations[1].options.duration,360);
+  assert.match(panel.animations[1].frames[0].transform,/translateX\(38px\)/);
+  arrow(s,"ArrowLeft");assert(panel.animations[1].cancelled);assert.match(panel.animations[2].frames[0].transform,/translateX\(-38px\)/);
+  const reduced=setup();reduced.open("beyond");reduced.get("[data-project-next]").emit("click");
+  assert.equal(reduced.get("#project-dialog-title").textContent,"Plant Bud");assert.equal(reduced.get(".project-window").animations.length,0);
 });
 
 test("each project resets its neon theme, including missing or invalid colors", () => {

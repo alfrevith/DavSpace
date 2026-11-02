@@ -1598,6 +1598,10 @@ html.project-dialog-open {
 }
 
 .project-close svg { width: 18px; height: 18px; }
+.project-nav-button { display: grid; place-items: center; flex: none; width: 38px; height: 38px; padding: 0; border: 1px solid #ffffff1f; border-radius: 50%; background: #ffffff04; color: #c3cdd4; font: 18px/1 system-ui, sans-serif; cursor: pointer; }
+.project-nav-button:hover { color: #fff; border-color: var(--file-accent); background: rgb(var(--file-accent-rgb) / .09); }
+.project-nav-button:focus-visible { outline: 2px solid var(--file-accent); outline-offset: 3px; }
+@media (max-width: 600px) { .project-nav-button { width: 40px; height: 40px; } }
 .project-close:hover { color: #fff; background: #ffffff12; border-color: #ffffff4d; }
 .project-modal :is(button, a, object, [tabindex]):focus-visible { outline: 2px solid var(--file-accent); outline-offset: 4px; }
 .project-details:focus-visible { outline-offset: -5px; }
@@ -1688,6 +1692,17 @@ html.project-dialog-open {
 .project-description { border: 0; padding-bottom: 28px; }
 .project-description dd { color: var(--file-muted); line-height: 1.85; white-space: pre-line; }
 .project-details-end { display: flex; align-items: center; gap: 12px; margin: 4px 0 0; color: #7f8c98; font-size: 9px; letter-spacing: .03em; }
+.project-model { margin: 26px 0; padding: 20px 0; border-block: 1px solid rgb(var(--file-accent-rgb) / .2); }
+.project-model[hidden], .project-model-mount[hidden] { display: none !important; }
+.project-model-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between; }
+.project-model-heading h3 { margin: 0; font-size: 16px; font-weight: 500; color: #e3e7eb; }
+.project-model-heading span { font: 10px/1.5 Consolas, monospace; color: var(--file-accent); }
+.project-model > p { margin: 10px 0 16px; font-size: 12px; color: #a4b0bd; }
+.project-model-toggle { display: flex; justify-content: space-between; align-items: center; gap: 18px; width: 100%; min-height: 46px; padding: 12px 15px; color: #e6f5ea; border: 1px solid rgb(var(--file-accent-rgb) / .35); border-radius: 8px; background: rgb(var(--file-accent-rgb) / .055); font: inherit; font-size: 12px; cursor: pointer; }
+.project-model-toggle:hover { background: rgb(var(--file-accent-rgb) / .12); }
+.project-model-toggle:focus-visible { outline: 2px solid var(--file-accent); outline-offset: 4px; }
+.project-model-mount { overflow: hidden; margin-top: 14px; border: 1px solid rgb(var(--file-accent-rgb) / .2); border-radius: 10px; background: #101816; }
+.project-model-mount iframe { display: block; width: 100%; height: clamp(320px, 48vh, 440px); border: 0; }
 .project-details-end > span:first-child { height: 1px; flex: 1; background: #ffffff14; }
 .project-details-end > span:last-child { color: var(--file-accent); font-size: 16px; }
 
@@ -1763,6 +1778,10 @@ html.project-dialog-open {
 .project-reader-paper canvas { display: block; align-self: flex-start; flex: none; border-radius: 2px; background: #fff; box-shadow: 0 10px 34px #0006, 0 0 0 1px #ffffff1a; }
 .project-reader-message { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 25px; color: #9ab2c0; text-align: center; font-size: 12px; }
 .project-reader-message a { color: var(--file-accent); border-bottom: 1px solid rgb(var(--file-accent-rgb) / .3); padding-bottom: 5px; }
+.project-reader-progress { display: block; width: min(260px, 80%); height: 6px; overflow: hidden; border: 0; border-radius: 8px; background: #ffffff15; accent-color: var(--file-accent); }
+.project-reader-progress::-webkit-progress-bar { background: #ffffff15; border-radius: 8px; }
+.project-reader-progress::-webkit-progress-value { background: var(--file-accent); border-radius: 8px; }
+.project-reader-progress::-moz-progress-bar { background: var(--file-accent); border-radius: 8px; }
 .reader-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .project-modal.is-document-focused .project-workspace { grid-template-columns: minmax(0,1fr); grid-template-areas: "archive"; }
 .project-modal.is-document-focused .project-archive { border-right: 0; }

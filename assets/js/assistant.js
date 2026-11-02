@@ -7,6 +7,7 @@
   let busy = false;
   let request;
   let version = 0;
+  let knowledgeCache;
   const copy = {
     es:{open:"Abrir chat",name:"Guía de David",heading:"¿Qué te gustaría saber?",welcome:"Proyectos, certificados o un poco más sobre David.",suggestions:["Muéstrame los proyectos","¿Quién es David?"],placeholder:"Escribe tu pregunta…",send:"Enviar",close:"Cerrar chat",reset:"Nueva conversación",you:"Tú",guide:"Guía",loading:"Consultando el portafolio…",failed:"No pude consultar los archivos del portafolio. Inténtalo otra vez.",source:"Ver sección",project:"Ver proyecto"},
     en:{open:"Open chat",name:"David's guide",heading:"What would you like to know?",welcome:"Projects, certificates, or a little more about David.",suggestions:["Show me the projects","Who is David?"],placeholder:"Ask a question…",send:"Send",close:"Close chat",reset:"New conversation",you:"You",guide:"Guide",loading:"Checking the portfolio…",failed:"I couldn't read the portfolio files. Please try again.",source:"View section",project:"View project"}
@@ -114,7 +115,7 @@
       if(!source || core.safeHref(source.href)!==source.href) continue;
       const link=document.createElement("a");link.href=new URL(source.href,siteRoot).href;
       const sectionLabels={"index.html#about-me":{es:"Sobre David",en:"About David"},"index.html#projects":{es:"Proyectos",en:"Projects"},"index.html#contact":{es:"Contacto",en:"Contact"}};
-      link.textContent=(source.project ? source.title : sectionLabels[source.href]?.[messageLang] || copy[messageLang].source)+" ↗";
+      link.textContent=(source.project||source.id?.startsWith("credential:") ? source.title : sectionLabels[source.href]?.[messageLang] || copy[messageLang].source)+" ↗";
       link.title=String(source.title || "").slice(0,120);
       link.addEventListener("click",event=>{
         const card=source.project && [...document.querySelectorAll("#project-list [data-project]")].find(card=>card.dataset.project===source.project);
@@ -144,18 +145,21 @@
   }
 
   async function loadKnowledge(signal) {
+    // Reuse a bounded in-memory snapshot. Nothing is fetched before a question;
+    // a minute later edits can be picked up without reloading the page.
+    if(knowledgeCache&&Date.now()-knowledgeCache.time<60000)return knowledgeCache.sources;
     const read=async name=>{
       if(!/^(?:data\/)?[\w-]+\.(html|js|json)$/.test(name)) throw new Error("Invalid source path");
       const response=await fetch(new URL(name,siteRoot),{cache:"no-store",credentials:"omit",signal});
       if(!response.ok) throw new Error("Source unavailable");
       const text=await response.text();if(text.length>1000000) throw new Error("Source too large");return text;
     };
-    let main;
-    try { main=new DOMParser().parseFromString(await read("index.html"),"text/html"); }
-    catch(error) { if(signal.aborted) throw error;main=document; }
+    const files=await Promise.allSettled([read("index.html"),read("data/projects.js"),read("data/assistant-knowledge.json"),read("data/credentials.json")]);
+    if(signal.aborted)throw new Error("Cancelled source read");
+    const main=files[0].status==="fulfilled"?new DOMParser().parseFromString(files[0].value,"text/html"):document;
     let projects=window.PORTFOLIO_PROJECTS || {};
     let manual={},credentials={};
-    const extra=await Promise.allSettled([read("data/projects.js"),read("data/assistant-knowledge.json"),read("data/credentials.json")]);
+    const extra=files.slice(1);
     if(extra[0].status==="fulfilled") {try{projects=core.parseProjects(extra[0].value);}catch{/* Existing on-page data remains usable. */}}
     if(extra[1].status==="fulfilled") {try{manual=JSON.parse(extra[1].value);}catch{/* A malformed training file cannot break the chat. */}}
     if(extra[2].status==="fulfilled") {try{credentials=JSON.parse(extra[2].value);}catch{/* Other portfolio sources remain available. */}}
@@ -164,7 +168,8 @@
     const names=[...new Set([...main.querySelectorAll("main a[href]")].map(a=>a.getAttribute("href").split("#")[0]).filter(name=>/^[\w-]+\.html$/.test(name)&&name!=="index.html"))].slice(0,12);
     const pages=await Promise.allSettled(names.map(async name=>core.extractDocument(new DOMParser().parseFromString(await read(name),"text/html"),name)));
     pages.forEach(result=>{if(result.status==="fulfilled")sources.push(...result.value);});
-    return sources;
+    if(signal.aborted)throw new Error("Cancelled source read");
+    knowledgeCache={sources,time:Date.now()};return sources;
   }
 
   async function send() {

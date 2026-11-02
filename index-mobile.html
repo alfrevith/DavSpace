@@ -620,6 +620,8 @@
             <header class="project-window-bar">
                 <p class="project-file-label"><span class="project-file-mark" aria-hidden="true"></span>PROJECT FILE <span class="project-file-number" data-project-number=""></span></p>
                 <div class="project-window-actions">
+                      <button class="project-nav-button" data-project-prev type="button" aria-label="Previous project" title="Previous project (←)">←</button>
+                      <button class="project-nav-button" data-project-next type="button" aria-label="Next project" title="Next project (→)">→</button>
                     <span class="project-escape-hint"><kbd>esc</kbd> to close</span>
                     <button class="project-close" type="button" aria-label="Close project details" autofocus>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
@@ -670,21 +672,18 @@
                             <dd data-project-description=""></dd>
                         </div>
                     </dl>
+                    <section class="project-model" data-project-model hidden aria-labelledby="project-model-title">
+                        <div class="project-model-heading"><h3 id="project-model-title">Interactive 3D model</h3><span>POT-C · 12 MB</span></div>
+                        <p>Explore the smart bin from every angle.</p>
+                        <button class="project-model-toggle" data-project-model-toggle type="button" aria-expanded="false" aria-controls="project-model-mount">Show 3D model <span aria-hidden="true">↗</span></button>
+                        <div id="project-model-mount" class="project-model-mount" data-project-model-mount hidden></div>
+                    </section>
                     <p class="project-details-end" aria-hidden="true"><span></span>End of project file <span>✦</span></p>
                 </section>
                 <section class="project-archive" aria-label="Project document"><h3 class="mobile-document-heading">Visual documentation</h3>
                     <div class="project-document-stage">
                         <a class="project-pdf-link project-native-open" data-project-pdf-link="" target="_blank" rel="noopener noreferrer" hidden>Open PDF <span aria-hidden="true">↗</span></a>
-                        <div class="project-document-empty" data-project-pdf-empty="">
-                            <div class="project-document-art" aria-hidden="true">
-                                <span class="project-document-orbit"></span>
-                                <svg viewBox="0 0 120 150" fill="none"><path d="M24 10h48l26 26v104H24z" /><path d="M72 10v26h26M39 58h44M39 67h28" /><rect x="39" y="83" width="44" height="35" rx="2" /><path d="m39 110 13-13 10 9 8-7 13 13" /><circle cx="72" cy="92" r="3" /></svg>
-                                <span class="project-document-badge">PDF</span>
-                            </div>
-                            <p class="project-document-kicker">Behind the project</p>
-                            <h4>A little more perspective.</h4>
-                            <p>Images, screens, and the story behind the work.<br>Visual documentation is coming soon.</p>
-                        </div>
+                        <div class="project-document-empty" data-project-pdf-empty hidden></div>
                         <div class="project-pdf-mount" data-project-pdf-mount="" hidden></div>
                     </div>
                     <div class="project-archive-footer"><span><i aria-hidden="true"></i><span data-project-document-label="">Visual documentation</span></span><span>PDF / <span data-project-document-state="">Pending</span></span></div>

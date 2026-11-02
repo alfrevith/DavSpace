@@ -16,7 +16,7 @@
           <div class="project-reader-controls"><button type="button" data-reader-out aria-label="Zoom out" title="Zoom out">−</button><button type="button" data-reader-fit title="Fit page width" aria-label="Fit page width">Fit</button><button type="button" data-reader-in aria-label="Zoom in" title="Zoom in">+</button><span class="project-reader-divider"></span><button type="button" data-reader-expand title="Expand document" aria-label="Expand document" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button></div>
           <a class="project-pdf-link project-reader-open" target="_blank" rel="noopener noreferrer">Open PDF <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
         </div>
-        <div class="project-reader-viewport" tabindex="0" role="region" aria-label="Interactive PDF pages"><div class="project-reader-paper" data-reader-paper></div><p class="project-reader-message" data-reader-message role="status">Preparing your document…</p></div>
+        <div class="project-reader-viewport" tabindex="0" role="region" aria-label="Interactive PDF pages"><div class="project-reader-paper" data-reader-paper></div><div class="project-reader-message" data-reader-message role="status"><span data-reader-loading-label>Preparing PDF reader…</span><progress class="project-reader-progress" data-reader-progress max="100" aria-label="PDF download progress"></progress></div></div>
         <div class="reader-sr-only" role="status"><span data-reader-position>Visual documentation</span><span data-reader-zoom>Fit to width</span></div>`;
       mount.replaceChildren(root);
       const $ = selector => root.querySelector(selector);
@@ -25,6 +25,7 @@
       const viewport = $(".project-reader-viewport"), paper = $("[data-reader-paper]"), pageInput = $("[data-reader-page]"), message = $("[data-reader-message]");
       let alive = true, loading, pdf, task, pageNumber = 1, zoom = null, renderedScale = 1, revision = 0, resizeTimer;
       const controls = [...root.querySelectorAll("button, input")];
+      viewport.setAttribute("aria-busy", "true");
       controls.forEach(control => { control.disabled = true; });
       function sync() {
         pageInput.value = pageNumber;
@@ -36,6 +37,7 @@
       }
       function fail(text = "This document couldn't be displayed here.") {
         if (!alive) return;
+        viewport.removeAttribute("aria-busy");
         message.hidden = false;message.replaceChildren();
         const p = document.createElement("span");p.textContent = text;
         const a = document.createElement("a");a.href = url.href;a.target = "_blank";a.rel = "noopener noreferrer";a.textContent = "Open full PDF ↗";
@@ -109,9 +111,21 @@
       loadLibrary().then(async pdfjs=>{
         if (!alive) return;
         loading = pdfjs.getDocument({url:url.href,cMapUrl:new URL("cmaps/",assets).href,cMapPacked:true,standardFontDataUrl:new URL("standard_fonts/",assets).href,wasmUrl:new URL("wasm/",assets).href,disableAutoFetch:true,disableStream:true});
+        const progress=$('[data-reader-progress]'), label=$('[data-reader-loading-label]');
+        loading.onProgress = ({loaded,total}) => {
+          if(!alive || pdf)return;
+          if(Number.isFinite(total)&&total>0){
+            const percent=Math.min(100,Math.max(0,Math.round(loaded/total*100)));
+            progress.value=percent;
+            label.textContent=percent===100?'Preparing the first page…':`Loading PDF… ${percent}%`;
+          } else {
+            progress.removeAttribute('value');label.textContent='Loading PDF…';
+          }
+        };
         loading.onPassword = ()=>{fail("This PDF needs a password. Please use the full reader.");loading.destroy().catch(()=>{});};
         pdf = await loading.promise;
         if (!alive) return;
+        progress.value=100;label.textContent='Preparing the first page…';
         $("[data-reader-total]").textContent = pdf.numPages;pageInput.max = pdf.numPages;
         controls.forEach(control=>{control.disabled=false;});sync();render();
       }).catch(()=>fail());

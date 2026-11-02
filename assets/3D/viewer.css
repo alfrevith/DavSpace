@@ -1,0 +1,11 @@
+:root { color-scheme: dark; font: 12px/1.5 system-ui, sans-serif; color: #cedbd1; background: #101816; }
+* { box-sizing: border-box; }
+body { margin: 0; height: 100dvh; display: grid; grid-template-rows: minmax(0,1fr) auto; }
+model-viewer { width: 100%; height: 100%; min-height: 0; background: radial-gradient(ellipse at center, #26392c, #101816 75%); --progress-bar-color: #8deca0; }
+#status { position: absolute; top: 12px; left: 12px; right: 12px; margin: 0; padding: 10px; background: #101816eb; border-radius: 6px; pointer-events: none; }
+[hidden] { display: none !important; }
+.controls { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 12px; border-top: 1px solid #ffffff15; }
+.controls p { margin: 0; flex: 1 1 180px; font-size: 10px; }
+button { color: #e6f8e9; background: #ffffff09; border: 1px solid #8deca044; padding: 8px 12px; min-height: 40px; border-radius: 6px; cursor: pointer; }
+button:focus-visible { outline: 2px solid #8deca0; outline-offset: 2px; }
+button:disabled { opacity: .4; cursor: default; }

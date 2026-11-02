@@ -9,6 +9,9 @@
   const pdfEmpty = dialog.querySelector("[data-project-pdf-empty]");
   const pdfLink = dialog.querySelector("[data-project-pdf-link]");
   const logoMount = dialog.querySelector("[data-project-logo]");
+  const modelSection = dialog.querySelector("[data-project-model]");
+  const modelToggle = dialog.querySelector("[data-project-model-toggle]");
+  const modelMount = dialog.querySelector("[data-project-model-mount]");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const entranceDuration = 1000;
   const statusLabels = {
@@ -30,6 +33,33 @@
   const setText = (selector, value, fallback = "Not specified yet") => {
     dialog.querySelector(selector).textContent = text(value) || fallback;
   };
+
+  function clearModel() {
+    // Destroy the isolated document, including its WebGL context and textures.
+    // Merely hiding a canvas would retain the model's GPU memory.
+    modelMount.replaceChildren();
+    modelMount.hidden = true;
+    modelToggle.setAttribute("aria-expanded", "false");
+    modelToggle.textContent = "Show 3D model ↗";
+  }
+  modelToggle.addEventListener("click", () => {
+    if (!dialog.open || closing || modelSection.hidden) return;
+    if (!modelMount.hidden) { clearModel(); return; }
+    const frame = document.createElement("iframe");
+    frame.src = new URL("assets/3D/viewer.html", document.baseURI).href;
+    frame.title = "POT-C smart bin — interactive 3D model";
+    frame.setAttribute("allow", "fullscreen");
+    modelMount.replaceChildren(frame);
+    modelMount.hidden = false;
+    modelToggle.setAttribute("aria-expanded", "true");
+    modelToggle.textContent = "Hide 3D model −";
+  });
+  window.addEventListener?.("message", event => {
+    const frame = modelMount.firstElementChild;
+    if (!frame || event.source !== frame.contentWindow || event.origin !== new URL(document.baseURI).origin) return;
+    if (event.data?.type === "pot-c-model-close") closeProject();
+    if (event.data?.type === "pot-c-model-focus-toggle") modelToggle.focus({preventScroll:true});
+  });
 
   // Relative paths and HTTP(S) documents only; never inject HTML from project data.
   function documentURL(value) {
@@ -108,8 +138,11 @@
     pdfEmpty.hidden = true;
   }
 
-  function openProject(card) {
-    if (dialog.open) return;
+  function openProject(card, {direction = 0} = {}) {
+    if (dialog.open && !direction) return;
+    const switching = dialog.open;
+    transition?.cancel();
+    transition = null;
     const key = card.dataset.project;
     const entries = window.PORTFOLIO_PROJECTS || {};
     const project = Object.hasOwn(entries, key) ? entries[key] || {} : {};
@@ -122,6 +155,8 @@
     closing = false;
     dialog.classList.remove("is-closing");
     clearDocument();
+    clearModel();
+    modelSection.hidden = key !== "pot-c";
 
     // One color controls the entire project theme. Reset it on every open.
     const accent = /^#[\da-f]{6}$/i.test(text(project.accent)) ? text(project.accent) : "#93e7ff";
@@ -161,10 +196,19 @@
 
     const source = card.getBoundingClientRect();
     document.documentElement.classList.add("project-dialog-open");
-    dialog.showModal();
+    if (!switching) dialog.showModal();
     details.scrollTop = 0;
     dialog.querySelector(".project-workspace").scrollTop = 0;
-    if (!reducedMotion.matches && typeof windowPanel.animate === "function") {
+    if (switching && !reducedMotion.matches && typeof windowPanel.animate === "function") {
+      // Replace content inside the same modal; a short directional transition
+      // avoids replaying the full opening or unlocking the background scroll.
+      windowPanel.style.setProperty("transform-origin", "50% 50%");
+      transition = windowPanel.animate([
+        {opacity: .15, transform: `translateX(${direction * 38}px) scale(.985)`, clipPath: "inset(0)"},
+        {offset: .45, opacity: .85, transform: `translateX(${direction * 8}px) scale(.998)`, clipPath: "inset(0)"},
+        {opacity: 1, transform: "none", clipPath: "inset(0)"}
+      ], {duration: 360, easing: "cubic-bezier(.16, 1, .3, 1)"});
+    } else if (!switching && !reducedMotion.matches && typeof windowPanel.animate === "function") {
       const target = dialog.getBoundingClientRect();
       const dx = Math.max(-70, Math.min(70, (source.left + source.width / 2 - target.left - target.width / 2) * .14));
       const dy = Math.max(-45, Math.min(45, (source.top + source.height / 2 - target.top - target.height / 2) * .12));
@@ -182,8 +226,31 @@
       ], { duration: entranceDuration, easing: "linear" });
     }
     // Create the native PDF viewer after the entrance, never on the initial page load.
-    if (pdf) pdfTimer = window.setTimeout(() => mountDocument(pdf, title), reducedMotion.matches ? 0 : entranceDuration);
+    if (pdf) pdfTimer = window.setTimeout(() => mountDocument(pdf, title), reducedMotion.matches ? 0 : switching ? 360 : entranceDuration);
   }
+
+  function navigateProject(direction) {
+    if (!dialog.open || closing) return;
+    const cards = [...document.querySelectorAll("#project-list [data-project]")];
+    if (cards.length < 2) return;
+    const index = cards.indexOf(opener);
+    const next = cards[(index + direction + cards.length) % cards.length];
+    // Focus remains on a stable control if a PDF or a 3D viewer is removed.
+    const active = document.activeElement;
+    const restoreFocus = active && active !== dialog && !active.closest?.(".project-window-actions");
+    openProject(next, {direction});
+    if (restoreFocus) closeButton.focus({preventScroll:true});
+  }
+  dialog.querySelector("[data-project-prev]").addEventListener("click", () => navigateProject(-1));
+  dialog.querySelector("[data-project-next]").addEventListener("click", () => navigateProject(1));
+  dialog.addEventListener("keydown", event => {
+    if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    // Page navigation, numeric inputs and embedded model controls own their keys.
+    if (event.target?.closest?.("input, textarea, select, [contenteditable], .project-reader-viewport, object, iframe")) return;
+    event.preventDefault();
+    navigateProject(event.key === "ArrowRight" ? 1 : -1);
+  });
 
   function finishClose() {
     transition?.cancel();
@@ -194,6 +261,7 @@
   function closeProject() {
     if (!dialog.open || closing) return;
     closing = true;
+    clearModel();
     window.clearTimeout(pdfTimer);
     // Preserve an interrupted entrance instead of flashing the full panel.
     const current = window.getComputedStyle(windowPanel);
@@ -237,6 +305,7 @@
     backdropPressed = false;
   });
   dialog.addEventListener("close", () => {
+    clearModel();
     clearDocument();
     transition?.cancel();
     transition = null;

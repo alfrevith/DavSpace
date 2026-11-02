@@ -54,6 +54,12 @@ with Beyond first among the 2026 projects. The board's year and labels remain in
 each card, so update them too if the project's year or category changes.
 
 PDFs load only when their project opens, after the entrance animation, and are
+connected to the five documents in `pdfs/`. A loading indicator shows actual
+PDF.js download progress when the server supplies a total size, and an
+indeterminate bar otherwise. It stays visible while the first page is prepared
+and disappears after that page is painted; errors retain the external reader link.
+The former decorative pending-document panel has been removed from both layouts.
+PDFs are
 unmounted when the window closes. The custom PDF.js reader has page navigation,
 a page-number input, zoom, fit-to-width, and an expanded document layout. Arrow
 keys navigate pages when the page viewport has focus. The single compact toolbar
@@ -69,6 +75,21 @@ a bounded canvas resolution. `assets/js/project-pdf-viewer.js` manages the reade
 releases its rendering task and worker when the project closes.
 
 The window closes with its close button, Escape, or a click outside its frame.
+Left/right arrow keys and the two header buttons move between projects in board
+order, looping at either end without closing the modal. Each change uses a short
+directional slide and fade (disabled for reduced motion), resets the reading
+position and releases the previous PDF and 3D viewer. PDFs load only after the
+transition settles. Arrow keys inside the PDF page viewport still navigate PDF
+pages; editable controls and the 3D viewer keep their own keyboard interactions.
+POT-C alone also has an **Interactive 3D model** section. **Show 3D model** loads
+`assets/3D/viewer.html` and `assets/3D/Basurero.glb` (filename case matters).
+Drag to rotate, pinch or scroll to zoom, and use **Reset view** to reframe it.
+**Hide 3D model** or closing the project destroys the isolated viewer document,
+releasing its model and WebGL resources. Nothing from the 3D viewer loads before
+the button is pressed, and each reopening starts hidden. Model Viewer 4.4.0 and
+its Apache license are served locally from `assets/model-viewer/`; no CDN or build
+step is required. The supplied GLB includes its textures and needs no decoder.
+
 Keyboard focus is contained by the native dialog and returns to the project
 card on close. Reduced-motion preferences disable the entrance and exit motion.
 

@@ -65,3 +65,30 @@ test("a certificate-specific question retrieves the published result and links t
   assert.match(reply.answer, /972\/1000/);
   assert.equal(reply.sources[0].href, "index.html#certificates");
 });
+
+test("Spanish score paraphrases distinguish earned marks from the passing threshold",()=>{
+  const sources=core.credentialSources(data);
+  for(const question of ["¿Con qué nota aprobó Excel Expert?","Oye, ¿qué puntaje obtuvo en Microsoft Excel Expert?"])
+    assert.match(core.answer(sources,question,{lang:"es"}).answer,/972\/1000/);
+  const threshold=core.answer(sources,"¿Cuál es la nota mínima para aprobar Excel Expert?",{lang:"es"});
+  assert.match(threshold.answer,/700/);assert(!threshold.answer.includes("972"));
+});
+test("ambiguous certificates ask a useful question and carry the requested field into an ordinal reply",()=>{
+  const sources=core.credentialSources(data);
+  const first=core.answer(sources,"¿Qué puntaje obtuvo en Excel?",{lang:"es"});
+  assert.match(first.answer,/cuál/);assert.equal(first.suggestions.length,2);
+  const second=core.answer(sources,"El segundo",{lang:"es",context:first.context});
+  assert.match(second.answer,/960\/1000/);
+  const date=core.answer(sources,"¿Y cuándo?",{lang:"es",context:second.context});
+  assert.match(date.answer,/2025-10-31/);
+});
+test("credential lists filter by year, compare actual scores and exclude unearned achievements",()=>{
+  const sources=core.credentialSources(data);
+  const older=core.answer(sources,"Muestra las certificaciones de 2025",{lang:"es"});
+  assert.match(older.answer,/Microsoft Excel/);assert(!older.answer.includes("Expert"));
+  const compare=core.answer(sources,"Compara las notas de Excel y Excel Expert",{lang:"es"});
+  assert.match(compare.answer,/972\/1000/);assert.match(compare.answer,/960\/1000/);
+  assert.match(core.answer(sources,"¿Qué logros tiene?",{lang:"es"}).answer,/No hay registros publicados/);
+  assert.equal(core.answer(sources,"Muestra los certificados de David",{lang:"es"}).sources.length,2);
+  assert.equal(core.answer(sources,"Muestra certificados de Python",{lang:"es"}).sources.length,0);
+});

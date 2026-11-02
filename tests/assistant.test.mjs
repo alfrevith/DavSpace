@@ -209,3 +209,89 @@ test("training supports several authored responses without changing their facts"
   assert.notEqual(first.answer,second.answer);
   assert(sources[0].variants.en.includes(second.answer));
 });
+
+test("colloquial paraphrases, a multiword name typo and project contributions resolve to actual fields",()=>{
+  for(const question of ["Oye bro, ¿con qué hicieron Beyond?","¿En qué lenguaje fue programado Beyond?","¿Qué lenguaje usa Beyond?"])
+    assert.match(ask(question,{lang:"es"}).answer,/JavaScript/);
+  assert.match(ask("What is Plnat Bdu written in?").answer,/Python/);
+  assert.match(ask("¿Qué aportó David a Beyond?",{lang:"es"}).answer,/Frontend \/ Backend/);
+  assert.match(ask("¿Hizo Beyond por su cuenta?",{lang:"es"}).answer,/individual/);
+});
+test("a correction retains the requested field and excludes the corrected project",()=>{
+  const first=ask("What technologies does Beyond use?");
+  const next=ask("Not Beyond, I meant Plant Bud",{context:first.context});
+  assert.match(next.answer,/Python/);assert(!next.answer.includes("Beyond"));
+  assert.equal(next.context.projectId,"plant");
+});
+test("multiple questions can cross topics without silently losing the second question",()=>{
+  const result=ask("¿Dónde vive David y qué tecnologías usa Beyond?",{lang:"es"});
+  assert.match(result.answer,/El Salvador/);assert.match(result.answer,/JavaScript/);
+  assert.equal(result.sources.length,2);
+  const separate=ask("What languages does David speak? What has he built?");
+  assert.match(separate.answer,/English and Spanish/);assert.match(separate.answer,/Plant Bud/);
+});
+test("last and numbered project references follow the actual displayed list",()=>{
+  const list=ask("Show me the projects");
+  assert.equal(ask("The last one",{context:list.context}).context.projectId,"older");
+  assert.equal(ask("2",{context:list.context}).context.projectId,"plant");
+  assert.match(ask("Only the latest",{context:list.context}).answer,/Beyond/);
+});
+test("concept follow-ups give examples, simpler explanations and actual project usage",()=>{
+  const first=ask("Ayúdame a entender CSS",{lang:"es"});
+  assert.equal(first.context.topic,"concept");
+  assert.match(ask("Dame un ejemplo",{lang:"es",context:first.context}).answer,/button \{/);
+  assert(!ask("Explícalo más simple",{lang:"es",context:first.context}).answer.includes("No tengo"));
+  const usage=ask("¿En qué proyectos aparece?",{lang:"es",context:first.context});
+  assert.match(usage.answer,/Beyond/);assert(!usage.answer.includes("Plant Bud"));
+  assert.equal(ask("What is an API?").context.topic,"concept");
+  assert.match(ask("What's JSON?").answer,/format/);
+});
+test("a visitor's name and interests live in conversation context, separate from David's profile",()=>{
+  let result=ask("Me llamo Alex",{lang:"es"});
+  assert.match(result.answer,/Alex/);
+  result=ask("Me gustan los videojuegos",{lang:"es",context:result.context});
+  assert(!result.answer.includes("David"));
+  assert.equal(result.context.visitor.interest,"games");
+  result=ask("Who is David?",{context:result.context});
+  assert.match(result.answer,/David Menjivar/);
+  assert.match(ask("¿Cómo me llamo?",{lang:"es",context:result.context}).answer,/Alex/);
+  assert(!ask("¿Cómo me llamo?",{lang:"es"}).answer.includes("Alex"));
+});
+test("casual and learning conversations continue but never swallow a new topic",()=>{
+  const music=ask("Me gusta la música",{lang:"es"});assert.equal(music.context.topic,"casual");
+  assert(!ask("Prefiero rock",{lang:"es",context:music.context}).answer.includes("No tengo"));
+  assert.equal(ask("Cuéntame un chiste",{lang:"es",context:music.context}).context.topic,"joke");
+  const first=ask("Quiero aprender a programar",{lang:"es"});assert.equal(first.context.topic,"learning");
+  const second=ask("Ya sé HTML",{lang:"es",context:first.context});assert.match(second.answer,/CSS/);
+  assert.match(ask("Dame un ejemplo",{lang:"es",context:second.context}).answer,/button \{/);
+  assert(!ask("Estoy bien",{lang:"es"}).answer.includes("No tengo"));
+});
+test("authored motivations resolve a pronoun after a project without inventing missing motivations",()=>{
+  const sources=[...fixture().sources,...core.manualSources({entries:[{id:"why",published:true,project:"beyond",questions:["Why did David build Beyond?"],answers:{es:"Una motivación real."}}]})];
+  const first=core.answer(sources,"Cuéntame sobre Beyond",{lang:"es"});
+  assert.equal(core.answer(sources,"¿Por qué lo hizo?",{lang:"es",context:first.context}).answer,"Una motivación real.");
+  assert.match(core.answer(sources,"¿Cuánto dinero ganó?",{lang:"es",context:first.context}).answer,/No tengo/);
+});
+test("bilingual ranked search finds a supported sentence and keeps unrelated facts unknown",()=>{
+  const sources=[{id:"public-note",kind:"section",title:"Creative notes",text:"Photography and writing are creative interests. The telescope collection contains three notebooks.",href:"index.html#about-me"}];
+  assert.match(core.answer(sources,"Cuéntame sobre fotografía y escritura",{lang:"es"}).answer,/Photography and writing/);
+  assert.match(core.answer(sources,"What is the telescope price?").answer,/don't have/);
+});
+test("neither entry page loads a downloadable model or any new runtime",async()=>{
+  for(const file of ["index.html","index-mobile.html"]){const html=await readFile(new URL("../"+file,import.meta.url),"utf8");assert(!/assistant-ai|assistant-worker|web-llm|huggingface/.test(html));}
+  const pkg=JSON.parse(await readFile(new URL("../package.json",import.meta.url),"utf8"));
+  assert(!pkg.devDependencies["@mlc-ai/web-llm"]);
+});
+test("question focus prevents a method question from receiving a motivation answer",()=>{
+  const sources=[...fixture().sources,...core.manualSources({entries:[{id:"why",published:true,project:"beyond",questions:["Why did David build Beyond?"],answers:{en:"The real motivation."}}]})];
+  assert.equal(core.answer(sources,"What was the reason behind building Beyond?").answer,"The real motivation.");
+  assert.notEqual(core.answer(sources,"How did David build Beyond?").answer,"The real motivation.");
+});
+test("list filters distinguish either technology, both technologies and unfinished records",()=>{
+  const either=ask("Which projects use HTML or Python?");assert.match(either.answer,/Beyond/);assert.match(either.answer,/Plant Bud/);
+  const both=ask("Which projects use HTML and Python?");assert.match(both.answer,/couldn't find/);
+  const unfinished=ask("Show unfinished projects");assert.match(unfinished.answer,/Earlier Work/);assert(!unfinished.answer.includes("Beyond"));
+});
+test("a non-programming learning request does not turn into an HTML lesson",()=>{
+  const reply=ask("Quiero aprender guitarra",{lang:"es"});assert(!reply.answer.includes("HTML"));
+});
