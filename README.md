@@ -46,4 +46,10 @@ Las dependencias de npm se utilizan para desarrollo y pruebas. `node_modules/` e
 
 ## Publicación
 
+La dirección pública es `https://alfrevith.github.io/DavSpace/`. Las etiquetas de
+vista previa de ambos índices deben conservar esa base. Publica también
+`images/thumbnail-social-v2.jpg`, la copia ligera del thumbnail para compartir;
+el PNG original se conserva. El título utiliza signos Unicode similares a los
+corchetes angulares para que las apps no lo eliminen como una etiqueta HTML.
+
 Publica la raíz del repositorio en GitHub Pages, incluyendo `assets/`, `data/`, `images/` y los documentos. Las rutas también funcionan cuando el sitio se aloja bajo una subcarpeta como `/Portafolio/`.

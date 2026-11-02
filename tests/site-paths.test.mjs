@@ -27,6 +27,23 @@ function existingPath(relative) {
 
 for (const page of pages) {
   const document = new DOMParser().parseFromString(fs.readFileSync(new URL(page,root),"utf8"),"text/html");
+  test(`${page}: sharing previews use the published base, a lightweight image and a sanitizer-safe title`, () => {
+    const published = new URL('https://alfrevith.github.io/DavSpace/');
+    assert.equal(document.querySelector('link[rel="canonical"]').getAttribute('href'), published.href);
+    assert.equal(document.querySelector('meta[property="og:url"]').getAttribute('content'), published.href);
+    assert(document.title.replace(/<[^>]*>/g, '').includes('David Menjivar'));
+    for (const selector of ['meta[property="og:title"]', 'meta[name="twitter:title"]']) {
+      assert.equal(document.querySelector(selector).getAttribute('content'), document.title);
+    }
+    const image = new URL(document.querySelector('meta[property="og:image"]').getAttribute('content'));
+    assert.equal(image.origin, published.origin);
+    assert(image.pathname.startsWith(published.pathname));
+    assert.equal(document.querySelector('meta[name="twitter:image"]').getAttribute('content'), image.href);
+    const localImage = existingPath(decodeURIComponent(image.pathname.slice(published.pathname.length)));
+    const bytes = fs.readFileSync(localImage);
+    assert(bytes.length < 300000, 'share image stays small for mobile preview fetchers');
+    assert.equal(bytes.readUInt16BE(0), 0xffd8, 'published JPEG metadata matches the actual format');
+  });
   test(`${page}: local scripts, styles and images resolve under a project subdirectory`, () => {
     for (const node of document.querySelectorAll("script[src], link[href], img[src]")) {
       const value = node.getAttribute(node.tagName === "LINK" ? "href" : "src");
