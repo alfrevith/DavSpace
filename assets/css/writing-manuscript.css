@@ -1,0 +1,259 @@
+/* The Burning Manuscript: vellum, dark ink, oxblood binding and living fire. */
+.world-writing {
+  --ink: #2b2019; --vellum: #e5cda0; --ember: #dd9c55; --brass: #b49361;
+  --room-accent: #e1bc84; --file-accent: #d0a365; --file-accent-rgb: 208 163 101;
+  --literary-serif: Georgia, 'Times New Roman', serif;
+  --literary-hand: 'Segoe Print', 'Bradley Hand', cursive;
+  --firelight: .8;
+  position: relative; isolation: isolate; color: #e9dcc5; background: #16110f;
+  font: 15px/1.8 var(--literary-serif);
+}
+.world-writing :is(a, button) { transition: color .25s, background-color .25s, border-color .25s; }
+.world-writing :is(a, button, input, [tabindex]):focus-visible { outline: 1px solid #f0c384; outline-offset: 6px; }
+.world-writing ::selection { background: #b7844f; color: #130f0c; }
+.world-writing .writing-icon { display: inline-block; width: 28px; height: 28px; vertical-align: middle; flex: none; }
+.world-writing .world-header { position: relative; z-index: 2; color: #d0bea1; }
+.world-writing .world-header::after { content: ''; position: absolute; left: 44px; right: 44px; bottom: 0; height: 1px; background: linear-gradient(90deg, #c1a07735, #c1a0770d); }
+.world-writing .world-header nav { color: #b7a88d; }
+.world-writing .world-header nav [aria-current] { color: #33241a; isolation: isolate; }
+.world-writing .world-header nav [aria-current]::before { content: ''; position: absolute; inset: 4px 4px 1px; z-index: -1; background: #d9bd8c; clip-path: polygon(0 0, 100% 2%, 98% 100%, 51% 90%, 2% 100%); }
+.world-writing .world-header nav [aria-current]::after { display: none; }
+.world-writing .world-header a:not([aria-current]):hover { color: #ecc794; }
+.world-writing .writing-atmosphere { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; contain: strict; background: radial-gradient(ellipse at 75% 10%, #6f391c2d, transparent 62%), #16110f; }
+.world-writing .writing-atmosphere canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.world-writing .hearth-light { position: absolute; inset: -15%; background: radial-gradient(ellipse at 78% 30%, #b55b2426, transparent 57%); opacity: var(--firelight); }
+.world-writing .vellum-dust { position: absolute; inset: 0; opacity: .025; background: url('../illustrations/photography-grain.svg') repeat; }
+.world-writing main { max-width: 1320px; padding: 52px 48px 95px; }
+.world-writing .room-kicker { color: #b89f79; font: 9px/1.8 var(--literary-serif); letter-spacing: .17em; }
+.world-writing .room-kicker > span { margin-inline: 12px; color: #80684a; }
+.world-writing .writing-opening { display: grid; grid-template-columns: minmax(0,.75fr) minmax(0,1.25fr); gap: 25px 55px; position: relative; animation: none; }
+.world-writing .writing-introduction { padding: 13px 0 0; }
+.world-writing .writers-room { margin: 34px 0 18px; color: #c2ab86; font: italic 18px/1.5 var(--literary-serif); }
+.world-writing .writing-introduction h2 { font: 400 clamp(42px,4.3vw,60px)/1.08 var(--literary-serif); letter-spacing: -.05em; }
+.world-writing .writing-introduction h2 em { color: #dcbb86; font-weight: 400; }
+.world-writing .writing-description { margin-top: 24px; max-width: 285px; color: #b8a68b; font: 14px/1.9 var(--literary-serif); }
+.world-writing .library-invitation { display: inline-flex; align-items: center; gap: 20px; min-height: 48px; margin-top: 25px; padding-bottom: 2px; color: #dfc49a; font: italic 14px/1.7 var(--literary-serif); border-bottom: 1px solid #9d744348; }
+.world-writing .library-invitation:hover { color: #ffe0ac; border-color: #d2a568; }
+.world-writing .library-invitation .writing-icon { width: 24px; height: 24px; }
+.world-writing .desk-note { display: block; margin: 25px 0 0 4px; color: #968066; font: 12px/1.7 var(--literary-hand); transform: rotate(-3deg); }
+
+/* The paper is the hero surface, not a repeated wallpaper. */
+.world-writing .manuscript-scene { position: relative; align-self: center; height: 510px; min-width: 0; }
+.world-writing .manuscript-shadow { position: absolute; inset: 93px 12px 42px -4px; background: #0008; transform: rotate(-3deg); filter: blur(20px); }
+.world-writing .manuscript-back { position: absolute; inset: 61px 26px 57px 0; background: url('../illustrations/writing-paper.svg') center / 100% 100% no-repeat; transform: rotate(3deg); opacity: .65; }
+.world-writing .hero-manuscript { position: absolute; inset: 50px 25px 60px -4px; padding: 39px 43px 33px; color: var(--ink); background: url('../illustrations/writing-paper.svg') center / 100% 100% no-repeat; transform: rotate(-3deg); transform-origin: 15% 75%; }
+.world-writing .manuscript-imprint { color: #765332; font: 8px/1.8 var(--literary-serif); letter-spacing: .23em; }
+.world-writing .folio-mark { position: absolute; top: 35px; right: 43px; font: italic 16px var(--literary-serif); color: #7d5833; }
+.world-writing .room-heading h1 { display: flex; align-items: baseline; margin: 40px 0 0; font: italic 400 clamp(68px,8.3vw,112px)/1.1 var(--literary-serif); letter-spacing: -.065em; color: #302219; text-shadow: 0 1px #f5e4bf; }
+.world-writing .writing-letter { display: inline-block; }
+.world-writing .manuscript-dedication { margin-top: 12px; color: #795332; font: italic 17px/1.5 var(--literary-serif); }
+.world-writing .literary-flourish { display: block; width: 88%; height: 49px; margin: 13px 0 11px; overflow: visible; stroke: #54311f; stroke-width: 1.6; stroke-linecap: round; }
+.world-writing .literary-flourish path:last-child { stroke-width: .7; opacity: .65; }
+.world-writing .manuscript-colophon { display: flex; justify-content: space-between; gap: 15px; position: absolute; left: 43px; right: 43px; bottom: 39px; font: 7px/1.6 var(--literary-serif); color: #6e4c2c; letter-spacing: .12em; }
+.world-writing .singed-margin { position: absolute; bottom: 8px; left: 3%; width: 94%; height: 22px; color: #7a3c20; opacity: .6; }
+.world-writing .quill-trigger { position: absolute; z-index: 5; top: -31px; right: -17px; width: 142px; height: 366px; padding: 0; border: 0; background: none; transform: rotate(14deg); transform-origin: 20% 95%; cursor: pointer; }
+.world-writing .quill-trigger img { display: block; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(8px 12px 7px #0005); }
+.world-writing .quill-trigger:focus-visible { outline-offset: -12px; }
+.world-writing .inkwell { position: absolute; z-index: 4; right: -6px; bottom: 28px; width: 100px; height: 87px; filter: drop-shadow(5px 8px 9px #0008); }
+.world-writing .inkwell svg { width: 100%; height: 100%; }
+.world-writing .hero-fire { position: absolute; z-index: 3; left: 25%; right: 3%; bottom: 42px; height: 270px; transform: rotate(-3deg); pointer-events: none; }
+.world-writing .hero-fire canvas { display: block; width: 100%; height: 100%; }
+.world-writing .static-flame { position: absolute; right: 10%; bottom: 0; width: 85px; height: 70px; opacity: .65; }
+.world-writing.has-living-fire .static-flame { display: none; }
+.world-writing .warm-ink-label { position: absolute; bottom: 17px; left: 12px; color: #927652; font: 7px/1.7 var(--literary-serif); letter-spacing: .19em; }
+.world-writing .cook-reveal { position: absolute; top: 78%; left: 8%; right: 10%; z-index: 6; opacity: 0; text-align: center; color: #642d1d; font: bold italic clamp(24px,3vw,40px)/1.2 var(--literary-serif); letter-spacing: -.04em; pointer-events: none; }
+.world-writing .cook-words { display: inline-flex; align-items: baseline; gap: .28em; white-space: nowrap; }
+.world-writing .cook-word { display: inline-block; transform-origin: 30% 90%; text-shadow: 0 1px #f7dfb6; }
+.world-writing .cook-underline { display: block; width: 68%; height: 18px; margin: 3px auto 0; overflow: visible; stroke: #6f3e25; stroke-width: 1.5; stroke-linecap: round; }
+.world-writing .cook-underline path:last-child { stroke-width: .8; opacity: .65; }
+.world-writing .cook-reveal[hidden] { display: none !important; }
+.world-writing .hero-manuscript::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 75% 100%, #ffae523d, transparent 65%); opacity: 0; transition: opacity .5s; }
+.world-writing.is-cooking .hero-manuscript::after { opacity: 1; }
+.world-writing .writing-edition { display: flex; justify-content: space-between; gap: 20px; grid-column: 1/-1; margin-top: 10px; color: #9b8465; font: 8px/1.8 var(--literary-serif); letter-spacing: .15em; }
+
+.world-writing .manuscripts-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-top: 70px; padding-top: 38px; border-top: 1px solid #b38e5836; scroll-margin-top: 25px; }
+.world-writing .manuscripts-heading h2 { margin-top: 15px; font: 400 clamp(31px,3.8vw,48px)/1.15 var(--literary-serif); letter-spacing: -.04em; }
+.world-writing .manuscripts-heading > p { color: #a99476; font: italic 15px/1.7 var(--literary-serif); }
+.world-writing .collection-bar { padding: 28px 0 42px; }
+.world-writing .room-tabs { gap: 37px; }
+.world-writing .room-tabs button { position: relative; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 0; border: 0; color: #a9977c; font: 21px/1.5 var(--literary-serif); }
+.world-writing .room-tabs button span { margin-left: 3px; font: 9px var(--literary-serif); color: #9e7e50; }
+.world-writing .room-tabs button .writing-icon { width: 23px; height: 23px; }
+.world-writing .room-tabs button::after { content: ''; position: absolute; bottom: 0; left: 33px; right: 0; height: 1px; background: linear-gradient(90deg, #d6b37a, #d6b37a22); transform: scaleX(0); transform-origin: left; transition: transform .45s; }
+.world-writing .room-tabs button[aria-selected=true] { color: #f0d7af; }
+.world-writing .room-tabs button[aria-selected=true]::after { transform: scaleX(1); }
+.world-writing .archive-count { color: #b49c78; font: 9px/1.8 var(--literary-serif); letter-spacing: .15em; }
+.world-writing #literary-collection { outline-offset: 12px; }
+.world-writing .literary-library { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 65px; padding: 12px 4vw 42px; align-items: start; }
+.world-writing .literary-book { position: relative; min-width: 0; padding: 0; background: none; color: #d7c3a0; text-align: left; animation: none; perspective: 1100px; }
+.world-writing .literary-book:nth-child(even) { margin-top: 44px; }
+.world-writing .book-cover { position: relative; min-height: 365px; padding: 32px 38px; overflow: visible; border: 0; border-radius: 0; background: none; color: #37251b; box-shadow: none; transform: rotate(-2deg); transition: transform .65s cubic-bezier(.2,.7,.2,1); }
+.world-writing .book-cover::before { content: ''; position: absolute; inset: 9px -6px -8px 7px; z-index: -2; background: url('../illustrations/writing-paper.svg') center / 100% 100% no-repeat; filter: brightness(.82); transform: rotate(1deg); }
+.world-writing .book-cover::after { inset: 0; z-index: -1; border: 0; background: url('../illustrations/writing-paper.svg') center / 100% 100% no-repeat; filter: drop-shadow(10px 16px 17px #0006); }
+.world-writing .literary-book:nth-child(even) .book-cover { transform: rotate(2deg); }
+.world-writing .book-category { color: #785432; font: 8px/1.8 var(--literary-serif); letter-spacing: .16em; }
+.world-writing .book-title { padding-block: 35px 25px; font: italic 38px/1.15 var(--literary-serif); letter-spacing: -.04em; color: #38251a; overflow-wrap: anywhere; }
+.world-writing .book-author { color: #76512f; font: 8px/1.8 var(--literary-serif); letter-spacing: .12em; }
+.world-writing .book-page-count { position: absolute; bottom: 32px; right: 38px; color: #76512f; font: 8px/1.8 var(--literary-serif); letter-spacing: .07em; }
+.world-writing .book-decoration { position: absolute; left: 35px; right: 35px; width: calc(100% - 70px); top: 65%; height: 30px; fill: none; stroke: #674125; stroke-width: 1.25; opacity: .65; pointer-events: none; }
+.world-writing .book-details { color: #ad9878; font: 13px/1.8 var(--literary-serif); }
+.world-writing .book-details:empty { display: none; }
+.world-writing .book-action { display: inline-flex; align-items: center; min-height: 45px; margin-top: 20px; padding-block: 9px; color: #d1b485; border-color: #ab804440; font: italic 14px/1.7 var(--literary-serif); }
+.world-writing .literary-book:hover .book-cover, .world-writing .literary-book:focus-visible .book-cover { transform: translateY(-7px) rotate(-.6deg); }
+.world-writing .literary-book:nth-child(even):is(:hover,:focus-visible) .book-cover { transform: translateY(-6px) rotate(.8deg); }
+.world-writing .literary-book[data-work-kind=story] { max-width: 435px; }
+.world-writing .literary-library[data-kind=story] { grid-template-columns: minmax(0,435px); justify-content: center; }
+.world-writing .literary-book[data-work-kind=story] .book-cover { min-height: 420px; padding: 36px 37px 31px 48px; border-left: 12px solid #2a1514; background: linear-gradient(100deg, #35201d, #4a2725 9%, #371d1c 80%, #271615); box-shadow: 4px 2px #d4bb8c, 7px 4px #59412e, 10px 6px #c2a779, 17px 25px 40px #0007; }
+.world-writing .literary-book[data-work-kind=story] .book-cover::before { display: none; }
+.world-writing .literary-book[data-work-kind=story] .book-cover::after { inset: 16px 18px; border: 1px solid #b58b4b66; outline: 1px solid #b58b4b26; outline-offset: 4px; background: none; filter: none; }
+.world-writing .literary-book[data-work-kind=story] :is(.book-title,.book-author,.book-category,.book-page-count) { color: #d6b67f; }
+.world-writing .literary-book[data-work-kind=story] .book-title { font-style: normal; font-size: 37px; }
+.world-writing .literary-book[data-work-kind=story] .book-decoration { stroke: #c4a164; }
+.world-writing .original-manuscripts { margin-top: 32px; border-block: 1px solid #b38e5826; color: #b9a385; font: 13px/1.8 var(--literary-serif); }
+.world-writing .original-manuscripts summary { cursor: pointer; padding: 18px 2px; }
+.world-writing .original-manuscripts ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 30px; margin: 0; padding: 0 0 18px; }
+.world-writing .original-manuscripts a { display: inline-flex; align-items: center; min-height: 44px; color: #dfc59d; text-decoration: underline; text-decoration-color: #9d7a4b60; text-underline-offset: 5px; }
+.world-writing .collection-status { color: #d2b17d; font: italic 15px/1.8 var(--literary-serif); }
+
+/* A quiet reading surface: no particles, fire, tinting or texture over a PDF. */
+.world-writing .literary-reader { width: min(1250px,calc(100% - 34px)); height: calc(100dvh - 30px); max-height: none; border: 1px solid #a07b485c; border-radius: 2px; background: #1d1612; color: #e6d2b0; box-shadow: 7px 8px 0 #0d0907, 0 35px 100px #0009; animation: none; }
+.world-writing .literary-reader::backdrop { background: #0b0806ec; }
+.world-writing .literary-reader > header { background: #241a14; border-bottom: 1px solid #ae834c3d; padding: 16px 22px; }
+.world-writing .literary-reader h2 { font: italic 27px/1.2 var(--literary-serif); letter-spacing: -.03em; }
+.world-writing .reader-actions { gap: 12px; }
+.world-writing .literary-reader :is([data-close],[data-fullscreen]) { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #a57b423d; border-radius: 0; background: #bd95510a; color: #d5bc93; }
+.world-writing .reader-actions [data-fullscreen] { padding: 10px 12px; font: 11px var(--literary-serif); }
+.world-writing .literary-reader-links { background: #19120e; padding: 4px 22px; color: #cdb086; font: 12px/1.8 var(--literary-serif); }
+.world-writing .literary-reader-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; }
+.world-writing .literary-reader-links .writing-icon { width: 21px; height: 21px; }
+.world-writing .literary-reader .project-reader { background: #17120f; }
+.world-writing .literary-reader .project-reader-toolbar { min-height: 53px; padding: 6px 14px; background: #2a1e16; border-color: #ad85462e; }
+.world-writing .literary-reader .project-reader-controls button { width: 40px; height: 40px; border-radius: 1px; color: #e4c799; }
+.world-writing .literary-reader .project-reader-controls button:is(:hover,[aria-pressed=true]) { background: #a67e4026; border-color: #bd955b55; }
+.world-writing .literary-reader .project-reader-page { color: #c5ab85; font-family: var(--literary-serif); }
+.world-writing .literary-reader .project-reader-page input { border-radius: 0; color: #ead5b2; background: #140f0b; }
+.world-writing .literary-reader .project-reader-viewport { background: #110e0c; scrollbar-color: #9d76475c transparent; }
+.world-writing .literary-reader .project-reader-paper { padding: 14px; }
+.world-writing .literary-reader .project-reader-paper canvas { border-radius: 0; box-shadow: 0 5px 30px #0007; }
+.world-writing .reader-accessibility { background: #1a130e; color: #a79170; padding: 8px 18px; font: 10px/1.6 var(--literary-serif); }
+.world-writing .literary-reader [data-resume-note] { font-family: var(--literary-serif); color: #c3a87f; }
+.world-writing .literary-reader:fullscreen, .world-writing .literary-reader.is-document-focused { width: 100%; height: 100dvh; max-height: none; }
+.world-writing .skip-link { background: #e7c995; color: #2b1e13; font-family: var(--literary-serif); }
+
+.world-writing .writing-footer { display: grid; grid-template-columns: 1fr auto; gap: 35px 55px; max-width: 1320px; padding: 54px 48px 30px; border-color: #9e75432e; background: #130e0b; }
+.world-writing .writing-footer > div { display: block; }
+.world-writing .writing-footer h2 { margin: 18px 0; font: 400 clamp(35px,4vw,52px)/1.1 var(--literary-serif); letter-spacing: -.04em; }
+.world-writing .writing-footer h2 em { color: #cfad78; font-weight: 400; }
+.world-writing .writing-footer p:not(.room-kicker) { font: italic 14px/1.8 var(--literary-serif); color: #a18a69; }
+.world-writing .writing-contact { align-self: center; gap: 14px; font: italic 16px/1.7 var(--literary-serif); color: #d6bb91; }
+.world-writing .writing-footer .writing-footer-bottom { display: flex; grid-column: 1/-1; align-items: center; justify-content: space-between; gap: 25px; margin-top: 25px; color: #8a7152; font: 7px/1.8 var(--literary-serif); letter-spacing: .15em; }
+.world-writing .writing-footer-bottom a { display: inline-flex; align-items: center; gap: 10px; color: #bca17a; font: italic 13px var(--literary-serif); }
+.world-writing .writing-footer a:hover { color: #f0d2a5; text-decoration-color: #b79666; }
+.world-writing .creative-departure { background: #1a100c; }
+.world-writing .writing-first-word { position: fixed; inset: 0; z-index: 80; background: #100b08; pointer-events: none; }
+.world-writing .first-ember { position: fixed; left: 0; top: 0; width: 3px; height: 6px; border-radius: 50%; background: #ffe0a0; box-shadow: 0 0 15px 4px #d8853566, 0 0 80px 20px #b05a2024; }
+.world-writing .original-manuscripts .writing-icon { width: 20px; height: 20px; margin-left: 7px; }
+
+@media(max-width:1050px) {
+  .world-writing .writing-opening { grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: 25px 35px; }
+  .world-writing .manuscript-scene { height: 465px; }
+  .world-writing .hero-manuscript { padding: 32px 32px 25px; }
+  .world-writing .room-heading h1 { margin-top: 43px; font-size: clamp(66px,8.2vw,85px); }
+  .world-writing .manuscript-colophon { left: 32px; right: 32px; font-size: 6px; }
+  .world-writing .manuscript-imprint { font-size: 7px; }
+  .world-writing .quill-trigger { width: 122px; height: 315px; top: -7px; right: 32px; }
+  .world-writing .literary-library { padding-inline: 12px; gap: 40px; }
+  .world-writing .book-title { font-size: 34px; }
+}
+@media(max-width:760px) {
+  .world-writing main { padding: 35px 28px 65px; }
+  .world-writing .world-header::after { left: 27px; right: 27px; }
+  .world-writing .writing-opening { display: block; }
+  .world-writing .writing-introduction { padding-top: 0; }
+  .world-writing .writers-room { margin: 24px 0 16px; font-size: 16px; }
+  .world-writing .writing-introduction h2 { font-size: 43px; }
+  .world-writing .writing-introduction h2 br { display: none; }
+  .world-writing .writing-description { max-width: 360px; }
+  .world-writing .desk-note { position: absolute; right: 3px; top: 172px; font-size: 11px; }
+  .world-writing .manuscript-scene { max-width: 590px; margin: 25px auto 0; height: 440px; }
+  .world-writing .room-heading h1 { font-size: clamp(75px,14vw,100px); }
+  .world-writing .hero-manuscript { inset: 35px 15px 55px 0; padding: 32px 40px; }
+  .world-writing .manuscript-back { inset: 43px 18px 50px 3px; }
+  .world-writing .quill-trigger { top: -12px; right: 55px; width: 135px; height: 330px; }
+  .world-writing .inkwell { width: 85px; right: -6px; bottom: 20px; }
+  .world-writing .hero-fire { bottom: 37px; height: 240px; }
+  .world-writing .writing-edition { margin-top: 17px; font-size: 7px; }
+  .world-writing .manuscripts-heading { margin-top: 47px; padding-top: 28px; gap: 20px; }
+  .world-writing .manuscripts-heading h2 { font-size: 32px; }
+  .world-writing .manuscripts-heading > p { font-size: 13px; }
+  .world-writing .literary-library { gap: 35px; padding-inline: 5px; }
+  .world-writing .book-cover { padding: 25px 26px; min-height: 320px; }
+  .world-writing .book-title { font-size: 30px; }
+  .world-writing .book-category { font-size: 7px; }
+  .world-writing .book-author { font-size: 7px; }
+  .world-writing .book-page-count { bottom: 25px; right: 23px; font-size: 7px; }
+  .world-writing .book-decoration { left: 24px; right: 24px; width: calc(100% - 48px); }
+  .world-writing .writing-footer { padding: 38px 28px 24px; gap: 30px; }
+}
+@media(max-width:480px) {
+  .world-writing .room-kicker { font-size: 8px; }
+  .world-writing .writing-introduction h2 { font-size: 37px; max-width: 300px; }
+  .world-writing .writing-description { font-size: 13px; margin-top: 19px; max-width: 265px; }
+  .world-writing .desk-note { display: none; }
+  .world-writing .library-invitation { margin-top: 15px; }
+  .world-writing .manuscript-scene { height: 330px; margin-top: 30px; }
+  .world-writing .hero-manuscript { inset: 23px 7px 42px -2px; padding: 26px 25px; }
+  .world-writing .manuscript-back { inset: 29px 9px 38px 0; }
+  .world-writing .room-heading h1 { font-size: clamp(52px,15vw,72px); margin-top: 31px; }
+  .world-writing .manuscript-imprint { font-size: 5px; letter-spacing: .16em; }
+  .world-writing .folio-mark { top: 24px; right: 29px; font-size: 12px; }
+  .world-writing .manuscript-dedication { font-size: 12px; margin-top: 9px; }
+  .world-writing .literary-flourish { margin-top: 5px; height: 37px; width: 83%; }
+  .world-writing .manuscript-colophon { left: 25px; right: 25px; bottom: 28px; font-size: 5px; letter-spacing: .04em; }
+  .world-writing .quill-trigger { top: -8px; right: 43px; width: 78px; height: 225px; }
+  .world-writing .inkwell { width: 68px; height: 65px; bottom: 7px; right: -4px; }
+  .world-writing .hero-fire { left: 10%; right: 0; bottom: 28px; height: 190px; }
+  .world-writing .cook-underline { height: 13px; margin-top: 1px; }
+  .world-writing .warm-ink-label { bottom: 7px; font-size: 5px; }
+  .world-writing .writing-edition { gap: 12px; font-size: 6px; letter-spacing: .08em; }
+  .world-writing .manuscripts-heading { display: block; }
+  .world-writing .manuscripts-heading h2 { font-size: 33px; }
+  .world-writing .manuscripts-heading > p { margin-top: 17px; }
+  .world-writing .manuscripts-heading > p br { display: none; }
+  .world-writing .collection-bar { gap: 12px; padding-block: 24px 30px; }
+  .world-writing .room-tabs { gap: 26px; }
+  .world-writing .room-tabs button { font-size: 19px; gap: 7px; }
+  .world-writing .room-tabs button span { display: none; }
+  .world-writing .room-tabs button .writing-icon { width: 21px; height: 21px; }
+  .world-writing .archive-count { font-size: 8px; letter-spacing: .08em; }
+  .world-writing .literary-library { grid-template-columns: minmax(0,1fr); gap: 42px; padding: 5px 14px 30px; }
+  .world-writing .literary-book:nth-child(even) { margin-top: 0; }
+  .world-writing .book-cover { min-height: 345px; padding: 29px 30px; }
+  .world-writing .book-title { font-size: 36px; }
+  .world-writing .book-author { font-size: 8px; }
+  .world-writing .book-page-count { right: 30px; bottom: 29px; }
+  .world-writing .literary-book[data-work-kind=story] .book-cover { min-height: 385px; padding: 32px 29px 29px 36px; }
+  .world-writing .literary-book[data-work-kind=story] .book-title { font-size: 32px; }
+  .world-writing .writing-footer { display: block; }
+  .world-writing .writing-contact { margin-top: 26px; }
+  .world-writing .writing-footer .writing-footer-bottom { display: block; margin-top: 29px; }
+  .world-writing .writing-footer-bottom a { margin-top: 10px; }
+  .world-writing .literary-reader { width: calc(100% - 14px); height: calc(100dvh - 18px); }
+  .world-writing .literary-reader > header { padding: 14px 13px; gap: 12px; }
+  .world-writing .literary-reader h2 { font-size: 22px; }
+  .world-writing .reader-actions { gap: 5px; }
+  .world-writing .reader-actions [data-fullscreen] { padding-inline: 7px; font-size: 9px; }
+  .world-writing .literary-reader-links { padding-inline: 12px; font-size: 10px; gap: 12px; }
+  .world-writing .literary-reader .project-reader-toolbar { padding: 5px 8px; gap: 6px; }
+  .world-writing .literary-reader .project-reader-controls { gap: 1px; }
+  .world-writing .literary-reader .project-reader-controls button { width: 35px; height: 42px; }
+  .world-writing .literary-reader .project-reader-page input { width: 30px; }
+  .world-writing .literary-reader .project-reader-divider { margin-inline: 2px; }
+  .world-writing .literary-reader .project-reader-paper { padding: 6px; }
+  .world-writing .reader-accessibility { font-size: 9px; padding: 7px 12px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .world-writing.is-cooking .cook-reveal { opacity: 1; }
+  .world-writing *, .world-writing *::before, .world-writing *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .world-writing .literary-book:is(:hover,:focus-visible) .book-cover { transform: none; }
+}

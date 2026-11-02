@@ -10,7 +10,7 @@ const site = "https://example.test/Portafolio/";
 
 test("main navigation matches the published portfolio sections", () => {
   const document = new DOMParser().parseFromString(fs.readFileSync(new URL("index.html",root),"utf8"),"text/html");
-  const ids = ["start", "about-me", "projects", "certificates", "journey", "contact"];
+  const ids = ["start", "about-me", "projects", "certificates", "beyond-the-code", "contact"];
   assert.deepEqual([...document.querySelectorAll("main .section[id]")].map(section=>section.id),ids);
   assert.deepEqual([...document.querySelectorAll(".nav a")].map(link=>link.getAttribute("href")),ids.map(id=>"#"+id));
 });
@@ -29,8 +29,9 @@ for (const page of pages) {
   const document = new DOMParser().parseFromString(fs.readFileSync(new URL(page,root),"utf8"),"text/html");
   test(`${page}: sharing previews use the published base, a lightweight image and a sanitizer-safe title`, () => {
     const published = new URL('https://alfrevith.github.io/DavSpace/');
-    assert.equal(document.querySelector('link[rel="canonical"]').getAttribute('href'), published.href);
-    assert.equal(document.querySelector('meta[property="og:url"]').getAttribute('content'), published.href);
+    const canonical = new URL(page.startsWith('index') ? '' : page, published).href;
+    assert.equal(document.querySelector('link[rel="canonical"]').getAttribute('href'), canonical);
+    assert.equal(document.querySelector('meta[property="og:url"]').getAttribute('content'), canonical);
     assert(document.title.replace(/<[^>]*>/g, '').includes('David Menjivar'));
     for (const selector of ['meta[property="og:title"]', 'meta[name="twitter:title"]']) {
       assert.equal(document.querySelector(selector).getAttribute('content'), document.title);

@@ -1,361 +1,40 @@
 {
-  "intro": "I didn't start by knowing how to build everything. I started by being curious enough to try.",
-  "chapters": [
+  "title": "Beyond the Code",
+  "subtitle": "Not everything I create is made of code.",
+  "intro": "Some ideas become photographs. Others become drawings, poems, or entire stories.",
+  "socials": {
+    "instagram": "https://www.instagram.com/alfrevith/",
+    "vsco": "https://vsco.co/alfrevith"
+  },
+  "stations": [
     {
-      "key": "pets-health",
-      "year": "2024",
-      "title": "Pet's Health",
-      "subtitle": "Where It All Began",
-      "role": "Concept Development, UI Design, Basic Application Logic",
-      "summary": "An idea for better pet care became my first exploration of interfaces, teamwork, and application logic.",
-      "stage": "The first spark",
-      "challenge": "Turning an ambitious pet-care idea into an early interactive prototype.",
-      "story": [
-        "Pet's Health was one of my first experiences in software development. The project aimed to create a digital platform that made pet care easier by organizing medical records, veterinary appointments, pet communities, and pet-related services and products.",
-        "I contributed to developing the original concept, designing interfaces in Figma, and implementing basic functionality through Microsoft Power Apps.",
-        "Although the project remained an early prototype, it introduced me to the process of transforming an idea into a digital experience."
-      ],
-      "skills": [
-        {
-          "id": "ui-ux",
-          "label": "UI/UX fundamentals"
-        },
-        {
-          "id": "figma-prototyping",
-          "label": "Figma prototyping"
-        },
-        {
-          "id": "microsoft-power-apps",
-          "label": "Microsoft Power Apps"
-        },
-        {
-          "id": "application-logic",
-          "label": "Basic application logic"
-        },
-        {
-          "id": "teamwork",
-          "label": "Teamwork and conceptual development"
-        }
-      ],
-      "lesson": "I learned that every application begins with understanding a problem, not just writing code.",
-      "transition": "From designing interfaces to building websites with code.",
-      "color": "#EDDAAC",
-      "applied": [
-        "ui-ux"
-      ]
+      "id": "photography",
+      "title": "Photography",
+      "subtitle": "A few moments, selected.",
+      "description": "A small selection of the moments I capture, with more to discover on Instagram and VSCO.",
+      "action": "Enter the Photography Room",
+      "room": "The Photography Room",
+      "color": "#e8b566",
+      "transition": "From a moment observed to a line imagined."
     },
     {
-      "key": "cecam",
-      "year": "2025",
-      "title": "CECAM",
-      "subtitle": "Learning to Build",
-      "role": "Front-End Development",
-      "summary": "A real school. A larger idea. My first steps into building the web with HTML and CSS.",
-      "stage": "A language of my own",
-      "challenge": "Organizing a real institution’s information into an accessible website.",
-      "story": [
-        "CECAM was one of my first attempts at building a larger website for a real educational institution, Centro Escolar Católico Alberto Masferrer.",
-        "I worked on developing an informational website using HTML and CSS, exploring responsive layouts, navigation systems, image galleries, and the organization of academic information.",
-        "Although the project was never completed and remained an early-stage prototype, it helped me develop a stronger understanding of web development and gave me confidence to approach more complex projects."
-      ],
-      "skills": [
-        {
-          "id": "html",
-          "label": "HTML"
-        },
-        {
-          "id": "css",
-          "label": "CSS"
-        },
-        {
-          "id": "responsive",
-          "label": "Responsive layouts"
-        },
-        {
-          "id": "website-structure",
-          "label": "Website structure"
-        },
-        {
-          "id": "navigation-systems",
-          "label": "Navigation systems"
-        },
-        {
-          "id": "interface-organization",
-          "label": "Interface organization"
-        }
-      ],
-      "lesson": "I discovered that building a website isn't just about making it look good, but about making information accessible and easy to navigate.",
-      "transition": "From creating digital interfaces to exploring technology beyond the screen.",
-      "color": "#9aabff",
-      "applied": [
-        "html",
-        "css",
-        "front-end",
-        "responsive"
-      ]
+      "id": "drawings",
+      "title": "Drawings",
+      "subtitle": "Lines of Imagination.",
+      "description": "Sometimes a few lines are enough to bring an idea to life.",
+      "action": "Open the Sketchbook",
+      "room": "The Sketchbook",
+      "color": "#d5d5b4",
+      "transition": "From a line on paper to a world of words."
     },
     {
-      "key": "pot-c",
-      "year": "2025",
-      "title": "POT-C",
-      "subtitle": "Beyond the Screen",
-      "role": "Front-End Development, 3D Printing, Hardware Support",
-      "summary": "With Klani, our composting prototype, I stepped beyond interfaces and into electronics and physical making.",
-      "stage": "Ideas made tangible",
-      "challenge": "Bringing an environmental idea into both a digital experience and a physical prototype.",
-      "story": [
-        "POT-C was an environmental technology project developed with my team at ¡Supérate! Fundación Poma.",
-        "The project introduced Klani, a smart compost bin prototype designed to transform organic household waste, such as fruit peels, vegetable scraps, and eggshells, into natural compost through a five-phase process.",
-        "My primary responsibility was developing the front end of its informational website using HTML, CSS, JavaScript, and Tailwind CSS.",
-        "The website included interactive environmental statistics, charts, image galleries, and a 3D visualization of Klani.",
-        "I also helped with the 3D printing of physical components and the assembly of the prototype's internal electronic circuitry.",
-        "The project was presented during Expo 2025, Roots of Legacy."
-      ],
-      "skills": [
-        {
-          "id": "front-end",
-          "label": "Interactive front-end development"
-        },
-        {
-          "id": "javascript",
-          "label": "JavaScript"
-        },
-        {
-          "id": "tailwind-css",
-          "label": "Tailwind CSS"
-        },
-        {
-          "id": "chart-js",
-          "label": "Chart.js"
-        },
-        {
-          "id": "3d-model-integration",
-          "label": "3D model integration"
-        },
-        {
-          "id": "3d-printing",
-          "label": "3D printing"
-        },
-        {
-          "id": "basic-electronics",
-          "label": "Basic electronics"
-        },
-        {
-          "id": "hardware-prototyping",
-          "label": "Hardware prototyping"
-        }
-      ],
-      "lesson": "I realized that technology doesn't have to stay inside a screen. Programming, electronics, and creativity can work together to bring physical ideas to life.",
-      "transition": "From combining hardware and software to developing more complex digital platforms.",
-      "color": "#79d99c",
-      "applied": [
-        "html",
-        "css",
-        "front-end",
-        "javascript"
-      ]
-    },
-    {
-      "key": "plant-bud",
-      "year": "2026",
-      "title": "Plant Bud",
-      "subtitle": "Connecting Everything",
-      "role": "Front-End Development, Back-End Development, AI Integration, Teamwork",
-      "summary": "A collaborative platform where AI, plant care, and local services became parts of one experience.",
-      "stage": "Connecting the pieces",
-      "challenge": "Connecting many features and technologies into one coherent application.",
-      "story": [
-        "Plant Bud became one of my most ambitious collaborative projects, developed alongside a team from ¡Supérate! Fundación Poma.",
-        "The platform was designed to make plant care easier through artificial intelligence and digital services.",
-        "Its main features included AI-powered plant health analysis through photographs, personalized care recommendations, plant information, AI-assisted garden redesign using uploaded images, professional gardener hiring, nearby nursery discovery, and a reward points system for payments made through the platform.",
-        "I contributed to both front-end and back-end development, helping integrate different technologies and functionalities into a larger application.",
-        "We also presented the project at Expo Tech."
-      ],
-      "skills": [
-        {
-          "id": "front-end",
-          "label": "Front-end development"
-        },
-        {
-          "id": "back-end-development",
-          "label": "Back-end development"
-        },
-        {
-          "id": "node-js",
-          "label": "Node.js"
-        },
-        {
-          "id": "adonisjs",
-          "label": "AdonisJS"
-        },
-        {
-          "id": "python",
-          "label": "Python"
-        },
-        {
-          "id": "ai-feature-integration",
-          "label": "AI feature integration"
-        },
-        {
-          "id": "application-architecture",
-          "label": "Application architecture"
-        },
-        {
-          "id": "teamwork",
-          "label": "Team collaboration"
-        },
-        {
-          "id": "multi-feature-platform-development",
-          "label": "Multi-feature platform development"
-        }
-      ],
-      "lesson": "I learned that building a complex application isn't just about developing individual features. It's about connecting everything into a meaningful and functional experience.",
-      "transition": "From developing ambitious collaborative platforms to creating independent solutions inspired by personal experiences.",
-      "color": "#a7f3c5",
-      "applied": [
-        "html",
-        "css",
-        "javascript",
-        "responsive",
-        "application-logic",
-        "teamwork"
-      ]
-    },
-    {
-      "key": "beyond",
-      "year": "2026",
-      "title": "Beyond",
-      "subtitle": "Creating with Purpose",
-      "role": "Independent Development, Front-End and Back-End Logic, Educational Technology",
-      "summary": "My own experience preparing for AVANZO became a free learning tool for other students.",
-      "stage": "A purpose of my own",
-      "challenge": "Turning the challenge of studying several subjects into useful, independent practice.",
-      "story": [
-        "Beyond was born during my final year of high school while preparing for the AVANZO 2026 exam in El Salvador.",
-        "After experiencing how challenging it could be to study multiple subjects at once, I decided to create a free educational platform that could help other students prepare more effectively.",
-        "The platform includes interactive practice across Mathematics, Language and Literature, Natural Sciences, and Social Studies.",
-        "Students can complete 20-question timed exams with a 60-minute limit, take extensive 100-question diagnostic assessments, receive feedback, and learn from detailed explanations of incorrect answers.",
-        "Beyond allowed me to apply my programming experience to a project I developed independently, combining educational content, interactive assessment systems, and user-centered design."
-      ],
-      "skills": [
-        {
-          "id": "independent-project-development",
-          "label": "Independent project development"
-        },
-        {
-          "id": "application-logic",
-          "label": "JavaScript application logic"
-        },
-        {
-          "id": "interactive-assessment-systems",
-          "label": "Interactive assessment systems"
-        },
-        {
-          "id": "educational-content-organization",
-          "label": "Educational content organization"
-        },
-        {
-          "id": "user-centered-feedback",
-          "label": "User-centered feedback"
-        },
-        {
-          "id": "front-end-architecture",
-          "label": "Front-end architecture"
-        },
-        {
-          "id": "web-deployment",
-          "label": "Web deployment"
-        },
-        {
-          "id": "problem-solving",
-          "label": "Problem-solving"
-        }
-      ],
-      "lesson": "I learned that something I experienced personally could become the starting point for a tool capable of helping others.",
-      "transition": "From building individual projects to bringing my entire journey together.",
-      "color": "#E8B566",
-      "applied": [
-        "html",
-        "css",
-        "javascript",
-        "responsive",
-        "front-end"
-      ]
-    },
-    {
-      "key": "portfolio",
-      "year": "2026",
-      "title": "My Portfolio",
-      "subtitle": "Building My Own Space",
-      "role": "Independent Web Development, UI/UX, Interactive Experiences",
-      "summary": "A personal space where my technical and creative sides finally meet.",
-      "stage": "Everything, together",
-      "challenge": "Bringing different projects and experiences together without sacrificing usability or performance.",
-      "story": [
-        "My personal portfolio represents the combination of everything I've learned throughout my previous projects.",
-        "Rather than creating a simple website to display my work, I wanted to build an interactive digital space that reflects both my technical and creative sides.",
-        "The portfolio includes separate desktop and mobile experiences, animated interfaces, interactive project galleries, detailed documentation, an integrated PDF viewer, a 3D model viewer, and a locally developed chatbot capable of answering questions about my projects and experience without relying on external AI services.",
-        "It also incorporates performance optimizations, accessibility features, and automated testing."
-      ],
-      "skills": [
-        {
-          "id": "front-end",
-          "label": "Advanced front-end development"
-        },
-        {
-          "id": "responsive",
-          "label": "Responsive experience design"
-        },
-        {
-          "id": "front-end-architecture",
-          "label": "JavaScript architecture"
-        },
-        {
-          "id": "ui-ux",
-          "label": "Interactive UI development"
-        },
-        {
-          "id": "rule-based-chatbot-development",
-          "label": "Rule-based chatbot development"
-        },
-        {
-          "id": "performance-optimization",
-          "label": "Performance optimization"
-        },
-        {
-          "id": "accessibility",
-          "label": "Accessibility"
-        },
-        {
-          "id": "automated-testing",
-          "label": "Automated testing"
-        },
-        {
-          "id": "technical-documentation",
-          "label": "Technical documentation"
-        }
-      ],
-      "lesson": "I discovered that everything I had learned could come together in one place, creating something that truly represents who I am and what I love building.",
-      "transition": "The next chapter is still being written.",
-      "color": "#93e7ff",
-      "applied": [
-        "html",
-        "css",
-        "javascript",
-        "responsive",
-        "ui-ux",
-        "application-logic",
-        "front-end-architecture",
-        "independent-project-development",
-        "user-centered-feedback",
-        "web-deployment",
-        "problem-solving"
-      ]
+      "id": "writing",
+      "title": "Writing",
+      "subtitle": "Worlds Made of Words.",
+      "description": "Some thoughts become poems. Others become entire worlds.",
+      "action": "Enter the Writer’s Room",
+      "room": "The Writer’s Room",
+      "color": "#c9ad94"
     }
-  ],
-  "future": {
-    "title": "Still Learning. Still Creating.",
-    "description": "Every project taught me something new. Every challenge pushed me further. And every idea reminds me that there's still so much left to discover.",
-    "closing": "The next chapter hasn't been written yet."
-  }
+  ]
 }

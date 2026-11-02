@@ -12,7 +12,8 @@ Sitio estático compatible con GitHub Pages, sin backend ni compilación obligat
 | Fichas de proyectos | [`data/projects.js`](data/projects.js) |
 | Certificados, logros, logos y neón | [`data/credentials.json`](data/credentials.json) |
 | Respuestas personales del chatbot | [`data/assistant-knowledge.json`](data/assistant-knowledge.json) |
-| Capítulos y conexiones de My Journey | [`data/journey.json`](data/journey.json) |
+| Estaciones de Beyond the Code y redes creativas | [`data/journey.json`](data/journey.json) |
+| Fotografías, dibujos y obras PDF | `data/photography.json`, `data/drawings.json`, `data/writing.json` |
 | Comportamiento del sitio | `assets/js/` |
 | Estilos | `assets/css/` |
 | Imágenes e iconos | `images/` |
@@ -31,7 +32,7 @@ Las imágenes de reserva están en `images/backgrounds/`. Son fotografías disti
 - [Editar proyectos](docs/PROJECTS.md)
 - [Editar certificados y logros](docs/CREDENTIALS.md)
 - [Enseñar respuestas al chatbot](docs/ASSISTANT.md)
-- [Editar My Journey](docs/JOURNEY.md)
+- [Editar Beyond the Code y las colecciones creativas](docs/CREATIVE-WORLDS.md)
 
 ## Revisar localmente
 

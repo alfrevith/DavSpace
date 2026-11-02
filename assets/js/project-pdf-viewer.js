@@ -28,7 +28,7 @@
     return {destroy(){alive=false;clearTimeout(resizeTimer);observer?.disconnect();window.removeEventListener('resize',resize);image.removeAttribute('src');paper.replaceChildren();mount.replaceChildren();dialog.classList.remove('is-document-focused');const details=dialog.querySelector(detailsSelector);if(details)details.hidden=false;}};
   }
   window.ProjectPDFViewer = {
-    create({mount, url, title, dialog, detailsSelector = ".project-details"}) {
+    create({mount, url, title, dialog, detailsSelector = ".project-details", initialPage = 1, onPageChange = () => {}}) {
       if(/\.(png|jpe?g|webp)$/i.test(url.pathname))return createImageReader({mount,url,title,dialog,detailsSelector});
       const root = document.createElement("div");
       root.className = "project-reader";
@@ -85,7 +85,9 @@
           task = page.render({canvasContext:canvas.getContext("2d",{alpha:false}),background:"#ffffff",viewport:size,transform:density===1?null:[density,0,0,density,0,0]});
           await task.promise;
           if (!alive || current !== revision) return;
+          paper.querySelectorAll('canvas').forEach(old=>{old.width=0;old.height=0;});
           paper.replaceChildren(canvas);message.hidden = true;
+          onPageChange(pageNumber, pdf.numPages);
           renderedScale = scale;
           $("[data-reader-zoom]").textContent = `${Math.round(scale * 100)}%${zoom === null ? " · Fit width" : ""}`;
           $("[data-reader-fit]").setAttribute("aria-pressed", String(zoom === null));
@@ -122,8 +124,8 @@
         const details = dialog.querySelector(detailsSelector);
         if (details) details.hidden = expanded;
         $("[data-reader-expand]").setAttribute("aria-pressed",String(expanded));
-        $("[data-reader-expand]").setAttribute("aria-label",expanded?"Restore project layout":"Expand document");
-        $("[data-reader-expand]").title=expanded?"Restore project layout":"Expand document";
+        $("[data-reader-expand]").setAttribute("aria-label",expanded?"Restore document layout":"Expand document");
+        $("[data-reader-expand]").title=expanded?"Restore document layout":"Expand document";
         resize();
       });
       viewport.addEventListener("keydown",event=>{if(event.key==="ArrowLeft"){event.preventDefault();navigate(pageNumber-1);}if(event.key==="ArrowRight"){event.preventDefault();navigate(pageNumber+1);}});
@@ -147,11 +149,12 @@
         loading.onPassword = ()=>{fail("This PDF needs a password. Please use the full reader.");loading.destroy().catch(()=>{});};
         pdf = await loading.promise;
         if (!alive) return;
+        pageNumber=Math.max(1,Math.min(pdf.numPages,Math.trunc(Number(initialPage))||1));
         progress.value=100;label.textContent='Preparing the first page…';
         $("[data-reader-total]").textContent = pdf.numPages;pageInput.max = pdf.numPages;
         controls.forEach(control=>{control.disabled=false;});sync();render();
       }).catch(()=>fail());
-      return {destroy(){alive=false;revision++;clearTimeout(resizeTimer);observer?.disconnect();window.removeEventListener("resize",resize);task?.cancel();loading?.destroy().catch(()=>{});dialog.classList.remove("is-document-focused");const details=dialog.querySelector(detailsSelector);if(details)details.hidden=false;mount.replaceChildren();}};
+      return {goTo:navigate,get page(){return pageNumber;},destroy(){alive=false;revision++;clearTimeout(resizeTimer);observer?.disconnect();window.removeEventListener("resize",resize);task?.cancel();loading?.destroy().catch(()=>{});dialog.classList.remove("is-document-focused");const details=dialog.querySelector(detailsSelector);if(details)details.hidden=false;paper.querySelectorAll('canvas').forEach(canvas=>{canvas.width=0;canvas.height=0;});mount.replaceChildren();}};
     }
   };
 })();

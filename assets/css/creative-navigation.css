@@ -1,0 +1,20 @@
+/* Shared geometry only. Each world keeps its own materials and active state. */
+.creative-world .world-header { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px; max-width: 1320px; margin: auto; padding: 22px 44px 25px; border: 0; font: 14px/1.5 Georgia, serif; }
+.creative-world .world-header .portfolio-return { display: inline-flex; align-items: center; width: fit-content; min-height: 44px; gap: 9px; font-style: italic; }
+.creative-world .world-header .return-mark { display: inline-grid; place-items: center; width: 28px; height: 28px; font-size: 22px; flex: none; }
+.creative-world .world-header nav { grid-column: auto; display: flex; justify-content: flex-end; gap: 9px; font: inherit; }
+.creative-world .world-header nav a { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 47px; padding: 9px 19px; border: 0; }
+.creative-world .world-header nav small { font: 10px Georgia, serif; opacity: .7; }
+.world-writing .world-header nav [aria-current]::after { content: ''; position: absolute; bottom: 5px; left: 19px; right: 19px; height: 1px; background: #b89c71; }
+@media (max-width: 760px) {
+  .creative-world .world-header { display: flex; flex-wrap: wrap; gap: 10px 20px; padding: 17px 27px 22px; }
+  .creative-world .world-header .portfolio-return { font-size: 13px; }
+  .creative-world .world-header nav { justify-content: flex-start; flex-wrap: wrap; gap: 6px; font-size: 13px; }
+  .creative-world .world-header nav a { padding: 8px 12px; gap: 7px; }
+}
+@media (max-width: 480px) {
+  .creative-world .world-header { gap: 8px; }
+  .creative-world .world-header nav { width: 100%; justify-content: space-between; gap: 0; }
+  .creative-world .world-header nav a { padding-inline: 9px; font-size: 12px; }
+  .creative-world .world-header nav small { font-size: 9px; }
+}

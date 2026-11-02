@@ -46,3 +46,25 @@ test('PDF progress handles unknown sizes, real percentages, failures and destroy
   reader.destroy();assert(destroyed);assert.equal(mount.children.length,0);
   loading.onProgress({loaded:1,total:100});assert.equal(mount.children.length,0);
 });
+test('shared PDF reader clamps restored pages, navigates, zooms, fits and releases canvases',async()=>{
+  const document=new DOMParser().parseFromString('<body><dialog><div id="mount"></div></dialog></body>','text/html');
+  Object.defineProperty(document,'currentScript',{value:{src:'https://example.test/DavSpace/assets/js/project-pdf-viewer.js'}});
+  const create=document.createElement.bind(document);
+  document.createElement=tag=>{const node=create(tag);if(tag==='canvas')node.getContext=()=>({});return node;};
+  const pages=[],positions=[];let destroyed=false;
+  const pdf={numPages:3,getPage:async number=>{pages.push(number);return {getViewport:({scale})=>({width:600*scale,height:800*scale}),render:()=>({promise:Promise.resolve(),cancel(){}})};}};
+  const loading={promise:Promise.resolve(pdf),destroy:async()=>{destroyed=true;}};
+  const window={addEventListener(){},removeEventListener(){},devicePixelRatio:1,__pdfjs:{GlobalWorkerOptions:{},getDocument:()=>loading}};
+  runInNewContext(source.replace('import(new URL("pdf.min.mjs", assets).href)','Promise.resolve(window.__pdfjs)'),{document,window,URL,setTimeout,clearTimeout});
+  const mount=document.querySelector('#mount');
+  const reader=window.ProjectPDFViewer.create({mount,url:new URL('https://example.test/DavSpace/file.pdf'),title:'Manuscript',dialog:document.querySelector('dialog'),initialPage:99,onPageChange:(p,total)=>positions.push([p,total])});
+  Object.defineProperty(mount.querySelector('.project-reader-viewport'),'clientWidth',{value:600});
+  const flush=()=>new Promise(resolve=>setImmediate(resolve));await flush();
+  assert.equal(reader.page,3);assert.deepEqual(positions,[[3,3]]);assert.equal(mount.querySelector('[data-reader-next]').disabled,true);
+  const first=mount.querySelector('canvas');assert.equal(first.style.width,'588px');
+  mount.querySelector('[data-reader-prev]').click();await flush();assert.equal(reader.page,2);assert.equal(first.width,0);
+  mount.querySelector('[data-reader-in]').click();await flush();assert.equal(mount.querySelector('canvas').style.width,'708px');
+  mount.querySelector('[data-reader-fit]').click();await flush();assert.equal(mount.querySelector('canvas').style.width,'588px');
+  reader.goTo(-4);await flush();assert.equal(reader.page,1);assert.equal(mount.querySelector('[data-reader-prev]').disabled,true);
+  const last=mount.querySelector('canvas');reader.destroy();assert(destroyed);assert.equal(last.width,0);assert.equal(mount.children.length,0);
+});

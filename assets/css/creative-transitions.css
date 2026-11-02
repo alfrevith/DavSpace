@@ -1,0 +1,8 @@
+/* A short opacity-only handoff; no SVG masks, text or moving full-screen layers. */
+html[data-world-arriving]:not([data-passage-ready])::after { content: ''; position: fixed; inset: 0; z-index: 12000; background: #0b0d0c; pointer-events: none; }
+html[data-world-arriving=drawings]:not([data-passage-ready])::after { background: #e9e3d1; }
+html[data-world-arriving=writing]:not([data-passage-ready])::after { background: #20130f; }
+.world-passage { position: fixed; inset: 0; z-index: 12001; pointer-events: none; contain: strict; background: #0b0d0c; }
+.world-passage[data-to=drawings] { background: #e9e3d1; }
+.world-passage[data-to=writing] { background: #20130f; }
+@media(prefers-reduced-motion:reduce) { .world-passage,html[data-world-arriving]::after { display: none !important; } }

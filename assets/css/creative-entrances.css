@@ -1,0 +1,146 @@
+/* Each entrance is a small piece of the world behind it. */
+.journey-tagline { margin: 30px 0 0; color: #e5e2da; font: italic clamp(21px,2.4vw,31px)/1.4 Georgia,serif; }
+.journey-section .journey-intro { margin: 15px 0 42px; max-width: 600px; font-size: 15px; }
+.journey-section .journey-console { border-radius: 3px; background: #10131a; box-shadow: 0 18px 35px -24px #000; }
+.journey-section .journey-chapters a { border-radius: 2px; }
+.journey-console-meta > span { color: #a7acb6; font: 8px/1.8 Consolas,monospace; letter-spacing: .1em; }
+.journey-section .journey-scenes { padding-top: 15px; }
+.creative-station { align-items: center; column-gap: clamp(35px,5.5vw,85px); }
+.creative-station .journey-visual { position: relative; align-self: center; padding: 18px 0 30px; }
+.creative-station .journey-copy { padding: 16px 0 24px; }
+.creative-station .journey-chapter-label { gap: 12px; font-size: 9px; margin-bottom: 23px; }
+.creative-station .journey-chapter-label > span { font: italic 12px Georgia,serif; letter-spacing: 0; }
+.creative-station .journey-copy h3 { font: 400 clamp(40px,4.2vw,66px)/1.08 Georgia,serif; letter-spacing: -.055em; color: #f0e7d5; }
+.station-drawings .journey-copy h3 { font-weight: 700; color: #f0ead8; }
+.station-writing .journey-copy h3 { font-style: italic; }
+.creative-station .journey-chapter-subtitle { font-size: clamp(23px,2.4vw,33px); margin: 13px 0 21px; }
+.creative-station .journey-summary { max-width: 365px; font-size: 14px; color: #afb3bd; }
+.creative-socials { display: flex; gap: 24px; margin-top: 17px; color: #8e97a7; font: 10px/1.6 Consolas,monospace; }
+.creative-socials:empty { display: none; }
+.creative-socials a { display: inline-flex; gap: 9px; align-items: center; min-height: 44px; text-decoration: none; }
+.creative-socials a:hover { color: #e7d3ae; }
+.creative-station .journey-explore { position: relative; display: flex; justify-content: space-between; align-items: center; width: min(100%,365px); gap: 20px; min-height: 65px; margin-top: 29px; padding: 12px 14px 12px 23px; border: 1px solid #e0c695; border-radius: 2px; background: #e0c695; color: #211e17; text-decoration: none; font: 600 12px/1.4 Consolas,monospace; box-shadow: 0 12px 35px -16px #ddb67375; transition: transform .3s,box-shadow .3s,background-color .3s; }
+.creative-station .journey-explore .door-action-label { min-width: 0; transform: none; }
+.creative-station .door-action-icon { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-left: 1px solid #5a482331; transition: transform .35s; }
+.door-action-icon svg { width: 27px; height: 27px; }
+.creative-station .journey-explore:is(:hover,:focus-visible) { transform: translateY(-3px); box-shadow: 0 14px 35px -14px #d5ad6b7a; background: #ecd6b0; }
+.creative-station .journey-explore:is(:hover,:focus-visible) .door-action-icon { transform: translateX(3px); }
+.station-drawings .journey-explore { border: 0; color: #24231f; background: #eee8d7; clip-path: polygon(0 3%,34% 0,70% 2%,99% 0,100% 65%,99% 98%,66% 100%,33% 98%,1% 100%); font-family: Georgia,serif; font-style: italic; font-size: 15px; }
+.station-drawings .journey-explore:focus-visible { box-shadow: inset 0 0 0 3px #65533c; background: #fff6df; }
+.station-writing .journey-explore { border-color: #aa7e47; background: #3c211d; color: #eed6ac; box-shadow: 0 12px 35px -15px #d17b333e; font: italic 15px/1.4 Georgia,serif; }
+.station-writing .journey-explore:is(:hover,:focus-visible) { background: #4e2a21; }
+.station-writing .door-action-icon { border-color: #c9a36b45; }
+.creative-entrance { position: relative; display: block; width: 100%; aspect-ratio: 1.12; isolation: isolate; color: inherit; text-decoration: none; transform: translateY(var(--journey-parallax,0px)); -webkit-tap-highlight-color: transparent; }
+.creative-entrance > * { pointer-events: none; }
+.creative-entrance img { display: block; max-width: 100%; filter: none; }
+.creative-entrance :is(i,em) { font-weight: 400; }
+.door-world-number { position: absolute; top: -8%; right: 4%; color: #dcc6a510; font: italic 180px/1 Georgia,serif; letter-spacing: -.1em; }
+.door-optics { position: absolute; inset: -5% 0 0; width: 100%; height: 100%; color: #c4a6703a; }
+.entrance-photography { background: radial-gradient(ellipse at 75% 30%,#b2813422,transparent 67%); }
+.door-photo-main { display: block; position: absolute; left: 11%; right: 0; top: 14%; padding: 11px; border: 1px solid #b49b6b52; background: #161815; box-shadow: 0 24px 40px #0008; transform: rotate(-7deg); transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.door-photo-rail,.door-photo-credit { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 2px 10px; color: #c5b28c; font: 6px/1.5 Consolas,monospace; letter-spacing: .11em; }
+.door-photo-credit { padding: 11px 2px 1px; font-size: 6px; color: #a6997e; }
+.door-photo-window { display: grid; position: relative; aspect-ratio: 16/9; place-items: center; overflow: hidden; background: #090b0a; }
+.door-photo-window img { width: 100%; height: 100%; object-fit: contain; }
+.door-focus { position: absolute; inset: 10px; background: linear-gradient(#e8d7ab,#e8d7ab) left top / 20px 1px,linear-gradient(#e8d7ab,#e8d7ab) left top / 1px 20px,linear-gradient(#e8d7ab,#e8d7ab) right bottom / 20px 1px,linear-gradient(#e8d7ab,#e8d7ab) right bottom / 1px 20px; background-repeat: no-repeat; opacity: .55; transition: opacity .4s; }
+.door-photo-companion { position: absolute; bottom: 12%; left: 1%; width: 26%; padding: 6px; border: 1px solid #cab1824d; background: #191b17; box-shadow: 0 18px 30px #0007; transform: rotate(5deg); transition: transform .7s; }
+.door-photo-companion img { width: 100%; height: auto; }
+.door-photo-companion > span { display: block; padding: 7px 0 2px; color: #b7a789; font: 5px/1.4 Consolas,monospace; }
+.door-light-beam { position: absolute; z-index: -1; top: -5%; right: 10%; width: 30%; height: 90%; transform: rotate(25deg); background: linear-gradient(90deg,transparent,#efd3a50e,transparent); mask-image: linear-gradient(transparent,#000 25%,#000 65%,transparent); }
+.door-inscription { position: absolute; left: 1%; right: 0; bottom: 0; display: flex; align-items: center; justify-content: space-between; color: #b7a586; font: 7px/1.6 Consolas,monospace; letter-spacing: .2em; }
+.door-inscription > span { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #c7ab733d; border-radius: 50%; }
+.door-inscription svg { width: 21px; height: 21px; }
+.door-paper-back { position: absolute; inset: 5% 4% 3% 4%; background: #c5beaa; transform: rotate(3deg); clip-path: polygon(1% 0,100% 1%,99% 98%,0 100%); box-shadow: 10px 15px 30px #0006; }
+.door-ink-paper { display: block; position: absolute; inset: 2% 2% 4% 0; color: #282621; background: #eee9d9 url('../illustrations/sketchbook-paper.svg') center/cover; transform: rotate(-3deg); clip-path: polygon(0 1%,33% 0,67% 1%,100% 0,99% 32%,100% 65%,99% 100%,65% 99%,33% 100%,1% 99%,0 66%,1% 33%); transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.door-ink-frame,.door-ink-doodles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.door-ink-edition { position: absolute; left: 8%; right: 8%; top: 9%; display: flex; justify-content: space-between; color: #575348; font: 7px/1.5 Georgia,serif; letter-spacing: .16em; }
+.door-drawing-print { position: absolute; left: 8%; top: 21%; width: 40%; height: 59%; padding: 7px; border: 1.5px solid #332f27; background: #e6e0d0; transform: rotate(-4deg); box-shadow: 4px 5px #433c2826; }
+.door-drawing-print img { width: 100%; height: 100%; object-fit: contain; }
+.door-ink-words { position: absolute; left: 54%; top: 31%; right: 6%; font: italic clamp(11px,1vw,15px)/1.5 Georgia,serif; color: #5b5548; }
+.door-ink-words strong { display: block; margin-top: 10px; font: 700 clamp(25px,3.1vw,46px)/1.03 Georgia,serif; letter-spacing: -.065em; color: #24221e; }
+.door-ink-words svg { width: 95%; height: 30px; margin-top: 7px; }
+.door-ink-caption { position: absolute; left: 8%; right: 7%; bottom: 9%; display: flex; justify-content: space-between; align-items: center; color: #514b3e; font: 6px/1.5 Georgia,serif; letter-spacing: .16em; }
+.door-ink-caption svg { width: 28px; height: 28px; }
+.entrance-writing { color: #e4cb9f; }
+.door-desk-glow { position: absolute; inset: -10%; z-index: -1; background: radial-gradient(ellipse at 72% 65%,#aa592434,transparent 65%); mask-image: radial-gradient(ellipse,#000 25%,transparent 70%); }
+.door-manuscript-back { position: absolute; inset: 14% 9% 13% 9%; background: url('../illustrations/writing-paper.svg') center/100% 100% no-repeat; transform: rotate(4deg); opacity: .65; }
+.door-burning-page { position: absolute; inset: 9% 8% 16% 2%; background: url('../illustrations/writing-paper.svg') center/100% 100% no-repeat; color: #352219; transform: rotate(-6deg); transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.door-manuscript-edition { position: absolute; top: 10%; left: 9%; right: 9%; display: flex; justify-content: space-between; gap: 15px; color: #6d4b2c; font: 6px/1.5 Georgia,serif; letter-spacing: .15em; }
+.door-writing-words { position: absolute; left: 9%; top: 23%; font: 400 clamp(34px,4.6vw,67px)/.99 Georgia,serif; letter-spacing: -.055em; }
+.door-writing-words em { font-style: italic; color: #694126; }
+.door-writing-line { position: absolute; left: 9%; top: 67%; width: 77%; height: 35px; }
+.door-writing-author { position: absolute; bottom: 10%; left: 9%; right: 9%; display: flex; justify-content: space-between; font: 5px/1.5 Georgia,serif; color: #73502c; letter-spacing: .08em; }
+.door-quill { position: absolute; top: 0; right: -1%; width: 25%; height: 73%; object-fit: contain; transform: rotate(14deg); transform-origin: 20% 95%; }
+.door-fire { position: absolute; width: 35%; height: 48%; right: 1%; bottom: 14%; pointer-events: none; }
+.door-flame { transform-origin: 60% 95%; }
+.station-writing { padding-bottom: 40px; }
+@media(hover:hover) {
+  .creative-entrance:is(:hover,:focus-visible) .door-photo-main { transform: rotate(-4deg) translateY(-5px); }
+  .creative-entrance:is(:hover,:focus-visible) .door-photo-companion { transform: rotate(2deg) translateY(3px); }
+  .creative-entrance:is(:hover,:focus-visible) .door-focus { opacity: .95; }
+  .creative-entrance:is(:hover,:focus-visible) .door-ink-paper { transform: rotate(-1deg) translateY(-4px); }
+  .creative-entrance:is(:hover,:focus-visible) .door-burning-page { transform: rotate(-3deg) translateY(-4px); }
+}
+@media(prefers-reduced-motion:no-preference) {
+  .is-portal-visible .door-flame { animation: door-flame-breathe 2.4s ease-in-out infinite alternate; }
+  .is-portal-visible .door-flame-second { animation-delay: -.8s; animation-duration: 1.9s; }
+  .is-portal-visible .door-embers { animation: door-ember-rise 3.4s ease-in-out infinite; }
+  [data-portals-paused] .door-flame,[data-portals-paused] .door-embers { animation-play-state: paused; }
+  @keyframes door-flame-breathe { from { transform: scaleX(.9) scaleY(.86) skewX(-3deg); opacity: .7; } to { transform: scaleX(1.07) scaleY(1.06) skewX(3deg); opacity: 1; } }
+  @keyframes door-ember-rise { 0%,100% { opacity: 0; transform: translateY(8px); } 40% { opacity: .7; } 85% { opacity: 0; transform: translate(6px,-28px); } }
+}
+@media(min-width:981px) {
+  .journey-section .creative-station { display: grid; grid-template-columns: minmax(0,1.12fr) minmax(0,1fr); }
+}
+@media(max-width:980px) {
+  .creative-station .journey-visual { width: 100%; max-width: 580px; margin-inline: auto; padding: 0 0 28px; }
+  .creative-station .journey-copy { padding-top: 16px; }
+  .door-ink-words strong { font-size: clamp(29px,6vw,49px); }
+  .door-writing-words { font-size: clamp(44px,8vw,75px); }
+  .door-ink-words { font-size: 15px; }
+}
+@media(max-width:600px) {
+  .journey-section .journey-console { padding: 8px 9px; }
+  .journey-section .journey-chapters { padding-bottom: 8px; }
+  .journey-section .journey-chapters a { min-height: 49px; gap: 3px; padding-block: 5px; }
+  .journey-section .journey-chapters a > span { width: 22px; height: 22px; font-size: 8px; }
+  .journey-section .journey-chapters small { font-size: 8px; }
+  .journey-section .journey-console-meta { padding-top: 8px; }
+  .journey-heading { display: block; }
+  .journey-period { text-align: left; margin-top: 20px; }
+  .journey-period br { display: none; }
+  .journey-period > span:last-child { display: inline; max-width: none; margin-left: 12px; }
+  .journey-section .journey-intro { font-size: 13px; }
+  .journey-console-meta > span { font-size: 7px; }
+  .creative-station .journey-visual { padding-bottom: 14px; }
+  .creative-station .journey-copy h3 { font-size: 43px; }
+  .creative-station .journey-chapter-subtitle { font-size: 26px; }
+  .creative-station .journey-chapter-label { margin-bottom: 16px; font-size: 8px; }
+  .creative-station .journey-chapter-label > span { font-size: 11px; }
+  .creative-station .journey-summary { font-size: 13px; max-width: 100%; }
+  .creative-station .journey-explore { width: 100%; min-height: 65px; font-size: 11px; }
+  .station-drawings .journey-explore,.station-writing .journey-explore { font-size: 15px; }
+  .door-world-number { font-size: 135px; }
+  .door-photo-main { padding: 7px; }
+  .door-photo-rail,.door-photo-credit { font-size: 5px; letter-spacing: .04em; }
+  .door-photo-rail { padding-bottom: 7px; }
+  .door-photo-credit { padding-top: 7px; }
+  .door-photo-companion { padding: 4px; }
+  .door-photo-companion > span { font-size: 4px; padding-top: 4px; }
+  .door-inscription { font-size: 6px; }
+  .door-ink-edition { font-size: 6px; }
+  .door-ink-words { font-size: 10px; }
+  .door-ink-words strong { font-size: clamp(26px,8.1vw,43px); }
+  .door-drawing-print { padding: 4px; }
+  .door-ink-caption { font-size: 5px; }
+  .door-manuscript-edition { font-size: 5px; letter-spacing: .06em; }
+  .door-quill { right: 7%; width: 22%; }
+  .door-writing-words { font-size: clamp(38px,12vw,67px); }
+  .door-writing-line { height: 25px; top: 67%; }
+  .door-writing-author { font-size: 4px; }
+  .mobile-site .mobile-nav a[href="#beyond-the-code"] { font-size: 8px; }
+}
+.mobile-site .creative-station { display: flex; flex-direction: column; }
+@media(prefers-reduced-motion:reduce) {
+  .creative-entrance,.creative-entrance *,.journey-explore { animation: none !important; transition: none !important; }
+}

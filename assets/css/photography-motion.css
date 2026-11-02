@@ -1,0 +1,50 @@
+/* Motion has its own vocabulary: print settling, optical focus and quiet dissolves.
+   The final image always returns to its original DOM element and colors. */
+.world-photography .photo-title-line { display: block; }
+.world-photography .photo-title-line > * { display: inline-block; }
+.world-photography .photo-ghost { position: absolute; inset: 18px; z-index: 2; display: grid; place-items: center; overflow: hidden; pointer-events: none; }
+.world-photography .photo-ghost img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+.world-photography .optical-signature { position: absolute; top: -40px; right: -25px; width: 105%; height: auto; color: #d6bb84; opacity: .12; pointer-events: none; }
+.world-photography .context-light { position: absolute; inset: -15%; background: #bd8a4b16; mask-image: radial-gradient(ellipse at 77% 25%, #000, transparent 68%); opacity: .7; }
+.world-photography .optical-halo { border-color: #c1a77008; box-shadow: 0 0 100px #bb8b3815, inset 0 0 90px #b58a3e06; }
+.world-photography .hero-print { transform-style: preserve-3d; }
+.world-photography .hero-print button { isolation: isolate; }
+.world-photography .hero-print button::after { content: ''; position: absolute; inset: 0; z-index: 3; background: linear-gradient(115deg, transparent 20%, #f8e7c511 48%, #fff9ea20 49%, transparent 57%); background-size: 250% 100%; background-position: 100% 0; opacity: 0; pointer-events: none; }
+.world-photography .focus-lock { position: absolute; top: 50%; left: 50%; width: 29px; height: 29px; margin: -15px; border: 1px solid #e7c99488; border-radius: 50%; pointer-events: none; opacity: 0; }
+.world-photography .focus-lock::before, .world-photography .focus-lock::after { content: ''; position: absolute; background: #e7c994b3; }
+.world-photography .focus-lock::before { left: 50%; top: -4px; width: 1px; height: 6px; }
+.world-photography .focus-lock::after { top: 50%; right: -4px; height: 1px; width: 6px; }
+.world-photography .contact-image .focus-corners { z-index: 4; }
+.world-photography .art-stage > [data-art-status] { z-index: 8; }
+.world-photography .art-stage > .focus-corners { z-index: 7; }
+.world-photography .art-dialog > header, .world-photography .art-dialog > footer { position: relative; z-index: 8; }
+.world-photography .exposure-scale .scale-zero { transform: translateX(var(--meter-shift, 0px)); transition: transform 900ms cubic-bezier(.2,.7,.2,1); }
+.world-photography .photo-socials a { position: relative; }
+.world-photography .photo-socials a::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, #f0d7a6, #c6a77540); transform: scaleX(0); transform-origin: left; transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.world-photography .photo-socials a:is(:hover, :focus-visible)::after { transform: scaleX(1); }
+.world-photography .photo-socials a .photo-icon { transition: transform .65s cubic-bezier(.2,.7,.2,1); }
+.world-photography .photo-socials a:is(:hover, :focus-visible) .photo-icon { transform: translate(3px, -3px); }
+.world-photography .photo-intro .iris-engraving { opacity: .35; }
+.world-photography .photo-intro .iris-blade { transform-box: view-box; }
+.world-photography .intro-focus { position: fixed; width: 36px; height: 36px; margin: -18px; border: 1px solid #d6b88266; border-radius: 50%; opacity: 0; }
+.world-photography .intro-focus::after { content: ''; position: absolute; inset: 7px; border: 1px solid #d6b88233; border-radius: 50%; }
+.world-photography .light-note { padding: 0; border: 0; background: none; }
+.world-photography .hero-print .focus-corners { z-index: 4; }
+.world-photography .hero-print .print-open { z-index: 4; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .world-photography .hero-print button:is(:hover, :focus-visible)::after { animation: optical-sheen 1.3s cubic-bezier(.2,.7,.2,1); }
+  .world-photography .contact-frame:is(:hover, :focus-visible) .focus-lock { animation: optical-focus 750ms cubic-bezier(.2,.7,.2,1); }
+  .world-photography .room-tabs button[aria-pressed=true] .photo-icon { transition: color .35s; color: #f0d7a6; }
+  @keyframes optical-sheen { 0% { opacity: 0; background-position: 100% 0; } 30% { opacity: .8; } 100% { opacity: 0; background-position: 0 0; } }
+  @keyframes optical-focus { 0% { opacity: 0; transform: scale(1.5) rotate(-22deg); } 35% { opacity: .8; } 65% { opacity: .5; transform: scale(.9) rotate(0); } 100% { opacity: 0; transform: scale(1); } }
+}
+@media (max-width: 760px) {
+  .world-photography .optical-signature { top: 15px; right: -10px; opacity: .09; }
+  .world-photography .photo-ghost { inset: 12px; }
+}
+@media (max-width:480px) { .world-photography .photo-ghost { inset: 8px; } }
+@media (prefers-reduced-motion: reduce) {
+  .world-photography .focus-lock { display: none; }
+  .world-photography .hero-print { transform: none !important; }
+}

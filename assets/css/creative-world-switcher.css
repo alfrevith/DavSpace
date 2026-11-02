@@ -1,0 +1,55 @@
+/* Three materials on one small editorial rail. Geometry stays stable on scroll. */
+.journey-section .journey-console { --switch-accent:#b7b1a2; padding:12px 13px 10px; border:1px solid #c2b29030; background:#111310; border-radius:3px; box-shadow:0 16px 28px -20px #000c; }
+.journey-console[data-world=photography] { --switch-accent:#dfbc80; }
+.journey-console[data-world=drawings] { --switch-accent:#e0d8be; }
+.journey-console[data-world=writing] { --switch-accent:#d4a264; }
+.journey-console .journey-chapters { gap:12px; padding-bottom:11px; }
+.journey-console .journey-track { left:0; right:0; height:1px; background:#b5a78c20; }
+.journey-console .journey-track > span { background:var(--switch-accent); }
+.journey-console .journey-chapters a { position:relative; display:grid; grid-template-columns:32px minmax(0,1fr) 18px; align-items:center; gap:13px; min-height:78px; padding:13px 16px 12px 31px; border:1px solid #b79c6840; border-radius:1px; background:#1c1e18; color:#dac49e; transition:background-color .2s,color .2s,border-color .2s; }
+.journey-console .journey-chapters a > .world-step-number { position:absolute; top:7px; left:8px; display:block; width:auto; height:auto; border:0; border-radius:0; background:none; color:inherit; opacity:.6; font:8px/1.2 Georgia,serif; }
+.journey-console .world-step-symbol { width:30px; height:30px; }
+.journey-console .journey-chapters small { min-width:0; font:17px/1.2 Georgia,serif; letter-spacing:-.025em; }
+.journey-console .journey-chapters small em { display:block; margin-top:5px; font:italic 10px/1.3 Georgia,serif; color:inherit; letter-spacing:0; opacity:.6; }
+.journey-console .world-step-indicator { font:16px/1 Georgia,serif; font-weight:400; opacity:.45; transition:opacity .2s,transform .2s; }
+.journey-console .journey-chapters a[aria-current] .world-step-indicator { opacity:1; transform:translate(1px,-1px); }
+.journey-console .journey-chapters a[data-world=photography] { background:linear-gradient(135deg,#25271e,#171a16); }
+.journey-console .journey-chapters a[data-world=photography]::before { content:''; position:absolute; inset:4px; pointer-events:none; background:linear-gradient(#d1b57d,#d1b57d) left top/10px 1px,linear-gradient(#d1b57d,#d1b57d) left top/1px 10px,linear-gradient(#d1b57d,#d1b57d) right bottom/10px 1px,linear-gradient(#d1b57d,#d1b57d) right bottom/1px 10px; background-repeat:no-repeat; opacity:.35; }
+.journey-console .journey-chapters a[data-world=photography]:is(:hover,[aria-current]) { color:#f0d6a4; border-color:#d0af70a0; background:#2b2c21; }
+.journey-console .journey-chapters a[data-world=drawings] { color:#373126; border:0; background:#d6d0bc url('../illustrations/sketchbook-paper.svg') center/cover; clip-path:polygon(0 2%,34% 0,69% 2%,100% 0,99% 49%,100% 98%,66% 100%,32% 98%,1% 100%); }
+.journey-console .journey-chapters a[data-world=drawings] small { font-weight:700; }
+.journey-console .journey-chapters a[data-world=drawings]::after { content:''; position:absolute; bottom:9px; left:77px; right:30px; height:2px; background:#4c4233; clip-path:polygon(0 35%,30% 0,70% 40%,100% 10%,99% 80%,58% 100%,20% 60%,0 100%); opacity:.25; }
+.journey-console .journey-chapters a[data-world=drawings]:is(:hover,[aria-current]) { color:#211e19; background-color:#f3ecd8; }
+.journey-console .journey-chapters a[data-world=drawings][aria-current]::after { opacity:.8; }
+.journey-console .journey-chapters a[data-world=drawings]:focus-visible { box-shadow:inset 0 0 0 3px #5f513a; }
+.journey-console .journey-chapters a[data-world=writing] { border-color:#a97d473d; background:linear-gradient(115deg,#40251e,#291a16); color:#d8b988; }
+.journey-console .journey-chapters a[data-world=writing] small { font-style:italic; }
+.journey-console .journey-chapters a[data-world=writing]::after { content:''; position:absolute; right:11px; top:0; width:6px; height:17px; background:#ab7b43; clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%); opacity:.55; }
+.journey-console .journey-chapters a[data-world=writing]:is(:hover,[aria-current]) { background:#4b2c22; border-color:#c69453a0; color:#f0d2a0; }
+.journey-console .journey-console-meta { padding:10px 2px 0; align-items:center; gap:12px; }
+.journey-console .journey-console-meta p { color:#8f9286; font:9px/1.5 Georgia,serif; }
+.journey-console .journey-console-meta [data-journey-position] { margin-right:8px; color:var(--switch-accent); font:12px/1.5 Georgia,serif; font-variant-numeric:tabular-nums; }
+.journey-console .journey-console-meta [data-journey-current] { color:var(--switch-accent); font:italic 12px/1.5 Georgia,serif; gap:8px; }
+.journey-console [data-journey-current]::before { width:12px; height:1px; border-radius:0; background:var(--switch-accent); }
+@media(max-width:1100px) {
+ .journey-console .journey-chapters a { gap:8px; padding-left:25px; grid-template-columns:26px minmax(0,1fr) 12px; }
+ .journey-console .journey-chapters small { font-size:15px; }
+ .journey-console .world-step-symbol { width:26px; height:26px; }
+}
+@media(max-width:600px) {
+ .journey-section .journey-console { padding:8px 8px 9px; }
+ .journey-console .journey-chapters { gap:7px; padding-bottom:9px; }
+ .journey-console .journey-chapters a { grid-template-columns:minmax(0,1fr); justify-items:center; align-content:center; gap:4px; min-height:66px; padding:8px 3px; }
+ .journey-console .world-step-symbol { width:22px; height:22px; }
+ .journey-console .journey-chapters small { font-size:12px; letter-spacing:-.03em; }
+ .journey-console .journey-chapters small em,.journey-console .world-step-indicator { display:none; }
+ .journey-console .journey-chapters a > .world-step-number { top:5px; left:5px; font-size:7px; }
+ .journey-console .journey-chapters a[data-world=drawings]::after { left:14px; right:14px; bottom:5px; height:1px; }
+ .journey-console .journey-chapters a[data-world=writing]::after { width:4px; height:12px; right:6px; }
+ .journey-console .journey-console-meta { gap:5px; padding:8px 1px 0; }
+ .journey-console .journey-console-meta p { font-size:8px; }
+ .journey-console .journey-console-meta [data-journey-position] { font-size:10px; margin-right:4px; }
+ .journey-console .journey-console-meta [data-journey-current] { font-size:10px; gap:5px; }
+ .journey-console [data-journey-current]::before { width:7px; }
+}
+@media(prefers-reduced-motion:reduce) { .journey-console .journey-chapters a,.journey-console .world-step-indicator { transition:none; } }

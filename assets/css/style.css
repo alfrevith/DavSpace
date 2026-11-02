@@ -1757,32 +1757,6 @@ html.project-dialog-open {
 .project-document-empty h4 { max-width: 290px; margin: 0; color: #dce5e6; font: italic 31px/1.15 Georgia, serif; letter-spacing: -.045em; }
 .project-document-empty > p:last-child { margin: 16px 0 0; color: #8999a6; font-size: 11px; line-height: 1.9; }
 .project-pdf-mount { position: absolute; inset: 0; background: #0e151e; }
-.project-reader { display: grid; grid-template-rows: 44px minmax(0,1fr); height: 100%; min-width: 0; background: #0e151e; }
-.project-reader-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 10px; border-bottom: 1px solid #ffffff0d; background: #ffffff02; }
-.project-reader-controls { display: flex; align-items: center; gap: 3px; }
-.project-reader-controls button { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 1px solid transparent; border-radius: 5px; background: transparent; color: #bccbd5; font-size: 18px; line-height: 1; cursor: pointer; }
-.project-reader-controls button:hover:not(:disabled) { color: var(--file-accent); border-color: rgb(var(--file-accent-rgb) / .18); background: rgb(var(--file-accent-rgb) / .06); }
-.project-reader-controls button:disabled { color: #526270; cursor: default; }
-.project-reader-controls :is([data-reader-prev], [data-reader-next]) { width: 32px; height: 32px; border-color: #ffffff14; background: #ffffff03; color: #d2e6ed; }
-.project-reader-controls :is([data-reader-prev], [data-reader-next]):hover:not(:disabled) { background: rgb(var(--file-accent-rgb) / .1); border-color: rgb(var(--file-accent-rgb) / .35); }
-.project-reader-controls :is([data-reader-prev], [data-reader-next]):disabled { border-color: transparent; background: transparent; color: #52616d; }
-.project-reader-controls [data-reader-fit] { width: 35px; font-size: 10px; }
-.project-reader-controls [aria-pressed="true"] { color: var(--file-accent); background: rgb(var(--file-accent-rgb) / .055); }
-.project-reader-controls svg { width: 15px; height: 15px; }
-.project-reader-divider { width: 1px; height: 14px; margin: 0 5px; background: #ffffff12; }
-.project-reader-page { display: flex; align-items: center; gap: 6px; color: #9bb1c1; font: 11px Consolas, monospace; }
-.project-reader-page input { width: 28px; height: 28px; padding: 2px; border: 1px solid #ffffff14; border-radius: 4px; appearance: textfield; background: transparent; color: #d8e5ec; text-align: center; font: inherit; }
-.project-reader-page input::-webkit-inner-spin-button, .project-reader-page input::-webkit-outer-spin-button { appearance: none; margin: 0; }
-.project-reader-viewport { position: relative; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #617d8d66 transparent; background: radial-gradient(ellipse at 50% 0, rgb(var(--file-accent-rgb) / .04), transparent 70%), repeating-linear-gradient(135deg, #ffffff02 0 1px, transparent 1px 5px), #111c25; }
-.project-reader-paper { display: flex; justify-content: center; width: max-content; min-width: 100%; min-height: 100%; padding: 6px; }
-.project-reader-paper canvas { display: block; align-self: flex-start; flex: none; border-radius: 2px; background: #fff; box-shadow: 0 10px 34px #0006, 0 0 0 1px #ffffff1a; }
-.project-reader-message { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 25px; color: #9ab2c0; text-align: center; font-size: 12px; }
-.project-reader-message a { color: var(--file-accent); border-bottom: 1px solid rgb(var(--file-accent-rgb) / .3); padding-bottom: 5px; }
-.project-reader-progress { display: block; width: min(260px, 80%); height: 6px; overflow: hidden; border: 0; border-radius: 8px; background: #ffffff15; accent-color: var(--file-accent); }
-.project-reader-progress::-webkit-progress-bar { background: #ffffff15; border-radius: 8px; }
-.project-reader-progress::-webkit-progress-value { background: var(--file-accent); border-radius: 8px; }
-.project-reader-progress::-moz-progress-bar { background: var(--file-accent); border-radius: 8px; }
-.reader-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .project-modal.is-document-focused .project-workspace { grid-template-columns: minmax(0,1fr); grid-template-areas: "archive"; }
 .project-modal.is-document-focused .project-archive { border-right: 0; }
 .project-modal.is-document-focused .project-workspace::after { display: none; }

@@ -1,0 +1,39 @@
+/* Static first: missing JS, reduced motion and interrupted sequences all leave
+   the finished drawing in place. Only our vector UI paths are animated. */
+.world-drawings .ink-letter { display: inline-block; }
+.world-drawings .studio-replay { display: block; width: 100%; padding: 0; border: 0; color: inherit; background: none; }
+.world-drawings .studio-replay:active { transform: none; }
+.world-drawings .studio-pen { transform-box: fill-box; transform-origin: 5% 95%; }
+.world-drawings .studio-drop { transform-box: fill-box; transform-origin: center bottom; }
+.world-drawings .heading-illustration, .world-drawings .art-dialog[open] { animation: none; }
+.world-drawings .flourish-writer {
+  opacity: 0; offset-rotate: 0deg; offset-anchor: 0px 0px;
+  offset-path: path('M8 18C158 4 371 21 588 12c53-2 90-1 122 1');
+}
+.world-drawings .image-ink-tracing { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--ink); stroke-width: .72; stroke-linecap: round; stroke-linejoin: round; opacity: 0; pointer-events: none; }
+.world-drawings .folio-trace { position: absolute; inset: -2px; width: calc(100% + 4px); height: calc(100% + 4px); pointer-events: none; }
+.world-drawings .contact-frame.has-ink-outline::before { background: none; }
+.world-drawings .contact-frame:nth-child(3n+2) .folio-trace { transform: scaleX(-1); }
+.world-drawings .contact-frame:nth-child(3n) .folio-trace { transform: rotate(180deg); }
+.world-drawings .text-action::after { content: ''; position: absolute; top: 6px; right: -7px; width: 3px; height: 4px; border-radius: 47% 53% 36% 62%; background: var(--ink); box-shadow: 6px 6px 0 -1px var(--ink), -1px -6px 0 -1px var(--ink); opacity: 0; pointer-events: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .world-drawings.ink-intro .world-header::after { transform-origin: left; animation: ink-rule-arrive 1000ms 80ms cubic-bezier(.3,.1,.3,1) backwards; }
+  .world-drawings .text-action:is(:hover, :focus-visible)::before { animation: ink-brush-wet 420ms cubic-bezier(.3,.1,.2,1) backwards; }
+  .world-drawings .text-action:is(:hover, :focus-visible)::after { animation: ink-flecks 520ms ease-out; }
+  .world-drawings .studio-replay:hover .studio-illustration { transform: rotate(-1deg); }
+  .world-drawings .studio-illustration { transition: transform 500ms cubic-bezier(.2,.7,.2,1); }
+  @keyframes ink-rule-arrive { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes ink-brush-wet {
+    from { clip-path: polygon(0 0, 0 0, 4% 25%, 0 60%, 2% 100%, 0 100%); }
+    to { clip-path: polygon(0 0, 100% 0, 105% 25%, 100% 60%, 102% 100%, 0 100%); }
+  }
+  @keyframes ink-flecks {
+    0% { opacity: 0; transform: translate(-6px, 6px) scale(.3); }
+    30% { opacity: .8; }
+    100% { opacity: 0; transform: translate(3px, -2px) scale(1); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .world-drawings .flourish-writer, .world-drawings .image-ink-tracing { display: none; }
+}

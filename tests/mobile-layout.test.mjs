@@ -76,7 +76,7 @@ test("mobile controls initialize after their markup and menus put identity befor
   const doc = parse(mobile);
   assert(mobile.indexOf('class="nav mobile-nav"') < mobile.indexOf('src="assets/js/app.js"'));
   assert(mobile.indexOf('src="assets/js/device-router.js"') < mobile.indexOf('src="https://cdn.tailwindcss.com"'));
-  assert.deepEqual([...doc.querySelectorAll(".mobile-nav a")].map(node => node.hash || node.getAttribute("href")), ["#start", "#about-me", "#projects", "#certificates", "#journey", "#contact"]);
+  assert.deepEqual([...doc.querySelectorAll(".mobile-nav a")].map(node => node.hash || node.getAttribute("href")), ["#start", "#about-me", "#projects", "#certificates", "#beyond-the-code", "#contact"]);
   assert.equal(doc.querySelector(".project-workspace").firstElementChild.className, "project-details");
   assert.equal(doc.querySelector(".credential-workspace").firstElementChild.className, "credential-metadata");
   assert(doc.querySelector(".mobile-filters > summary"));

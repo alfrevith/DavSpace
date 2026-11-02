@@ -53,11 +53,11 @@ los mismos campos de cada proyecto.
 Las imágenes verticales conservan su proporción natural y tienen una altura
 máxima adaptada a la pantalla (hasta 340 px). Direct contact permanece visible.
 
-My Journey se sitúa después de certificados y antes de contacto, con un sexto enlace en las
-dos navegaciones. En móvil sus capítulos son verticales, sin paralaje ni fotos
-fijadas. La consola de capítulos se acomoda al encabezado al subir; las habilidades
-y la ruta se revelan cuando sus propios elementos entran en pantalla. El mapa
-de conexiones es un diálogo nativo con selector y vínculos de regreso a la historia.
+Beyond the Code se sitúa después de certificados y antes de contacto, con el enlace `extra`
+en las dos navegaciones y el ancla `#beyond-the-code`. En móvil sus tres estaciones
+son verticales y no usan paralaje. Conserva la consola de capítulos y las conexiones
+iluminadas. Cada destino tiene su propia página responsive: película/contactos,
+cuaderno de una página y biblioteca de PDFs. Consulta [la guía creativa](CREATIVE-WORLDS.md).
 
 El chat respeta las áreas seguras y el teclado mediante `visualViewport`,
 contiene el foco mientras está abierto y mantiene sus enlaces de sección en la

@@ -1,0 +1,40 @@
+{
+  "works": [
+    {
+      "id": "poetry-miedos",
+      "type": "poetry",
+      "pdf": "pdfs/poems/Miedos.pdf",
+      "title": "Miedos",
+      "author": "David Menjivar",
+      "cover": null,
+      "description": "",
+      "date": null,
+      "pages": 1,
+      "order": 1
+    },
+    {
+      "id": "poetry-que-es-el-amor",
+      "type": "poetry",
+      "pdf": "pdfs/poems/Qué es el Amor.pdf",
+      "title": "¿Qué es el Amor?",
+      "author": "David Menjivar",
+      "cover": null,
+      "description": "",
+      "date": null,
+      "pages": 1,
+      "order": 2
+    },
+    {
+      "id": "story-la-leyenda-de-las-pupusas",
+      "type": "story",
+      "pdf": "pdfs/stories/La Leyenda de las Pupusas.pdf",
+      "title": "La Leyenda de las Pupusas",
+      "author": "David Menjivar",
+      "cover": null,
+      "description": "",
+      "date": null,
+      "pages": 11,
+      "order": 3
+    }
+  ]
+}

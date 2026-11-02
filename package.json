@@ -2,8 +2,10 @@
   "name": "david-portfolio",
   "private": true,
   "scripts": {
+    "build:writing": "node scripts/build-writing-catalog.mjs && node scripts/build-creative-pages.mjs",
     "build:journey": "node scripts/build-journey.mjs",
-    "test": "node --test tests/*.test.cjs tests/*.test.mjs"
+    "test": "node --test tests/*.test.cjs tests/*.test.mjs",
+    "build:creative": "node scripts/build-journey.mjs && node scripts/build-creative-pages.mjs"
   },
   "engines": {
     "node": ">=22"
