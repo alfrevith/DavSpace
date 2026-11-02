@@ -143,6 +143,7 @@ test("clicking different cards refreshes all content without carrying over techn
   assert.equal(s.get("[data-project-date]").textContent, "2026");
   assert.equal(s.get("[data-project-technologies]").children.length, 6);
   s.escape();
+  s.window.PORTFOLIO_PROJECTS.cecam.technologies = [];
   s.open("cecam");
   assert.equal(s.get("#project-dialog-title").textContent, "CECAM");
   assert.equal(s.get("[data-project-status]").textContent, "Prototype");
@@ -284,6 +285,14 @@ function arrow(s,key,extra={}) {
   const event={key,prevented:false,preventDefault(){this.prevented=true;},...extra};
   s.dialog.emit("keydown",event);return event;
 }
+test("Journey shares the project modal and closing returns focus to its chapter link",()=>{
+  const s=setup(),chapterLink=element();
+  assert.equal(s.window.PortfolioProjects.open('missing',{returnFocus:chapterLink}),false);
+  assert.equal(s.window.PortfolioProjects.open('pot-c',{returnFocus:chapterLink}),true);
+  assert.equal(s.get('#project-dialog-title').textContent,'POT-C');
+  assert.equal(s.window.PortfolioProjects.open('beyond'),false);
+  arrow(s,'ArrowRight');s.escape();assert(chapterLink.focused);
+});
 test("arrows switch inside the same modal, wrap in both directions and restore focus to the current project",()=>{
   const s=setup();s.open("beyond");
   let closes=0; s.dialog.addEventListener("close",()=>closes++);

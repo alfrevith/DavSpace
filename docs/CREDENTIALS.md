@@ -21,7 +21,7 @@ Edit **`data/credentials.json`**. Each object controls one card and its detail w
 
 - Add the object to `certificates` or `achievements`. Use a unique `id` with letters, numbers, hyphens or underscores.
 - `title`, `subtitle`, `year` and `description` are the visible English content. `date` is an optional ISO date for sorting. Dated records appear newest first; pending records come last.
-- `pdf` is a relative PDF path. Match spelling and capitalization exactly for GitHub Pages. An empty string displays a document-pending state.
+- `pdf` is a relative PDF path. `image` accepts an original PNG, JPEG or WebP instead; when present it takes precedence. Match spelling and capitalization exactly for GitHub Pages. With neither field, the document-pending state is displayed.
 - `logo` sets the image on both the card and its detail menu. Use a transparent PNG, WebP or SVG path, or `""` for no image. Excel entries already use `images/icons/Excel.png`. No filled logo background is added.
 - `accent` controls each card's neon edges, soft light and hover treatment, and is also the default color of its menu. Use a full six-digit hex color, such as `"#79f2b0"`.
 - `dialogAccent` optionally gives that record's menu a different neon color. Leave it empty (or omit it) to follow `accent`. Invalid colors safely fall back; another record's colors never carry over.
@@ -33,3 +33,15 @@ Edit **`data/credentials.json`**. Each object controls one card and its detail w
 Both lanes loop automatically in opposite directions. Drag, swipe, arrow buttons and arrow keys work independently; each lane has its own persistent pause button. Automatic movement pauses on hover, keyboard focus, manual navigation, while a record is open, offscreen, and when the tab is hidden. Reduced-motion visitors get manual navigation.
 
 `assets/css/credentials.css` contains only archive styles. `assets/js/credentials.js` handles data, carousels and the folio dialog. The PDF reader is shared with projects and loads only when a PDF record is opened. The chat reads the same JSON automatically.
+
+The archive currently contains two MOS PDFs, two TOEIC Listening and Reading
+recognition images and six achievement images. Empty achievement templates have
+been removed. TOEIC scores (435 and 595) follow the original filenames; their
+attached documents are institutional Bronze TOEIC diplomas, not ETS score reports.
+ConTextos is dated January 29, 2026 as printed, despite its filename saying 2025.
+Unknown exact award dates are left empty rather than guessed.
+
+Image records open in a lightweight viewer with loading feedback, zoom, fit,
+expanded view and an original-image link. It uses no PDF.js worker. Images load
+only after opening a record and are removed on close; the original files remain
+unchanged. Matching organization logos are taken from `images/icons/`.

@@ -19,8 +19,8 @@ adaptables dentro de su contexto. Para forzar una versión en las pruebas:
 - `index.html?view=desktop`
 - `index-mobile.html?view=mobile`
 
-La opción explícita permanece en esa URL. El pie móvil incluye un enlace a la
-versión de escritorio. Sin JavaScript cada archivo conserva su propia versión
+La opción explícita permanece en esa URL. El pie móvil no incluye un selector de
+versión. Sin JavaScript cada archivo conserva su propia versión
 y el contenido sigue siendo legible.
 
 ## Contenido y animaciones
@@ -52,6 +52,12 @@ en menús de pantalla completa. Los tamaños de los logos y su halo se leen de
 los mismos campos de cada proyecto.
 Las imágenes verticales conservan su proporción natural y tienen una altura
 máxima adaptada a la pantalla (hasta 340 px). Direct contact permanece visible.
+
+My Journey se sitúa después de certificados y antes de contacto, con un sexto enlace en las
+dos navegaciones. En móvil sus capítulos son verticales, sin paralaje ni fotos
+fijadas. La consola de capítulos se acomoda al encabezado al subir; las habilidades
+y la ruta se revelan cuando sus propios elementos entran en pantalla. El mapa
+de conexiones es un diálogo nativo con selector y vínculos de regreso a la historia.
 
 El chat respeta las áreas seguras y el teclado mediante `visualViewport`,
 contiene el foco mientras está abierto y mantiene sus enlaces de sección en la

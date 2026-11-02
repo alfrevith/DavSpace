@@ -2,6 +2,7 @@
   "name": "david-portfolio",
   "private": true,
   "scripts": {
+    "build:journey": "node scripts/build-journey.mjs",
     "test": "node --test tests/*.test.cjs tests/*.test.mjs"
   },
   "engines": {

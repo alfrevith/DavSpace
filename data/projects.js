@@ -56,7 +56,7 @@ window.PORTFOLIO_PROJECTS = {
   cecam: {
     title: "CECAM",
     logoDoubleSize: false,
-    logo: "",
+    logo: "images/icons/Masferrer.png",
     logoWhiteBackground: false,
     accent: "#0800f2",
     status: "prototype",

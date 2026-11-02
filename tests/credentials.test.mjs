@@ -15,26 +15,28 @@ test("archive entries have unique stable identities and existing case-sensitive 
     assert(!ids.has(entry.id)); ids.add(entry.id);
     assert.equal(typeof entry.title, "string"); assert(entry.title.trim());
     assert.equal(typeof entry.pending, "boolean");
-    if (!entry.pdf) continue;
+    if(entry.logo)assert(fs.existsSync(new URL(entry.logo,root)),`Missing logo: ${entry.logo}`);
+    const file=entry.image||entry.pdf;
+    if (!file) continue;
     let current = new URL("./", root);
-    for (const part of entry.pdf.split("/")) {
-      assert(fs.readdirSync(current).includes(part), `Case-sensitive path missing: ${entry.pdf}`);
-      current = new URL(encodeURIComponent(part) + (part.endsWith(".pdf") ? "" : "/"), current);
+    for (const [index,part] of file.split("/").entries()) {
+      assert(fs.readdirSync(current).includes(part), `Case-sensitive path missing: ${file}`);
+      current = new URL(encodeURIComponent(part) + (index===file.split('/').length-1 ? "" : "/"), current);
     }
-    assert.equal(path.extname(entry.pdf), ".pdf");
+    assert(['.pdf','.png'].includes(path.extname(file)));
   }
 });
 
-test("unfilled achievement spaces remain explicitly pending and never become chat facts", () => {
-  assert(data.achievements.length > 0);
-  assert(data.achievements.every(record => record.pending && !record.pdf && !record.year));
-  assert(data.achievements.every(record => record.logo === ""));
+test("all six published achievements replace templates and join the chat's factual knowledge", () => {
+  assert.equal(data.achievements.length,6);
+  assert(data.achievements.every(record => !record.pending && record.image && record.year));
+  assert(data.achievements.every(record => record.logo));
   for (const record of data.certificates) {
     if (record.logo) assert(fs.existsSync(new URL(record.logo, root)), `Missing logo: ${record.logo}`);
   }
   const sources = core.credentialSources(data);
-  assert.equal(sources.length, data.certificates.filter(record => !record.pending).length);
-  assert(sources.every(source => !data.achievements.some(record => source.id.endsWith(record.id))));
+  assert.equal(sources.length, data.certificates.length+data.achievements.length);
+  assert(data.achievements.every(record=>sources.some(source=>source.id==='credential:'+record.id)));
 });
 
 test("published record edits, additions and removals flow into chat knowledge independently", () => {
@@ -88,7 +90,13 @@ test("credential lists filter by year, compare actual scores and exclude unearne
   assert.match(older.answer,/Microsoft Excel/);assert(!older.answer.includes("Expert"));
   const compare=core.answer(sources,"Compara las notas de Excel y Excel Expert",{lang:"es"});
   assert.match(compare.answer,/972\/1000/);assert.match(compare.answer,/960\/1000/);
-  assert.match(core.answer(sources,"¿Qué logros tiene?",{lang:"es"}).answer,/No hay registros publicados/);
-  assert.equal(core.answer(sources,"Muestra los certificados de David",{lang:"es"}).sources.length,2);
+  assert.match(core.answer(sources,"¿Qué logros tiene?",{lang:"es"}).answer,/Challenge Day/);
+  assert.equal(core.answer(sources,"Muestra los certificados de David",{lang:"es"}).sources.length,4);
   assert.equal(core.answer(sources,"Muestra certificados de Python",{lang:"es"}).sources.length,0);
+});
+test('TOEIC records retain their year, score, original image and institutional context',()=>{
+  const sources=core.credentialSources(data);
+  assert.match(core.answer(sources,'¿Qué puntaje tiene TOEIC 2025?',{lang:'es'}).answer,/595 puntos/);
+  assert.match(core.answer(sources,'What score is recorded for TOEIC 2024?').answer,/435 points/);
+  assert.equal(data.achievements.find(r=>r.id==='contextos-illustrated-memoir').date,'2026-01-29');
 });

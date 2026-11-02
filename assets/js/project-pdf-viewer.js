@@ -6,8 +6,30 @@
     return pdfjs;
   }).catch(error => { library = null; throw error; });
 
+  function createImageReader({mount,url,title,dialog,detailsSelector}) {
+    const root=document.createElement('div');root.className='project-reader';
+    root.innerHTML=`<div class="project-reader-toolbar" aria-label="Image controls"><div class="project-reader-controls"><button type="button" data-image-out aria-label="Zoom out">−</button><button type="button" data-image-fit aria-label="Fit image width">Fit</button><button type="button" data-image-in aria-label="Zoom in">+</button><button type="button" data-image-expand aria-label="Expand document" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button></div><a class="project-pdf-link project-reader-open" target="_blank" rel="noopener noreferrer">Open image ↗</a></div><div class="project-reader-viewport" tabindex="0" role="region" aria-label="Original recognition image"><div class="project-reader-paper"></div><div class="project-reader-message" role="status">Loading image…<progress class="project-reader-progress" aria-label="Image loading"></progress></div></div>`;
+    mount.replaceChildren(root);
+    const $=s=>root.querySelector(s),viewport=$('.project-reader-viewport'),paper=$('.project-reader-paper'),message=$('.project-reader-message');
+    $('.project-reader-open').href=url.href;
+    let alive=true,ready=false,zoom=1,resizeTimer;
+    const image=document.createElement('img');image.alt=title+' — original document';image.decoding='async';image.style.maxWidth='none';image.style.height='auto';
+    const buttons=[...root.querySelectorAll('button')];buttons.forEach(b=>{b.disabled=true;});viewport.setAttribute('aria-busy','true');
+    function fit(){if(!alive||!ready)return;const width=Math.max(100,viewport.clientWidth-12);image.style.width=Math.round(Math.min(image.naturalWidth,width)*zoom)+'px';$('[data-image-out]').disabled=zoom<=.5;$('[data-image-in]').disabled=zoom>=3;}
+    image.addEventListener('load',()=>{if(!alive)return;ready=true;paper.replaceChildren(image);message.hidden=true;viewport.removeAttribute('aria-busy');buttons.forEach(b=>{b.disabled=false;});fit();},{once:true});
+    image.addEventListener('error',()=>{if(!alive)return;message.textContent='The image could not load. Open the original image above to try again.';viewport.removeAttribute('aria-busy');},{once:true});
+    $('[data-image-in]').addEventListener('click',()=>{zoom=Math.min(3,zoom+.25);fit();});
+    $('[data-image-out]').addEventListener('click',()=>{zoom=Math.max(.5,zoom-.25);fit();});
+    $('[data-image-fit]').addEventListener('click',()=>{zoom=1;fit();});
+    $('[data-image-expand]').addEventListener('click',()=>{const expanded=!dialog.classList.contains('is-document-focused');dialog.classList.toggle('is-document-focused',expanded);const details=dialog.querySelector(detailsSelector);if(details)details.hidden=expanded;$('[data-image-expand]').setAttribute('aria-pressed',String(expanded));$('[data-image-expand]').setAttribute('aria-label',expanded?'Restore record layout':'Expand document');resize();});
+    function resize(){clearTimeout(resizeTimer);resizeTimer=setTimeout(fit,100);}
+    const observer=typeof ResizeObserver==='function'?new ResizeObserver(resize):null;observer?.observe(viewport);window.addEventListener('resize',resize);
+    image.src=url.href;
+    return {destroy(){alive=false;clearTimeout(resizeTimer);observer?.disconnect();window.removeEventListener('resize',resize);image.removeAttribute('src');paper.replaceChildren();mount.replaceChildren();dialog.classList.remove('is-document-focused');const details=dialog.querySelector(detailsSelector);if(details)details.hidden=false;}};
+  }
   window.ProjectPDFViewer = {
     create({mount, url, title, dialog, detailsSelector = ".project-details"}) {
+      if(/\.(png|jpe?g|webp)$/i.test(url.pathname))return createImageReader({mount,url,title,dialog,detailsSelector});
       const root = document.createElement("div");
       root.className = "project-reader";
       root.innerHTML = `

@@ -366,7 +366,10 @@
 
     const credentials=sources.filter(s=>s.id.startsWith("credential:"));
     const credentialQuery=intent(q,["certificates","certificate","certification","certifications","certificado","certificados","certificacion","certificaciones","certs","credentials","credenciales","logros","achievements"]);
-    const scored=credentials.map(s=>({s,hits:tokens(s.title).filter(term=>words(q).some(word=>near(word,term))).length})).filter(item=>item.hits>0).sort((a,b)=>b.hits-a.hits);
+    const scored=credentials.map(s=>{
+      const hits=tokens(s.title).filter(term=>!/^\d+$/.test(term)&&words(q).some(word=>near(word,term))).length;
+      return {s,hits:hits+(hits&&s.fields?.year&&has(q,[s.fields.year])?1:0)};
+    }).filter(item=>item.hits>0).sort((a,b)=>b.hits-a.hits);
     let credential=scored[0]&&(!scored[1]||scored[0].hits>scored[1].hits)?scored[0].s:null;
     if(scored.length>1&&has(q,["normal","basico","regular","basic","standard","estandar"]))credential=[...scored].sort((a,b)=>a.s.title.length-b.s.title.length)[0].s;
     let credentialField=has(q,["score","points","puntaje","puntuacion","calificacion","nota","puntos"])?"score":intent(q,["date","year","when","fecha","ano","cuando"])?"date":"";
@@ -387,7 +390,7 @@
     if(credential){
       const f=credential.fields||{};
       if(credentialField==="score"){
-        const score=/\b\d{1,4}\s*\/\s*\d{1,4}\b/.exec(f.description||credential.text)?.[0];
+        const score=/\b\d{1,4}\s*\/\s*\d{1,4}\b/.exec(f.description||credential.text)?.[0] || /\b\d{1,4} points\b/.exec(f.description||credential.text)?.[0]?.replace('points',es?'puntos':'points');
         const threshold=/\b(?:required|passing|minimum) score(?: of)?\s*[:=]?\s*(\d{1,4})/i.exec(f.description||credential.text)?.[1];
         if(has(q,["minimum","passing","required","minima","minimo","requerida","requerido","para aprobar"]))return threshold?reply(es?`La nota mínima publicada para ${credential.title} es ${threshold}.`:`The published passing score for ${credential.title} is ${threshold}.`,[credential],{topic:"credential",credentialId:credential.id}):unknown([credential]);
         const date=intent(q,["date","year","when","fecha","ano","cuando"])&&(f.date||f.year);
@@ -401,7 +404,8 @@
       const year=/\b(?:19|20)\d{2}\b/.exec(q)?.[0],achievements=has(q,["logros","achievements","logro","achievement"])&&!has(q,["certificados","certificates","certificaciones"]);
       const rawSubject=/(?:certificados?|certificaciones|certificacion|certifications?|certificates?)\s+(?:de|en|in|for)\s+([a-z][a-z0-9+#]*)/.exec(q)?.[1];
       const subject=rawSubject&&!has(rawSubject,["david","menjivar","este","esta","el","la","los","las","portafolio","portfolio","his","him"])?rawSubject:null;
-      let list=credentials.filter(s=>(!year||s.fields?.year===year)&&(!achievements||s.fields?.collection==="achievements")&&(!subject||words(s.title).some(word=>near(word,subject))));
+      const certificatesOnly=!achievements&&has(q,["certificates","certificate","certification","certifications","certificado","certificados","certificacion","certificaciones","certs"])&&!has(q,["logros","achievements","logro","achievement"]);
+      let list=credentials.filter(s=>(!year||s.fields?.year===year)&&(!achievements||s.fields?.collection==="achievements")&&(!certificatesOnly||s.fields?.collection==="certificates")&&(!subject||words(s.title).some(word=>near(word,subject))));
       if(has(q,["reciente","recientes","ultima","ultimo","latest","newest"]))list=[...list].sort((a,b)=>(b.fields?.date||b.fields?.year||"").localeCompare(a.fields?.date||a.fields?.year||"")).slice(0,1);
       if(!list.length)return reply(es?"No hay registros publicados que coincidan con eso. Los espacios pendientes no cuentan como logros obtenidos.":"No published records match that request. Pending spaces don't count as earned achievements.",[],{topic:"credentials"});
       return reply((es?`Hay ${list.length} registro${list.length===1?"":"s"} publicado${list.length===1?"":"s"}:\n`:`There ${list.length===1?"is":"are"} ${list.length} published record${list.length===1?"":"s"}:\n`)+list.map(s=>`• ${s.title}${s.fields?.year?" · "+s.fields.year:""}`).join("\n"),list,{topic:"credentials",credentialCandidates:list.map(s=>s.id)},list.slice(0,2).map(s=>es?`Cuéntame sobre ${s.title}`:`Tell me about ${s.title}`));

@@ -21,6 +21,7 @@
   };
   const modeLabels = { individual: "Individual project", team: "Team project" };
   let opener = null;
+  let externalOpener = null;
   let transition = null;
   let pdfTimer = 0;
   let closing = false;
@@ -138,9 +139,10 @@
     pdfEmpty.hidden = true;
   }
 
-  function openProject(card, {direction = 0} = {}) {
+  function openProject(card, {direction = 0, returnFocus = null} = {}) {
     if (dialog.open && !direction) return;
     const switching = dialog.open;
+    if (!switching) externalOpener = returnFocus;
     transition?.cancel();
     transition = null;
     const key = card.dataset.project;
@@ -290,6 +292,14 @@
     card.setAttribute("aria-controls", dialog.id);
     card.addEventListener("click", () => openProject(card));
   });
+  // Shared entry point for the Journey; there is still only one project reader.
+  window.PortfolioProjects = {open(key, {returnFocus = null} = {}) {
+    if (dialog.open || closing) return false;
+    const card = [...document.querySelectorAll("#project-list [data-project]")].find(item => item.dataset.project === key);
+    if (!card) return false;
+    openProject(card, {returnFocus});
+    return true;
+  }};
   closeButton.addEventListener("click", closeProject);
   dialog.addEventListener("cancel", (event) => {
     event.preventDefault();
@@ -312,7 +322,8 @@
     document.documentElement.classList.remove("project-dialog-open");
     dialog.classList.remove("is-closing");
     closing = false;
-    opener?.focus({ preventScroll: true });
+    (externalOpener || opener)?.focus({ preventScroll: true });
+    externalOpener = null;
     opener = null;
   });
   reducedMotion.addEventListener("change", () => {

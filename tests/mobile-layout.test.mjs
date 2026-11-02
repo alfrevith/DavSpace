@@ -76,7 +76,7 @@ test("mobile controls initialize after their markup and menus put identity befor
   const doc = parse(mobile);
   assert(mobile.indexOf('class="nav mobile-nav"') < mobile.indexOf('src="assets/js/app.js"'));
   assert(mobile.indexOf('src="assets/js/device-router.js"') < mobile.indexOf('src="https://cdn.tailwindcss.com"'));
-  assert.deepEqual([...doc.querySelectorAll(".mobile-nav a")].map(node => node.hash || node.getAttribute("href")), ["#start", "#about-me", "#projects", "#certificates", "#contact"]);
+  assert.deepEqual([...doc.querySelectorAll(".mobile-nav a")].map(node => node.hash || node.getAttribute("href")), ["#start", "#about-me", "#projects", "#certificates", "#journey", "#contact"]);
   assert.equal(doc.querySelector(".project-workspace").firstElementChild.className, "project-details");
   assert.equal(doc.querySelector(".credential-workspace").firstElementChild.className, "credential-metadata");
   assert(doc.querySelector(".mobile-filters > summary"));
@@ -163,7 +163,9 @@ test("canonical section links stay mobile, but explicit desktop links retain the
   assert(s.event(link, "click", {button: 0}).defaultPrevented);
   assert.equal(s.paths[0], "https://example.test/Portafolio/index-mobile.html?view=mobile#about-me");
   assert.equal(s.get("#about-me").scrolled.block, "start");
-  assert.equal(s.event(s.get(".mobile-version-link"), "click", {button: 0}).defaultPrevented, false);
+  // The footer shortcut was intentionally removed; explicit preview URLs remain valid.
+  const desktopLink=s.document.createElement('a');desktopLink.href='index.html?view=desktop';s.document.body.append(desktopLink);
+  assert.equal(s.event(desktopLink, "click", {button: 0}).defaultPrevented, false);
 });
 
 test("reopening mobile record sheets resets the reading position to their identity", async () => {

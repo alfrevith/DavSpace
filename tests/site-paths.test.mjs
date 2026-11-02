@@ -10,7 +10,7 @@ const site = "https://example.test/Portafolio/";
 
 test("main navigation matches the published portfolio sections", () => {
   const document = new DOMParser().parseFromString(fs.readFileSync(new URL("index.html",root),"utf8"),"text/html");
-  const ids = ["start", "about-me", "projects", "certificates", "contact"];
+  const ids = ["start", "about-me", "projects", "certificates", "journey", "contact"];
   assert.deepEqual([...document.querySelectorAll("main .section[id]")].map(section=>section.id),ids);
   assert.deepEqual([...document.querySelectorAll(".nav a")].map(link=>link.getAttribute("href")),ids.map(id=>"#"+id));
 });

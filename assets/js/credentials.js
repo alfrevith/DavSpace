@@ -233,7 +233,7 @@
     dialog.querySelector("[data-credential-subtitle]").textContent=record.subtitle;
     dialog.querySelector("[data-credential-year]").textContent=record.year||"—";
     dialog.querySelector("[data-credential-description]").textContent=record.description||"The story behind this record is coming soon.";
-    const pdf=asset(record.pdf),empty=dialog.querySelector(".credential-document-empty"),mount=dialog.querySelector("[data-credential-pdf]");
+    const pdf=asset(record.image || record.pdf),empty=dialog.querySelector(".credential-document-empty"),mount=dialog.querySelector("[data-credential-pdf]");
     empty.hidden=Boolean(pdf);mount.hidden=!pdf;
     const full=dialog.querySelector("[data-credential-full]");full.hidden=!pdf;full.removeAttribute("href");if(pdf)full.href=pdf.href;
     dialog.querySelector(".credential-metadata").hidden=false;

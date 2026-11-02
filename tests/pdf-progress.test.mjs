@@ -4,6 +4,27 @@ import {readFile} from 'node:fs/promises';
 import {runInNewContext} from 'node:vm';
 import {DOMParser} from 'linkedom';
 const source=await readFile(new URL('../assets/js/project-pdf-viewer.js',import.meta.url),'utf8');
+test('image records load without PDF.js, support zoom and release their source on close',()=>{
+  const document=new DOMParser().parseFromString('<body><dialog><section class="credential-metadata"></section><div id="mount"></div></dialog></body>','text/html');
+  Object.defineProperty(document,'currentScript',{value:{src:'https://example.test/assets/js/project-pdf-viewer.js'}});
+  const create=document.createElement.bind(document);let image;
+  document.createElement=(tag)=>{const node=create(tag);if(tag==='img')image=node;return node;};
+  const window={addEventListener(){},removeEventListener(){}};
+  runInNewContext(source,{document,window,URL,setTimeout,clearTimeout});
+  const mount=document.querySelector('#mount'),dialog=document.querySelector('dialog');
+  const reader=window.ProjectPDFViewer.create({mount,url:new URL('https://example.test/record.png'),title:'Recognition',dialog,detailsSelector:'.credential-metadata'});
+  assert.equal(image.src,'https://example.test/record.png');assert.match(mount.textContent,/Loading image/);
+  Object.defineProperty(image,'naturalWidth',{value:2896});
+  Object.defineProperty(mount.querySelector('.project-reader-viewport'),'clientWidth',{value:600});
+  image.dispatchEvent(new document.defaultView.Event('load'));
+  assert.equal(mount.querySelector('img'),image);assert.equal(image.style.width,'588px');
+  mount.querySelector('[data-image-in]').click();assert.equal(image.style.width,'735px');
+  mount.querySelector('[data-image-fit]').click();assert.equal(image.style.width,'588px');
+  mount.querySelector('[data-image-expand]').click();assert(dialog.classList.contains('is-document-focused'));
+  reader.destroy();assert(!image.hasAttribute('src'));assert.equal(mount.children.length,0);
+  assert(!dialog.classList.contains('is-document-focused'));assert.equal(dialog.querySelector('.credential-metadata').hidden,false);
+  image.dispatchEvent(new document.defaultView.Event('load'));assert.equal(mount.children.length,0);
+});
 test('PDF progress handles unknown sizes, real percentages, failures and destroyed readers',async()=>{
   const document=new DOMParser().parseFromString('<body><dialog><section class="project-details"></section><div id="mount"></div></dialog></body>','text/html');
   Object.defineProperty(document,'currentScript',{value:{src:'https://example.test/assets/js/project-pdf-viewer.js'}});

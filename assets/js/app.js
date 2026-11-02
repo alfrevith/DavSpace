@@ -665,7 +665,7 @@ window.addEventListener("pointermove", (event) => {
   cursorLight.style.setProperty("--y", `${event.clientY}px`);
 });
 
-const words = ["websites", "apps", "photographs", "drawings", "stories", "poems"];
+const words = ["websites", "apps", "photographs", "drawings", "stories", "desings", "experiences", "solutions", "memories", "possibilities", "experiments", "connections"];
 const chars = "!<>-_\\/[]{}=+*^?#0123456789";
 let wordIndex = 0;
 let scrambleFrame;
@@ -748,7 +748,7 @@ window.setInterval(() => {
   if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
   wordIndex = (wordIndex + 1) % words.length;
   scrambleTo(words[wordIndex]);
-}, 4200);
+}, 3000);
 
 function initializeHeroAmbience() {
   const hero = document.querySelector(".hero-stage");
