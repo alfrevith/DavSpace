@@ -232,3 +232,23 @@ html.mobile-chat-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .mobile-site .reveal { opacity: 1; transform: none; }
 }
+
+/* Shared document readers: bounded viewports and predictable touch controls. */
+.mobile-site :is(.project-modal,.credential-modal) { width:100vw; max-width:100vw; overflow:hidden; }
+.mobile-site :is(.project-modal,.credential-modal) .project-reader-toolbar { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-auto-rows:minmax(40px,auto); gap:4px; padding:6px; }
+.mobile-site :is(.project-modal,.credential-modal) .project-reader-toolbar > .project-reader-controls:nth-child(2) { grid-column:1/-1; grid-row:2; justify-content:center; }
+.mobile-site :is(.project-modal,.credential-modal) .project-reader-open { grid-column:2; grid-row:1; margin:0; white-space:nowrap; }
+.mobile-site :is(.project-modal,.credential-modal) .project-reader-viewport { min-width:0; scrollbar-gutter:stable; }
+.mobile-site .is-document-focused :is(.project-workspace,.credential-workspace) { min-height:0; overflow:hidden; padding-bottom:max(10px,env(safe-area-inset-bottom)); }
+.mobile-site .is-document-focused :is(.project-archive,.credential-document) { flex:1 1 0; height:auto; min-height:0; margin-bottom:0; }
+
+.mobile-site .project-modal::before { display:none; }
+
+@media(orientation:landscape) and (max-height:520px) {
+ .mobile-site :is(.project-modal,.credential-modal) .project-reader-toolbar { display:flex; justify-content:space-between; flex-wrap:wrap; }
+}
+
+.mobile-site .project-window-bar { gap:8px; }
+.mobile-site .project-window-actions { gap:4px; flex:none; }
+.mobile-site .project-file-label { min-width:0; flex-wrap:wrap; gap:4px 6px; }
+@media(max-width:350px) { .mobile-site .project-file-mark { display:none; } }

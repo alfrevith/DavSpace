@@ -12,7 +12,7 @@
     mount.replaceChildren(root);
     const $=s=>root.querySelector(s),viewport=$('.project-reader-viewport'),paper=$('.project-reader-paper'),message=$('.project-reader-message');
     $('.project-reader-open').href=url.href;
-    let alive=true,ready=false,zoom=1,resizeTimer;
+    let alive=true,ready=false,zoom=1,resizeTimer,lastWidth=0;
     const image=document.createElement('img');image.alt=title+' — original document';image.decoding='async';image.style.maxWidth='none';image.style.height='auto';
     const buttons=[...root.querySelectorAll('button')];buttons.forEach(b=>{b.disabled=true;});viewport.setAttribute('aria-busy','true');
     function fit(){if(!alive||!ready)return;const width=Math.max(100,viewport.clientWidth-12);image.style.width=Math.round(Math.min(image.naturalWidth,width)*zoom)+'px';$('[data-image-out]').disabled=zoom<=.5;$('[data-image-in]').disabled=zoom>=3;}
@@ -20,9 +20,9 @@
     image.addEventListener('error',()=>{if(!alive)return;message.textContent='The image could not load. Open the original image above to try again.';viewport.removeAttribute('aria-busy');},{once:true});
     $('[data-image-in]').addEventListener('click',()=>{zoom=Math.min(3,zoom+.25);fit();});
     $('[data-image-out]').addEventListener('click',()=>{zoom=Math.max(.5,zoom-.25);fit();});
-    $('[data-image-fit]').addEventListener('click',()=>{zoom=1;fit();});
-    $('[data-image-expand]').addEventListener('click',()=>{const expanded=!dialog.classList.contains('is-document-focused');dialog.classList.toggle('is-document-focused',expanded);const details=dialog.querySelector(detailsSelector);if(details)details.hidden=expanded;$('[data-image-expand]').setAttribute('aria-pressed',String(expanded));$('[data-image-expand]').setAttribute('aria-label',expanded?'Restore record layout':'Expand document');resize();});
-    function resize(){clearTimeout(resizeTimer);resizeTimer=setTimeout(fit,100);}
+    $('[data-image-fit]').addEventListener('click',()=>{zoom=1;viewport.scrollLeft=0;viewport.scrollTop=0;fit();});
+    $('[data-image-expand]').addEventListener('click',()=>{const expanded=!dialog.classList.contains('is-document-focused');dialog.classList.toggle('is-document-focused',expanded);const details=dialog.querySelector(detailsSelector);if(details)details.hidden=expanded;const workspace=dialog.querySelector('.project-workspace, .credential-workspace');if(workspace)workspace.scrollTop=0;$('[data-image-expand]').setAttribute('aria-pressed',String(expanded));$('[data-image-expand]').setAttribute('aria-label',expanded?'Restore record layout':'Expand document');resize();});
+    function resize(){const width=viewport.clientWidth;if(width===lastWidth)return;lastWidth=width;clearTimeout(resizeTimer);resizeTimer=setTimeout(fit,100);}
     const observer=typeof ResizeObserver==='function'?new ResizeObserver(resize):null;observer?.observe(viewport);window.addEventListener('resize',resize);
     image.src=url.href;
     return {destroy(){alive=false;clearTimeout(resizeTimer);observer?.disconnect();window.removeEventListener('resize',resize);image.removeAttribute('src');paper.replaceChildren();mount.replaceChildren();dialog.classList.remove('is-document-focused');const details=dialog.querySelector(detailsSelector);if(details)details.hidden=false;}};
@@ -45,7 +45,7 @@
       $(".project-reader-open").href = url.href;
       $(".project-reader-open").setAttribute("aria-label", `Open ${title} PDF in a new tab`);
       const viewport = $(".project-reader-viewport"), paper = $("[data-reader-paper]"), pageInput = $("[data-reader-page]"), message = $("[data-reader-message]");
-      let alive = true, loading, pdf, task, pageNumber = 1, zoom = null, renderedScale = 1, revision = 0, resizeTimer;
+      let alive = true, loading, pdf, task, pageNumber = 1, zoom = null, renderedScale = 1, revision = 0, resizeTimer, lastWidth = 0;
       const controls = [...root.querySelectorAll("button, input")];
       viewport.setAttribute("aria-busy", "true");
       controls.forEach(control => { control.disabled = true; });
@@ -104,9 +104,9 @@
         const next = Math.max(1,Math.min(pdf.numPages,Number(value)));
         if (!Number.isInteger(next)) {sync();return;}
         pageNumber = next;
-        viewport.scrollTop = 0;sync();render();
+        viewport.scrollLeft = 0;viewport.scrollTop = 0;sync();render();
       }
-      function resize() { clearTimeout(resizeTimer);resizeTimer = setTimeout(render,100); }
+      function resize() { const width=viewport.clientWidth;if(width===lastWidth)return;lastWidth=width;clearTimeout(resizeTimer);resizeTimer = setTimeout(render,100); }
       $("[data-reader-prev]").addEventListener("click",()=>navigate(pageNumber-1));
       $("[data-reader-next]").addEventListener("click",()=>navigate(pageNumber+1));
       pageInput.addEventListener("change",()=>navigate(pageInput.value));
@@ -117,12 +117,14 @@
       }
       $("[data-reader-in]").addEventListener("click",()=>changeZoom(.2));
       $("[data-reader-out]").addEventListener("click",()=>changeZoom(-.2));
-      $("[data-reader-fit]").addEventListener("click",()=>{zoom=null;render();});
+      $("[data-reader-fit]").addEventListener("click",()=>{zoom=null;viewport.scrollLeft=0;viewport.scrollTop=0;render();});
       $("[data-reader-expand]").addEventListener("click",()=>{
         const expanded = !dialog.classList.contains("is-document-focused");
         dialog.classList.toggle("is-document-focused",expanded);
         const details = dialog.querySelector(detailsSelector);
         if (details) details.hidden = expanded;
+        const workspace = dialog.querySelector(".project-workspace, .credential-workspace");
+        if (workspace) workspace.scrollTop = 0;
         $("[data-reader-expand]").setAttribute("aria-pressed",String(expanded));
         $("[data-reader-expand]").setAttribute("aria-label",expanded?"Restore document layout":"Expand document");
         $("[data-reader-expand]").title=expanded?"Restore document layout":"Expand document";

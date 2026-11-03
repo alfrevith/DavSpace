@@ -71,3 +71,12 @@ estilos, orden de los menús, chat y reinicio del scroll de los documentos.
 Para una revisión visual, sirve la raíz con un servidor estático y comprueba
 320, 360, 390 y 430 px, una tableta de 768 px y un teléfono en horizontal.
 Prueba también las dos variantes con los enlaces explícitos anteriores.
+
+### Lectores compartidos de documentos
+
+Ambos índices cargan assets/css/document-reader.css antes de las hojas de diseño.
+El lector compartido sirve proyectos, certificados y logros (PDF o imagen original).
+En móvil, los controles PDF usan dos filas; en horizontal se compactan en una.
+El modo expandido reserva toda el área disponible para lectura y mantiene accesible
+el cierre. Ajustar al ancho y cambiar página reinician el desplazamiento; los cambios
+de altura del navegador no vuelven a renderizar el PDF si su ancho no cambia.

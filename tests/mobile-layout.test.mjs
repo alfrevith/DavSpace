@@ -10,6 +10,14 @@ const desktop = read("index.html"), mobile = read("index-mobile.html");
 const router = read("assets/js/device-router.js");
 const parse = html => new DOMParser().parseFromString(html, "text/html");
 
+test("both portfolio entries load shared reader layout before their overrides", () => {
+  for (const html of [desktop,mobile]) {
+    const styles=[...parse(html).querySelectorAll('link[rel="stylesheet"]')].map(el=>el.getAttribute('href'));
+    assert(styles.includes('assets/css/document-reader.css'));
+    assert(styles.indexOf('assets/css/document-reader.css')<styles.indexOf('assets/css/style.css'));
+  }
+});
+
 function route({width, coarse = false, page = "index.html", query = "", hash = ""}) {
   let destination = null;
   const location = {href: `https://example.test/Portafolio/${page}${query}${hash}`, replace: url => { destination = url; }};

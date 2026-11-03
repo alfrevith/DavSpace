@@ -19,7 +19,9 @@ test('image records load without PDF.js, support zoom and release their source o
   image.dispatchEvent(new document.defaultView.Event('load'));
   assert.equal(mount.querySelector('img'),image);assert.equal(image.style.width,'588px');
   mount.querySelector('[data-image-in]').click();assert.equal(image.style.width,'735px');
+  const viewport=mount.querySelector('.project-reader-viewport');viewport.scrollLeft=80;viewport.scrollTop=120;
   mount.querySelector('[data-image-fit]').click();assert.equal(image.style.width,'588px');
+  assert.equal(viewport.scrollLeft,0);assert.equal(viewport.scrollTop,0);
   mount.querySelector('[data-image-expand]').click();assert(dialog.classList.contains('is-document-focused'));
   reader.destroy();assert(!image.hasAttribute('src'));assert.equal(mount.children.length,0);
   assert(!dialog.classList.contains('is-document-focused'));assert.equal(dialog.querySelector('.credential-metadata').hidden,false);
