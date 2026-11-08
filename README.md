@@ -14,6 +14,7 @@ Sitio estático compatible con GitHub Pages, sin backend ni compilación obligat
 | Respuestas personales del chatbot | [`data/assistant-knowledge.json`](data/assistant-knowledge.json) |
 | Estaciones de Beyond the Code y redes creativas | [`data/journey.json`](data/journey.json) |
 | Fotografías, dibujos y obras PDF | `data/photography.json`, `data/drawings.json`, `data/writing.json` |
+| Personaje jugable y controles | `assets/js/character-playground.js`, `assets/js/character-physics.js`, `assets/js/character-sprites.js` |
 | Comportamiento del sitio | `assets/js/` |
 | Estilos | `assets/css/` |
 | Imágenes e iconos | `images/` |
@@ -33,6 +34,7 @@ Las imágenes de reserva están en `images/backgrounds/`. Son fotografías disti
 - [Editar certificados y logros](docs/CREDENTIALS.md)
 - [Enseñar respuestas al chatbot](docs/ASSISTANT.md)
 - [Editar Beyond the Code y las colecciones creativas](docs/CREATIVE-WORLDS.md)
+- [Controles y edición del personaje jugable](docs/PLAYGROUND.md)
 
 ## Revisar localmente
 

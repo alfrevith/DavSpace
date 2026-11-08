@@ -260,6 +260,40 @@ button {
   }
 }
 
+/* Laptop browser chrome and display scaling leave much less height than the
+   panel resolution. Fit the complete story before its JS checks sticky space. */
+@media (min-width: 768px) and (max-height: 720px) {
+  body:not(.mobile-site) .hero-scene-content {
+    gap: 16px;
+    padding-block: 8px;
+  }
+
+  body:not(.mobile-site) .hero-intro-line { gap: 8px; }
+  body:not(.mobile-site) .intro-greeting { font-size: 16px; line-height: 24px; }
+  body:not(.mobile-site) .name { font-size: clamp(40px, 7.5vh, 54px); }
+  body:not(.mobile-site) .hero-statement { margin-top: 12px; font-size: 14px; }
+  body:not(.mobile-site) .hero-glitch-line { font-size: 30px; }
+  body:not(.mobile-site) .hero-identity { grid-template-columns: minmax(0, 1fr) 112px minmax(0, 1fr); }
+  body:not(.mobile-site) .profile-languages { margin-top: 12px; }
+  body:not(.mobile-site) .profile-status { margin-top: 8px; }
+}
+
+@media (min-width: 768px) and (max-height: 620px) {
+  body:not(.mobile-site) .hero-scene-content {
+    gap: 8px;
+    padding-block: 4px;
+  }
+
+  body:not(.mobile-site) .hero-intro-line { gap: 6px; }
+  body:not(.mobile-site) .intro-greeting { font-size: 14px; line-height: 20px; }
+  body:not(.mobile-site) .name { font-size: 38px; }
+  body:not(.mobile-site) .hero-statement { margin-top: 8px; font-size: 13px; }
+  body:not(.mobile-site) .hero-glitch-line { font-size: 26px; }
+  body:not(.mobile-site) .hero-identity { grid-template-columns: minmax(0, 1fr) 96px minmax(0, 1fr); }
+  body:not(.mobile-site) .profile-languages { margin-top: 8px; }
+  body:not(.mobile-site) .profile-status { margin-top: 6px; }
+}
+
 .hero-stage[data-hero-scroll] .hero-scroll-track {
   height: var(--hero-track-height);
 }
@@ -1898,6 +1932,22 @@ html.project-dialog-open {
 .contact-section.reveal {
   transform: none;
   transition: opacity .45s ease;
+}
+
+.contact-direct-link {
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, .25);
+  text-underline-offset: 4px;
+}
+
+.contact-direct-link:is(:hover, :focus-visible) {
+  color: #93e7ff;
+  text-decoration-color: currentColor;
+}
+
+.contact-direct-link:focus-visible {
+  outline: 2px solid #93e7ff;
+  outline-offset: 4px;
 }
 
 .contact-social::after {

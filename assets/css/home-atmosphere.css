@@ -1,0 +1,267 @@
+/* Shared by both home layouts. Decoration stays below content and never catches input. */
+.site-ambient {
+  z-index: 1;
+  overflow: hidden;
+  contain: strict;
+  user-select: none;
+  background:
+    radial-gradient(ellipse at 6% 18%, rgb(232 239 255 / .065), transparent 35%),
+    radial-gradient(ellipse at 96% 65%, rgb(240 243 255 / .055), transparent 34%);
+}
+
+.site-ambient *,
+.site-ambient *::before,
+.site-ambient *::after {
+  pointer-events: none;
+}
+
+.ambient-mist {
+  position: absolute;
+  inset: -12%;
+  opacity: .7;
+  background:
+    radial-gradient(ellipse at 15% 32%, rgb(225 232 255 / .09), transparent 30%),
+    radial-gradient(ellipse at 85% 62%, rgb(246 245 255 / .08), transparent 27%),
+    radial-gradient(ellipse at 52% 100%, rgb(230 237 255 / .045), transparent 38%);
+  animation: ambient-mist-drift 32s ease-in-out infinite alternate;
+}
+
+.ambient-rays {
+  position: absolute;
+  inset: -18% -15%;
+  transform: rotate(24deg);
+  opacity: .7;
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 55%, transparent 92%);
+}
+
+.ambient-ray {
+  position: absolute;
+  top: -10%;
+  left: var(--ray-x);
+  width: var(--ray-width);
+  height: 110%;
+  transform-origin: top center;
+  background: linear-gradient(90deg, transparent, rgb(245 248 255 / .045) 40%, rgb(255 255 255 / .1) 50%, rgb(245 248 255 / .035) 60%, transparent);
+  animation: ambient-ray-breathe var(--ray-duration) ease-in-out var(--ray-delay) infinite alternate;
+}
+
+.ambient-ray:nth-child(1) { --ray-x: 14%; --ray-width: 95px; --ray-duration: 13s; --ray-delay: -4s; }
+.ambient-ray:nth-child(2) { --ray-x: 25%; --ray-width: 22px; --ray-duration: 17s; --ray-delay: -11s; }
+.ambient-ray:nth-child(3) { --ray-x: 76%; --ray-width: 120px; --ray-duration: 19s; --ray-delay: -7s; }
+.ambient-ray:nth-child(4) { --ray-x: 88%; --ray-width: 32px; --ray-duration: 15s; --ray-delay: -2s; }
+
+.ambient-halo {
+  position: absolute;
+  top: 12%;
+  right: -170px;
+  width: clamp(320px, 40vw, 620px);
+  aspect-ratio: 1;
+  border: 1px solid rgb(246 248 255 / .09);
+  border-radius: 50%;
+  transform: rotate(-32deg) scaleY(.58);
+  box-shadow: 0 0 55px rgb(236 242 255 / .025), inset 0 0 45px rgb(236 242 255 / .025);
+}
+
+.ambient-halo::before,
+.ambient-halo::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+}
+
+.ambient-halo::before {
+  inset: 12px;
+  border: 1px dashed rgb(246 248 255 / .075);
+  animation: ambient-orbit 160s linear infinite;
+}
+
+.ambient-halo::after {
+  inset: -2px;
+  border: 1px solid transparent;
+  border-top-color: rgb(255 255 255 / .28);
+  border-left-color: rgb(255 255 255 / .09);
+  animation: ambient-orbit 90s linear infinite;
+}
+
+.ambient-halo--lower {
+  top: auto;
+  right: auto;
+  bottom: -180px;
+  left: -210px;
+  width: clamp(380px, 46vw, 700px);
+  transform: rotate(28deg) scaleY(.65);
+  opacity: .65;
+}
+
+.ambient-stars,
+.ambient-meteors {
+  position: absolute;
+  inset: 0;
+  /* Leave a quieter corridor for the portrait, headings and reading. */
+  mask-image: linear-gradient(90deg, #000, rgb(0 0 0 / .75) 22%, rgb(0 0 0 / .28) 42%, rgb(0 0 0 / .28) 58%, rgb(0 0 0 / .75) 78%, #000);
+}
+
+.ambient-star {
+  position: absolute;
+  top: var(--star-y);
+  left: var(--star-x);
+  width: var(--star-size);
+  height: var(--star-size);
+  border-radius: 50%;
+  background: #f9fbff;
+  opacity: var(--star-opacity);
+  box-shadow: 0 0 7px rgb(239 246 255 / .4);
+  animation: ambient-twinkle var(--star-duration) ease-in-out var(--star-delay) infinite alternate;
+}
+
+.ambient-star--glint {
+  width: 3px;
+  height: 3px;
+  box-shadow: 0 0 10px rgb(255 255 255 / .6), 0 0 23px rgb(235 242 255 / .2);
+}
+
+.ambient-star--glint::before,
+.ambient-star--glint::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: var(--glint-size);
+  transform: translate(-50%, -50%);
+  background: linear-gradient(transparent, rgb(255 255 255 / .85), transparent);
+}
+
+.ambient-star--glint::after {
+  transform: translate(-50%, -50%) rotate(90deg) scaleY(.7);
+}
+
+.ambient-meteor {
+  position: absolute;
+  top: var(--meteor-y);
+  left: var(--meteor-x);
+  width: var(--meteor-length);
+  height: 1px;
+  border-radius: 50%;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, rgb(241 246 255 / .25) 45%, #fff);
+  transform: rotate(126deg);
+  transform-origin: right center;
+  animation: ambient-meteor-fall var(--meteor-duration) linear var(--meteor-delay) infinite;
+}
+
+.ambient-meteor::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: 0;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 9px 2px rgb(244 248 255 / .55);
+}
+
+.ambient-lightning {
+  position: absolute;
+  top: -3%;
+  left: 3%;
+  width: clamp(90px, 12vw, 180px);
+  height: 56%;
+  overflow: visible;
+  opacity: 0;
+  fill: none;
+  stroke: #f4f7ff;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgb(242 247 255 / .6));
+  mask-image: linear-gradient(#000, #000 62%, transparent);
+  animation: ambient-lightning-arrive 21s ease-in-out -6s infinite;
+}
+
+.ambient-lightning path + path {
+  stroke-width: .55;
+  stroke-opacity: .5;
+}
+
+.ambient-lightning--right {
+  top: 27%;
+  left: auto;
+  right: 2%;
+  height: 66%;
+  transform: scaleX(-1);
+  animation-duration: 27s;
+  animation-delay: -17s;
+}
+
+.cursor-light {
+  background: radial-gradient(circle 360px at var(--x) var(--y), rgb(242 247 255 / .075), transparent 70%);
+}
+
+/* The existing hero dust belongs to the same white palette. */
+.hero-particle:nth-child(3n) { background: #f4f7ff; }
+
+.site-ambient *,
+.site-ambient *::before,
+.site-ambient *::after {
+  animation-play-state: paused;
+}
+
+.site-ambient[data-ambient-active] *,
+.site-ambient[data-ambient-active] *::before,
+.site-ambient[data-ambient-active] *::after {
+  animation-play-state: running;
+}
+
+@keyframes ambient-mist-drift {
+  from { transform: translate3d(-1%, -1%, 0); }
+  to { transform: translate3d(2%, 3%, 0); }
+}
+
+@keyframes ambient-ray-breathe {
+  from { opacity: .18; transform: translate3d(-12px, -30px, 0) scaleX(.85); }
+  to { opacity: .75; transform: translate3d(16px, 40px, 0) scaleX(1.15); }
+}
+
+@keyframes ambient-orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ambient-twinkle {
+  from { opacity: calc(var(--star-opacity) * .35); transform: translate3d(0, 0, 0) scale(.8); }
+  to { opacity: var(--star-opacity); transform: translate3d(3px, -9px, 0) scale(1.1); }
+}
+
+@keyframes ambient-meteor-fall {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(126deg) scaleX(.35); }
+  2% { opacity: .7; }
+  9% { opacity: 0; transform: translate3d(-250px, 350px, 0) rotate(126deg) scaleX(1); }
+  100% { opacity: 0; transform: translate3d(-250px, 350px, 0) rotate(126deg) scaleX(1); }
+}
+
+/* A slow, local apparition, without full-screen flashes or rapid flicker. */
+@keyframes ambient-lightning-arrive {
+  0%, 5%, 100% { opacity: 0; stroke-dashoffset: 680; }
+  8% { opacity: .32; stroke-dashoffset: 0; }
+  11% { opacity: .14; stroke-dashoffset: 0; }
+  16%, 99% { opacity: 0; stroke-dashoffset: 0; }
+}
+
+@media (max-width: 700px) {
+  .ambient-rays { opacity: .5; }
+  .ambient-ray:nth-child(even), .ambient-halo--lower { display: none; }
+  .ambient-halo { right: -230px; top: 18%; opacity: .7; }
+  .ambient-mist { opacity: .55; }
+  .ambient-lightning { left: -16px; width: 85px; opacity: 0; }
+  .ambient-lightning--right { left: auto; right: -18px; }
+  .ambient-stars, .ambient-meteors {
+    mask-image: linear-gradient(90deg, #000, rgb(0 0 0 / .35) 35%, rgb(0 0 0 / .35) 65%, #000);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-ambient *, .site-ambient *::before, .site-ambient *::after { animation: none !important; }
+  .ambient-meteors, .ambient-lightning { display: none; }
+  .ambient-ray { opacity: .25; }
+}

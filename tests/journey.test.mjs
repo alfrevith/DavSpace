@@ -35,7 +35,9 @@ function setup({reduced=false,mobile=false}={}){
 test('both layouts preserve the timeline with exactly three creative worlds and working static entrances',()=>{
  for(const file of ['index.html','index-mobile.html']){
   const doc=parse(read(file)),root=doc.querySelector('#beyond-the-code');
-  assert.equal(root.previousElementSibling.id,'certificates');assert.equal(root.nextElementSibling.id,'contact');
+  assert.equal(root.previousElementSibling.id,'certificates');
+  assert.equal(root.nextElementSibling.id,'playground');
+  assert.equal(root.nextElementSibling.nextElementSibling.id,'contact');
   assert.equal(root.querySelectorAll('[data-journey-chapter]').length,3);
   assert.equal(root.querySelectorAll('[data-journey-step]').length,3);
   assert(root.textContent.includes(data.subtitle));assert(root.textContent.includes(data.intro));
