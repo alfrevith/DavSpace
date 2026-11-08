@@ -389,10 +389,12 @@ function initializePlayground(root) {
     });
   });
   root.addEventListener('focusout', event => {
-    if (active && !root.contains(event.relatedTarget)) setActive(false);
+    // A tap on empty arena space can move focus to the page on phones.
+    // Touch gameplay does not depend on keyboard focus staying on the canvas.
+    if (active && !display.mobile() && !root.contains(event.relatedTarget)) setActive(false);
   });
   document.addEventListener('pointerdown', event => {
-    if (active && !root.contains(event.target)) setActive(false);
+    if (active && !display.mobile() && !root.contains(event.target)) setActive(false);
   }, { passive: true });
   window.addEventListener('blur', () => { if (active) setActive(false); });
   window.addEventListener('pagehide', () => { if (active) setActive(false); });
